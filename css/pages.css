@@ -1,0 +1,336 @@
+/* ============================================================
+   AUDRITA — THE QUIET GARDEN
+   Page-specific Styles
+   ============================================================ */
+
+/* ── HOME ─────────────────────────────────────────────────── */
+
+/* Hero */
+.hero {
+  padding: var(--space-32) 0 var(--space-20);
+}
+
+@media (max-width: 639px) {
+  .hero { padding: var(--space-20) 0 var(--space-16); }
+}
+
+.hero-eyebrow {
+  font-size: var(--text-xl);
+  color: var(--color-accent);
+  margin-bottom: var(--space-6);
+  line-height: 1;
+  font-family: var(--font-serif);
+}
+
+.hero-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, var(--text-3xl));
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-8);
+}
+
+.hero-heading em {
+  color: var(--color-text-muted);
+  font-weight: 300;
+}
+
+.hero-sub {
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  font-weight: 300;
+  font-style: italic;
+  max-width: 520px;
+}
+
+/* Home sections */
+.section-writings {
+  padding: var(--space-20) 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.section-garden-home {
+  padding: var(--space-20) 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.section-closing {
+  padding: var(--space-24) 0 var(--space-20);
+  text-align: center;
+}
+
+.closing-line {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-text-faint);
+  letter-spacing: 0.02em;
+}
+
+/* ── WRITINGS PAGE ────────────────────────────────────────── */
+.page-writings {
+  padding: var(--space-20) 0 var(--space-32);
+}
+
+.page-header {
+  margin-bottom: var(--space-16);
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.page-subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--color-text-muted);
+  font-weight: 300;
+  line-height: var(--leading-relaxed);
+}
+
+/* ── WRITING DETAIL PAGE ──────────────────────────────────── */
+.page-writing {
+  padding: var(--space-20) 0 var(--space-32);
+}
+
+.writing-header {
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.writing-detail-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, var(--text-3xl));
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+
+.writing-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.writing-detail-meta-sep {
+  color: var(--color-border);
+}
+
+.writing-location {
+  font-family: var(--font-serif);
+  font-size: var(--text-xs);
+  font-style: italic;
+  color: var(--color-text-faint);
+  margin-top: var(--space-8);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.writing-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.writing-tag {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  letter-spacing: var(--tracking-wide);
+}
+
+.writing-tag::before {
+  content: '#';
+}
+
+/* Poem content area */
+.writing-content {
+  margin-top: var(--space-12);
+}
+
+/* ── ABOUT PAGE ───────────────────────────────────────────── */
+.page-about {
+  padding: var(--space-20) 0 var(--space-32);
+}
+
+.about-section {
+  margin-bottom: var(--space-16);
+  padding-bottom: var(--space-16);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.about-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.about-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-6);
+}
+
+.about-body {
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  font-weight: 300;
+}
+
+.about-body p {
+  margin-bottom: var(--space-5);
+}
+
+.about-body p:last-child {
+  margin-bottom: 0;
+}
+
+.about-subjects {
+  list-style: none;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-text-muted);
+  font-weight: 300;
+  line-height: var(--leading-relaxed);
+}
+
+.about-belief {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-style: italic;
+  font-weight: 300;
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+  padding-left: var(--space-6);
+  border-left: 1px solid var(--color-border);
+}
+
+/* ── GARDEN PAGE ──────────────────────────────────────────── */
+.page-garden {
+  padding: var(--space-20) 0 var(--space-32);
+}
+
+.garden-intro {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-16);
+  max-width: 480px;
+}
+
+.garden-all-fragments {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.garden-entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.garden-entry-text {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  font-weight: 300;
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+
+.garden-entry-date {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-faint);
+}
+
+/* ── 404 PAGE ─────────────────────────────────────────────── */
+.page-404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+}
+
+.error-glyph {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  color: var(--color-border);
+  margin-bottom: var(--space-8);
+  display: block;
+}
+
+.error-heading {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.error-sub {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-10);
+}
+
+/* ── Empty State ──────────────────────────────────────────── */
+.empty-state {
+  padding: var(--space-16) 0;
+  text-align: center;
+}
+
+.empty-state-text {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-text-muted);
+  font-weight: 300;
+}
+
+.empty-state-sub {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--color-text-faint);
+  margin-top: var(--space-3);
+}

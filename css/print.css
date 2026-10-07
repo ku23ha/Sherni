@@ -1,0 +1,31 @@
+/* ============================================================
+   AUDRITA — THE QUIET GARDEN
+   Print Styles
+   ============================================================ */
+@media print {
+  .site-header,
+  .nav-mobile-toggle,
+  .nav-theme-toggle,
+  .writing-nav,
+  .filter-row,
+  .site-footer {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+
+  .poem-body {
+    font-size: 11pt;
+    line-height: 1.8;
+  }
+
+  .writing-detail-title {
+    font-size: 18pt;
+  }
+
+  a { color: black; text-decoration: none; }
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writings — Audrita Mukherjee</title>
+  <meta name="description" content="Poems, fragments, letters, and thoughts — kept as they arrive." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Noto+Serif+Bengali:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <nav class="nav-container" aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Audrita — Home">
+        <span class="nav-logo-name">Audrita</span>
+        <span class="nav-logo-mark" aria-hidden="true">·</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="writings.html" class="nav-link" aria-current="page">Writings</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="garden.html" class="nav-link">Garden</a></li>
+        <li>
+          <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <span class="theme-icon" aria-hidden="true">◐</span>
+          </button>
+        </li>
+      </ul>
+      <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul role="list">
+        <li><a href="writings.html" class="nav-link">Writings</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="garden.html" class="nav-link">Garden</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="page-writings">
+      <div class="container">
+
+        <header class="page-header">
+          <h1 class="page-title">Writings</h1>
+          <p class="page-subtitle">poems, fragments, letters, and thoughts — kept as they arrive.</p>
+        </header>
+
+        <!-- Filter -->
+        <div class="filter-row" role="group" aria-label="Filter writings by type">
+          <button class="filter-pill is-active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="poem">Poems</button>
+          <button class="filter-pill" data-filter="reflection">Reflections</button>
+          <button class="filter-pill" data-filter="fragment">Fragments</button>
+          <button class="filter-pill" data-filter="essay">Essays</button>
+        </div>
+
+        <!-- 2026 -->
+        <p class="archive-year">2026</p>
+
+        <ol class="writing-list" role="list">
+
+          <li class="writing-item" data-type="poem">
+            <a href="writings/the-river-knows.html" class="writing-link">
+              <span class="writing-title">The River Knows</span>
+              <span class="writing-meta">
+                <span class="writing-type">Poem</span>
+                <span class="writing-sep" aria-hidden="true">·</span>
+                <time datetime="2026-10-07" class="writing-date">07 Oct</time>
+              </span>
+            </a>
+          </li>
+
+          <li class="writing-item" data-type="reflection">
+            <a href="writings/on-becoming.html" class="writing-link">
+              <span class="writing-title">On Becoming</span>
+              <span class="writing-meta">
+                <span class="writing-type">Reflection</span>
+                <span class="writing-sep" aria-hidden="true">·</span>
+                <time datetime="2026-09-29" class="writing-date">29 Sep</time>
+              </span>
+            </a>
+          </li>
+
+          <li class="writing-item" data-type="poem">
+            <a href="writings/before-the-rain.html" class="writing-link">
+              <span class="writing-title">Before the Rain</span>
+              <span class="writing-meta">
+                <span class="writing-type">Poem</span>
+                <span class="writing-sep" aria-hidden="true">·</span>
+                <time datetime="2026-09-12" class="writing-date">12 Sep</time>
+              </span>
+            </a>
+          </li>
+
+          <li class="writing-item" data-type="fragment">
+            <a href="writings/letter-to-november.html" class="writing-link">
+              <span class="writing-title">Letter to November</span>
+              <span class="writing-meta">
+                <span class="writing-type">Fragment</span>
+                <span class="writing-sep" aria-hidden="true">·</span>
+                <time datetime="2026-09-01" class="writing-date">01 Sep</time>
+              </span>
+            </a>
+          </li>
+
+          <li class="writing-item" data-type="poem">
+            <a href="writings/the-colour-of-seven.html" class="writing-link">
+              <span class="writing-title">The Colour of Seven</span>
+              <span class="writing-meta">
+                <span class="writing-type">Poem</span>
+                <span class="writing-sep" aria-hidden="true">·</span>
+                <time datetime="2026-08-18" class="writing-date">18 Aug</time>
+              </span>
+            </a>
+          </li>
+
+        </ol>
+
+        <div class="garden-counter" style="margin-top: var(--space-12);">
+          <span class="counter-number">05 / 50</span>
+          <span class="counter-label">the first garden</span>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-name">Audrita Mukherjee</p>
+        <p class="footer-tagline">A quiet archive of becoming.</p>
+        <p class="footer-copy">Made slowly. Written honestly. Kept here. · 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /writings/
+Disallow: /garden.html
+
+# This site is currently private.
+# Public writing will be listed here once published.

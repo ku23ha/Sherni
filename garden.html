@@ -24,18 +24,8 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li class="nav-item-dropdown">
-          <a href="books.html" class="nav-link">Books <span class="nav-arrow">▾</span></a>
-          <ul class="nav-dropdown" role="list">
-            <li><a href="books.html" class="nav-dropdown-link">All Books</a></li>
-            <li><a href="books.html#love-poems" class="nav-dropdown-link">Love Poems</a></li>
-            <li><a href="books.html#the-quiet-garden" class="nav-dropdown-link">The Quiet Garden</a></li>
-            <li><a href="books.html#the-sun-and-her-words" class="nav-dropdown-link">The Sun & Her Words</a></li>
-            <li><a href="books.html#home-and-belonging" class="nav-dropdown-link">Home & Belonging</a></li>
-            <li><a href="books.html#healing-through-words" class="nav-dropdown-link">Healing Through Words</a></li>
-            <li><a href="books.html#boxed-sets" class="nav-dropdown-link">Boxed Sets</a></li>
-          </ul>
-        </li>
+        <li><a href="index.html#poetry" class="nav-link">Poetry</a></li>
+        <li><a href="garden.html" class="nav-link" aria-current="page">The Garden</a></li>
         <li class="nav-item-dropdown">
           <a href="about.html" class="nav-link">About Me <span class="nav-arrow">▾</span></a>
           <ul class="nav-dropdown" role="list">
@@ -46,24 +36,19 @@
             <li><a href="tour.html" class="nav-dropdown-link">Tour & Events</a></li>
           </ul>
         </li>
-        <li class="nav-item-dropdown">
-          <a href="shop.html" class="nav-link">Shop <span class="nav-arrow">▾</span></a>
-          <ul class="nav-dropdown" role="list">
-            <li><a href="shop.html" class="nav-dropdown-link">All Creations</a></li>
-            <li><a href="shop.html#art" class="nav-dropdown-link">Art & Prints</a></li>
-            <li><a href="shop.html#clothing" class="nav-dropdown-link">Clothing</a></li>
-            <li><a href="shop.html#stationery" class="nav-dropdown-link">Stationery & Journals</a></li>
-            <li><a href="shop.html#tattoos" class="nav-dropdown-link">Tattoos</a></li>
-          </ul>
-        </li>
-        <li><a href="garden.html" class="nav-link" aria-current="page">Garden</a></li>
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
       </ul>
 
       <div class="nav-actions">
-        <button class="nav-cart-btn"><span class="cart-count-badge">0</span></button>
-        <button class="nav-theme-toggle" id="theme-toggle">◐</button>
-        <button class="nav-mobile-toggle" id="mobile-menu-toggle"><span></span><span></span><span></span></button>
+        <button class="nav-saved-btn" aria-label="View saved poems">
+          <span>Saved</span>
+          <span class="saved-count-badge">0</span>
+        </button>
+        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </nav>
     <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">

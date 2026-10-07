@@ -139,105 +139,160 @@
       }
     });
 
-    // ── Shopping Cart Logic ──────────────────────────────────
-    let cart = [];
-    try {
-      const savedCart = localStorage.getItem('audrita-cart');
-      if (savedCart) cart = JSON.parse(savedCart);
-    } catch (e) {}
-
-    const cartBackdrop = document.getElementById('cart-backdrop');
-    const cartToggleBtns = document.querySelectorAll('.nav-cart-btn, .open-cart-btn');
-    const cartCloseBtn = document.getElementById('cart-close-btn');
-    const cartCountBadges = document.querySelectorAll('.cart-count-badge');
-    const cartItemsList = document.getElementById('cart-items-list');
-    const cartEmptyNotice = document.getElementById('cart-empty-notice');
-    const cartSubtotalEl = document.getElementById('cart-subtotal-val');
-
-    function saveCart() {
-      try {
-        localStorage.setItem('audrita-cart', JSON.stringify(cart));
-      } catch (e) {}
-      updateCartUI();
+    // ── Toast Notifications ──────────────────────────────────
+    let toastTimeout = null;
+    function showToast(message) {
+      let toast = document.getElementById('toast-notice');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast-notice';
+        toast.className = 'toast-notice';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 2600);
     }
 
-    function updateCartUI() {
-      const totalCount = cart.reduce((acc, item) => acc + (item.qty || 1), 0);
-      cartCountBadges.forEach(badge => {
-        badge.textContent = totalCount;
+    // ── Saved Poetry System (Local Persistence) ───────────────
+    const SAVED_KEY = 'audrita-saved-poems';
+    let savedPoems = [];
+    try {
+      const stored = localStorage.getItem(SAVED_KEY);
+      if (stored) savedPoems = JSON.parse(stored);
+    } catch (e) {}
+
+    const savedDrawerBackdrop = document.getElementById('saved-drawer-backdrop');
+    const savedToggleBtns = document.querySelectorAll('.nav-saved-btn, .open-saved-btn');
+    const savedCloseBtn = document.getElementById('saved-drawer-close-btn');
+    const savedCountBadges = document.querySelectorAll('.saved-count-badge');
+    const savedItemsList = document.getElementById('saved-items-list');
+    const savedEmptyNotice = document.getElementById('saved-empty-notice');
+
+    function persistSavedPoems() {
+      try {
+        localStorage.setItem(SAVED_KEY, JSON.stringify(savedPoems));
+      } catch (e) {}
+      updateSavedUI();
+    }
+
+    function updateSavedUI() {
+      // Update badges
+      savedCountBadges.forEach(badge => {
+        badge.textContent = savedPoems.length;
       });
 
-      if (!cartItemsList) return;
+      // Update button states in poem cards
+      document.querySelectorAll('.btn-save-poem').forEach(btn => {
+        const id = btn.getAttribute('data-id');
+        const isSaved = savedPoems.some(p => p.id === id);
+        if (isSaved) {
+          btn.classList.add('is-saved');
+          btn.innerHTML = '♥ Saved';
+          btn.setAttribute('aria-label', 'Remove from saved');
+        } else {
+          btn.classList.remove('is-saved');
+          btn.innerHTML = '♡ Save';
+          btn.setAttribute('aria-label', 'Save poem to collection');
+        }
+      });
 
-      if (cart.length === 0) {
-        cartItemsList.innerHTML = '';
-        if (cartEmptyNotice) cartEmptyNotice.style.display = 'block';
-        if (cartSubtotalEl) cartSubtotalEl.textContent = '₹0';
+      if (!savedItemsList) return;
+
+      if (savedPoems.length === 0) {
+        savedItemsList.innerHTML = '';
+        if (savedEmptyNotice) savedEmptyNotice.style.display = 'block';
         return;
       }
 
-      if (cartEmptyNotice) cartEmptyNotice.style.display = 'none';
+      if (savedEmptyNotice) savedEmptyNotice.style.display = 'none';
 
-      let total = 0;
-      cartItemsList.innerHTML = cart.map((item, index) => {
-        total += (item.price || 0) * (item.qty || 1);
-        return `
-          <div class="cart-item">
-            <div class="cart-item-info">
-              <div class="cart-item-name">${item.title}</div>
-              <div class="cart-item-meta">₹${item.price} × ${item.qty || 1}</div>
-              <button class="cart-item-remove" data-index="${index}">remove</button>
-            </div>
+      savedItemsList.innerHTML = savedPoems.map((p, idx) => `
+        <div class="saved-poem-item">
+          <div class="saved-poem-title">${p.title}</div>
+          <div class="saved-poem-snippet">${p.snippet}</div>
+          <div class="saved-poem-actions">
+            <button class="btn-icon-action btn-copy-saved" data-text="${encodeURIComponent(p.text)}">⎘ Copy</button>
+            <button class="saved-poem-remove" data-id="${p.id}">remove</button>
           </div>
-        `;
-      }).join('');
+        </div>
+      `).join('');
 
-      if (cartSubtotalEl) cartSubtotalEl.textContent = '₹' + total.toLocaleString();
-
-      cartItemsList.querySelectorAll('.cart-item-remove').forEach(btn => {
+      // Wire remove buttons in drawer
+      savedItemsList.querySelectorAll('.saved-poem-remove').forEach(btn => {
         btn.addEventListener('click', function () {
-          const idx = parseInt(this.getAttribute('data-index'), 10);
-          cart.splice(idx, 1);
-          saveCart();
+          const id = this.getAttribute('data-id');
+          savedPoems = savedPoems.filter(p => p.id !== id);
+          persistSavedPoems();
+          showToast('Removed from saved verses');
+        });
+      });
+
+      // Wire copy buttons in drawer
+      savedItemsList.querySelectorAll('.btn-copy-saved').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const text = decodeURIComponent(this.getAttribute('data-text'));
+          navigator.clipboard.writeText(text).then(() => {
+            showToast('Verse copied to clipboard ⎘');
+          });
         });
       });
     }
 
-    function openCart() {
-      if (cartBackdrop) cartBackdrop.classList.add('is-open');
+    function openSavedDrawer() {
+      if (savedDrawerBackdrop) savedDrawerBackdrop.classList.add('is-open');
     }
 
-    function closeCart() {
-      if (cartBackdrop) cartBackdrop.classList.remove('is-open');
+    function closeSavedDrawer() {
+      if (savedDrawerBackdrop) savedDrawerBackdrop.classList.remove('is-open');
     }
 
-    cartToggleBtns.forEach(btn => btn.addEventListener('click', openCart));
-    if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
-    if (cartBackdrop) {
-      cartBackdrop.addEventListener('click', function (e) {
-        if (e.target === cartBackdrop) closeCart();
+    savedToggleBtns.forEach(btn => btn.addEventListener('click', openSavedDrawer));
+    if (savedCloseBtn) savedCloseBtn.addEventListener('click', closeSavedDrawer);
+    if (savedDrawerBackdrop) {
+      savedDrawerBackdrop.addEventListener('click', function (e) {
+        if (e.target === savedDrawerBackdrop) closeSavedDrawer();
       });
     }
 
-    // Add to cart buttons
-    document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
+    // Wire poem card save buttons
+    document.querySelectorAll('.btn-save-poem').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        const title = this.getAttribute('data-title') || 'Art Print';
-        const price = parseInt(this.getAttribute('data-price') || '1200', 10);
-        
-        const existing = cart.find(item => item.title === title);
-        if (existing) {
-          existing.qty = (existing.qty || 1) + 1;
+        const id = this.getAttribute('data-id');
+        const title = this.getAttribute('data-title');
+        const text = this.getAttribute('data-verse') || '';
+        const snippet = text.split('\n').slice(0, 3).join('\n') + (text.split('\n').length > 3 ? '...' : '');
+
+        const existingIdx = savedPoems.findIndex(p => p.id === id);
+        if (existingIdx > -1) {
+          savedPoems.splice(existingIdx, 1);
+          showToast('Removed from saved verses');
         } else {
-          cart.push({ title, price, qty: 1 });
+          savedPoems.push({ id, title, text, snippet });
+          showToast('Poem saved to your collection ♡');
         }
-        saveCart();
-        openCart();
+        persistSavedPoems();
       });
     });
 
-    updateCartUI();
+    // Wire copy buttons on cards
+    document.querySelectorAll('.btn-copy-verse').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const verse = this.getAttribute('data-verse') || '';
+        navigator.clipboard.writeText(verse).then(() => {
+          showToast('Verse copied to clipboard ⎘');
+        }).catch(() => {
+          showToast('Could not copy to clipboard');
+        });
+      });
+    });
+
+    updateSavedUI();
 
     // ── Audio Player Simulation ──────────────────────────────
     const playBtn = document.getElementById('audio-play-btn');

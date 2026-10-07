@@ -25,18 +25,8 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li class="nav-item-dropdown">
-          <a href="books.html" class="nav-link">Books <span class="nav-arrow">▾</span></a>
-          <ul class="nav-dropdown" role="list">
-            <li><a href="books.html" class="nav-dropdown-link">All Books</a></li>
-            <li><a href="books.html#love-poems" class="nav-dropdown-link">Love Poems <span class="dropdown-tag">Poetry</span></a></li>
-            <li><a href="books.html#the-quiet-garden" class="nav-dropdown-link">The Quiet Garden <span class="dropdown-tag">Debut</span></a></li>
-            <li><a href="books.html#the-sun-and-her-words" class="nav-dropdown-link">The Sun & Her Words</a></li>
-            <li><a href="books.html#home-and-belonging" class="nav-dropdown-link">Home & Belonging</a></li>
-            <li><a href="books.html#healing-through-words" class="nav-dropdown-link">Healing Through Words</a></li>
-            <li><a href="books.html#boxed-sets" class="nav-dropdown-link">Boxed Sets <span class="dropdown-tag">Collector</span></a></li>
-          </ul>
-        </li>
+        <li><a href="index.html#poetry" class="nav-link">Poetry</a></li>
+        <li><a href="garden.html" class="nav-link">The Garden</a></li>
         <li class="nav-item-dropdown">
           <a href="about.html" class="nav-link" aria-current="page">About Me <span class="nav-arrow">▾</span></a>
           <ul class="nav-dropdown" role="list">
@@ -47,24 +37,12 @@
             <li><a href="tour.html" class="nav-dropdown-link">Tour & Events</a></li>
           </ul>
         </li>
-        <li class="nav-item-dropdown">
-          <a href="shop.html" class="nav-link">Shop <span class="nav-arrow">▾</span></a>
-          <ul class="nav-dropdown" role="list">
-            <li><a href="shop.html" class="nav-dropdown-link">All Creations</a></li>
-            <li><a href="shop.html#art" class="nav-dropdown-link">Art & Prints</a></li>
-            <li><a href="shop.html#clothing" class="nav-dropdown-link">Clothing</a></li>
-            <li><a href="shop.html#stationery" class="nav-dropdown-link">Stationery & Journals</a></li>
-            <li><a href="shop.html#tattoos" class="nav-dropdown-link">Tattoos</a></li>
-          </ul>
-        </li>
-        <li><a href="garden.html" class="nav-link">Garden</a></li>
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
       </ul>
 
       <div class="nav-actions">
-        <button class="nav-cart-btn" aria-label="Open Shopping Bag">
-          <span>Bag</span>
-          <span class="cart-count-badge">0</span>
+        <button class="nav-saved-btn" aria-label="View saved poems">
+          <span>Saved</span>
+          <span class="saved-count-badge">0</span>
         </button>
         <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
           <span class="theme-icon" aria-hidden="true">◐</span>
@@ -76,21 +54,19 @@
     </nav>
   </header>
 
-  <!-- Cart Drawer -->
-  <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true">
-    <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="Your Bag">
-      <div class="cart-header">
-        <h2 class="cart-title">Your Bag</h2>
-        <button class="cart-close-btn" id="cart-close-btn" aria-label="Close bag">×</button>
+  <!-- Saved Poems Drawer -->
+  <div class="saved-drawer-backdrop" id="saved-drawer-backdrop" aria-hidden="true">
+    <div class="saved-drawer" role="dialog" aria-modal="true" aria-label="Your Saved Verses">
+      <div class="saved-drawer-header">
+        <h2 class="saved-drawer-title">Saved Verses</h2>
+        <button class="saved-drawer-close-btn" id="saved-drawer-close-btn" aria-label="Close saved verses">×</button>
       </div>
-      <div class="cart-body">
-        <div id="cart-empty-notice" class="cart-empty"><p>Your bag is currently empty.</p></div>
-        <div id="cart-items-list"></div>
+      <div class="saved-drawer-body">
+        <div id="saved-empty-notice" class="saved-drawer-empty"><p>No saved verses yet.</p></div>
+        <div id="saved-items-list"></div>
       </div>
-      <div class="cart-footer">
-        <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-val">₹0</span></div>
-        <a href="shop.html" class="btn-checkout">Checkout · Order Now</a>
-      </div>
+    </div>
+  </div>
     </div>
   </div>
 

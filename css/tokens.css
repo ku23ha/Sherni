@@ -83,14 +83,21 @@
   /* ── Layout ───────────────────────────────────────────── */
   --content-width:    680px;   /* main reading column */
   --content-wide:     760px;   /* slightly wider for lists */
-  --nav-width:        1100px;  /* full nav container */
+  --container-max:    1200px;  /* full showcase grid */
+  --nav-width:        1180px;  /* full nav container */
   --padding-x:        var(--space-6);
   --padding-x-mobile: var(--space-5);
 
-  /* ── Borders ─────────────────────────────────────────── */
+  /* ── Borders & Shadows ─────────────────────────────────── */
   --radius-sm:   2px;
-  --radius-md:   4px;
+  --radius-md:   6px;
+  --radius-lg:   12px;
   --radius-full: 9999px;
+
+  --shadow-sm:     0 2px 8px rgba(42, 38, 34, 0.04);
+  --shadow-md:     0 8px 24px rgba(42, 38, 34, 0.07);
+  --shadow-lg:     0 16px 40px rgba(42, 38, 34, 0.1);
+  --shadow-book:   -6px 10px 24px rgba(42, 38, 34, 0.16), -1px 2px 6px rgba(42, 38, 34, 0.08);
 
   /* ── Animations ───────────────────────────────────────── */
   --duration-fast:   150ms;

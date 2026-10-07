@@ -334,3 +334,146 @@
   color: var(--color-text-faint);
   margin-top: var(--space-3);
 }
+
+/* ── Extended Page Layouts ───────────────────────────────── */
+.container-wide {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+
+/* Featured Book Spotlight Section (Rupi Kaur Style) */
+.section-featured-book {
+  padding: var(--space-24) 0;
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-alt);
+}
+
+.featured-book-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .featured-book-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.featured-book-cover {
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.featured-book-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.featured-book-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.featured-book-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--color-text);
+}
+
+.featured-book-quote {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  border-left: 2px solid var(--color-accent);
+  padding-left: var(--space-5);
+  margin: var(--space-4) 0;
+}
+
+/* Books Showcase Grid (All Collections) */
+.section-books {
+  padding: var(--space-20) 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+/* Poetry Linera Lucas / BB Writer Section */
+.section-poetry-whitespace {
+  padding: var(--space-24) 0;
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-bg);
+}
+
+/* Audio Section */
+.section-spoken-word {
+  padding: var(--space-20) 0;
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-alt);
+}
+
+/* Author Section on Home */
+.section-author {
+  padding: var(--space-24) 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* Shop Section on Home & Shop Page */
+.section-shop {
+  padding: var(--space-20) 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* Sub-page tabs for About / Traveling / Music / Tour */
+.about-subnav {
+  display: flex;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: var(--space-12);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.about-subnav-link {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  position: relative;
+  white-space: nowrap;
+}
+
+.about-subnav-link:hover,
+.about-subnav-link.is-active {
+  color: var(--color-text);
+}
+
+.about-subnav-link.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+

@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Audrita Mukherjee — A Quiet Garden of Words</title>
-  <meta name="description" content="A small place for words that are still becoming. Poetry, reflections, and fragments by Audrita Mukherjee." />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta property="og:title" content="Audrita Mukherjee — A Quiet Garden of Words" />
-  <meta property="og:description" content="A small place for words that are still becoming." />
-  <meta property="og:type" content="website" />
-  <link rel="canonical" href="/" />
+  <title>Audrita — Poet, Author & The Quiet Garden</title>
+  <meta name="description" content="Official website of author and poet Audrita Mukherjee. Poetry collections, Books, The Digital Garden, Art Prints, and reflections." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Noto+Serif+Bengali:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -20,148 +16,533 @@
 </head>
 <body>
 
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <span>The Quiet Garden · words that are still becoming · <a href="books.html">Explore All Books</a> · first 50 are for herself</span>
+  </div>
+
+  <!-- Header Navigation -->
   <header class="site-header" role="banner">
     <nav class="nav-container" aria-label="Primary navigation">
       <a href="index.html" class="nav-logo" aria-label="Audrita — Home">
         <span class="nav-logo-name">Audrita</span>
         <span class="nav-logo-mark" aria-hidden="true">·</span>
       </a>
+
       <ul class="nav-links" role="list">
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="garden.html" class="nav-link">Garden</a></li>
-        <li>
-          <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
-            <span class="theme-icon" aria-hidden="true">◐</span>
-          </button>
+        <!-- Books Dropdown -->
+        <li class="nav-item-dropdown">
+          <a href="books.html" class="nav-link">Books <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="books.html" class="nav-dropdown-link">All Books</a></li>
+            <li><a href="books.html#love-poems" class="nav-dropdown-link">Love Poems <span class="dropdown-tag">Poetry</span></a></li>
+            <li><a href="books.html#the-quiet-garden" class="nav-dropdown-link">The Quiet Garden <span class="dropdown-tag">Debut</span></a></li>
+            <li><a href="books.html#the-sun-and-her-words" class="nav-dropdown-link">The Sun & Her Words</a></li>
+            <li><a href="books.html#home-and-belonging" class="nav-dropdown-link">Home & Belonging</a></li>
+            <li><a href="books.html#healing-through-words" class="nav-dropdown-link">Healing Through Words</a></li>
+            <li><a href="books.html#boxed-sets" class="nav-dropdown-link">Boxed Sets <span class="dropdown-tag">Collector</span></a></li>
+          </ul>
         </li>
+
+        <!-- About Me Dropdown -->
+        <li class="nav-item-dropdown">
+          <a href="about.html" class="nav-link">About Me <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="about.html" class="nav-dropdown-link">My Story</a></li>
+            <li><a href="traveling-book.html" class="nav-dropdown-link">The Traveling Book</a></li>
+            <li><a href="photo-album.html" class="nav-dropdown-link">Photo Album</a></li>
+            <li><a href="music.html" class="nav-dropdown-link">Music & Words</a></li>
+            <li><a href="tour.html" class="nav-dropdown-link">Tour & Events</a></li>
+          </ul>
+        </li>
+
+        <!-- Shop Dropdown -->
+        <li class="nav-item-dropdown">
+          <a href="shop.html" class="nav-link">Shop <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="shop.html" class="nav-dropdown-link">All Creations</a></li>
+            <li><a href="shop.html#art" class="nav-dropdown-link">Art & Prints</a></li>
+            <li><a href="shop.html#clothing" class="nav-dropdown-link">Clothing</a></li>
+            <li><a href="shop.html#stationery" class="nav-dropdown-link">Stationery & Journals</a></li>
+            <li><a href="shop.html#tattoos" class="nav-dropdown-link">Tattoos</a></li>
+          </ul>
+        </li>
+
+        <li><a href="garden.html" class="nav-link">Garden</a></li>
+        <li><a href="writings.html" class="nav-link">Writings</a></li>
       </ul>
-      <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+
+      <div class="nav-actions">
+        <button class="nav-cart-btn" aria-label="Open Shopping Bag">
+          <span>Bag</span>
+          <span class="cart-count-badge">0</span>
+        </button>
+        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </nav>
+
+    <!-- Mobile Drawer -->
     <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">
       <ul role="list">
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="garden.html" class="nav-link">Garden</a></li>
+        <li><a href="books.html" class="nav-link">Books (All Collections)</a></li>
+        <li><a href="about.html" class="nav-link">About Me & My Story</a></li>
+        <li><a href="traveling-book.html" class="nav-link">The Traveling Book</a></li>
+        <li><a href="photo-album.html" class="nav-link">Photo Album</a></li>
+        <li><a href="music.html" class="nav-link">Music & Words</a></li>
+        <li><a href="tour.html" class="nav-link">Tour & Events</a></li>
+        <li><a href="shop.html" class="nav-link">Shop (Art, Apparel, Stationery)</a></li>
+        <li><a href="garden.html" class="nav-link">The Garden (05/50)</a></li>
+        <li><a href="writings.html" class="nav-link">Writings Archive</a></li>
       </ul>
     </div>
   </header>
 
+  <!-- Cart Slide-out Drawer -->
+  <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true">
+    <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="Your Bag">
+      <div class="cart-header">
+        <h2 class="cart-title">Your Bag</h2>
+        <button class="cart-close-btn" id="cart-close-btn" aria-label="Close bag">×</button>
+      </div>
+      <div class="cart-body">
+        <div id="cart-empty-notice" class="cart-empty">
+          <p>Your bag is currently empty.</p>
+          <p style="font-size: 0.85rem; margin-top: 8px; color: var(--color-text-faint);">Art prints, stationery, and poetry editions await.</p>
+        </div>
+        <div id="cart-items-list"></div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-subtotal">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val">₹0</span>
+        </div>
+        <a href="shop.html" class="btn-checkout">Checkout · Order Now</a>
+      </div>
+    </div>
+  </div>
+
   <main id="main-content">
 
+    <!-- Hero Section -->
     <section class="hero" aria-labelledby="hero-heading">
-      <div class="container">
+      <div class="container text-center">
         <p class="hero-eyebrow" aria-hidden="true">✦</p>
         <h1 class="hero-heading" id="hero-heading">
           A small place<br />
           <em>for words that are still becoming.</em>
         </h1>
-        <p class="hero-sub">
-          I write about love, becoming, silence, nature,<br class="break-desktop" />
-          and the questions that stay with us.
+        <p class="hero-sub" style="margin: 0 auto var(--space-8);">
+          Poetry, reflections, books, and the quiet architecture of being.<br />
+          Written by Audrita Mukherjee.
         </p>
+        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+          <a href="books.html" class="btn-primary">Explore Books</a>
+          <a href="garden.html" class="btn-secondary">Enter The Garden</a>
+        </div>
       </div>
     </section>
 
-    <section class="section-writings" aria-labelledby="recent-heading">
-      <div class="container">
-        <h2 class="section-label" id="recent-heading">Recently Written</h2>
-        <ol class="writing-list" role="list">
-          <li class="writing-item">
-            <a href="writings/the-river-knows.html" class="writing-link">
-              <span class="writing-title">The River Knows</span>
-              <span class="writing-meta">
-                <span class="writing-type">Poem</span>
-                <span class="writing-sep" aria-hidden="true">·</span>
-                <time datetime="2026-10-07" class="writing-date">07 October 2026</time>
-              </span>
-            </a>
-          </li>
-          <li class="writing-item">
-            <a href="writings/on-becoming.html" class="writing-link">
-              <span class="writing-title">On Becoming</span>
-              <span class="writing-meta">
-                <span class="writing-type">Reflection</span>
-                <span class="writing-sep" aria-hidden="true">·</span>
-                <time datetime="2026-09-29" class="writing-date">29 September 2026</time>
-              </span>
-            </a>
-          </li>
-          <li class="writing-item">
-            <a href="writings/before-the-rain.html" class="writing-link">
-              <span class="writing-title">Before the Rain</span>
-              <span class="writing-meta">
-                <span class="writing-type">Poem</span>
-                <span class="writing-sep" aria-hidden="true">·</span>
-                <time datetime="2026-09-12" class="writing-date">12 September 2026</time>
-              </span>
-            </a>
-          </li>
-          <li class="writing-item">
-            <a href="writings/letter-to-november.html" class="writing-link">
-              <span class="writing-title">Letter to November</span>
-              <span class="writing-meta">
-                <span class="writing-type">Fragment</span>
-                <span class="writing-sep" aria-hidden="true">·</span>
-                <time datetime="2026-09-01" class="writing-date">01 September 2026</time>
-              </span>
-            </a>
-          </li>
-          <li class="writing-item">
-            <a href="writings/the-colour-of-seven.html" class="writing-link">
-              <span class="writing-title">The Colour of Seven</span>
-              <span class="writing-meta">
-                <span class="writing-type">Poem</span>
-                <span class="writing-sep" aria-hidden="true">·</span>
-                <time datetime="2026-08-18" class="writing-date">18 August 2026</time>
-              </span>
-            </a>
-          </li>
-        </ol>
-        <div class="garden-counter">
-          <a href="writings.html" class="counter-link" aria-label="View all writings — 05 of 50">
-            <span class="counter-number">05 / 50</span>
-            <span class="counter-label">the first garden</span>
+    <!-- Featured Book Spotlight (Rupi Kaur style spotlight) -->
+    <section class="section-featured-book" aria-labelledby="featured-book-heading">
+      <div class="container-wide">
+        <div class="featured-book-grid">
+          <div class="featured-book-cover">
+            <div class="book-cover-wrap">
+              <span class="book-cover-eyebrow">The Debut Collection</span>
+              <svg class="book-cover-art" viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M12 22V12M12 12C9 9 4 9 2 12M12 12C15 9 20 9 22 12M12 8C12 4 10 2 12 2C14 2 12 4 12 8Z" stroke="currentColor"/>
+              </svg>
+              <h2 class="book-cover-title">the quiet<br />garden</h2>
+              <span class="book-cover-author">audrita mukherjee</span>
+            </div>
+          </div>
+          <div class="featured-book-details">
+            <span class="featured-book-eyebrow">Signature Book</span>
+            <h2 class="featured-book-title" id="featured-book-heading">The Quiet Garden</h2>
+            <blockquote class="featured-book-quote">
+              “i do not want to be a house with all its doors locked.<br />
+              i want to be a garden where the rain is welcome.”
+            </blockquote>
+            <p style="color: var(--color-text-muted); font-size: var(--text-base); line-height: var(--leading-relaxed); max-width: 540px;">
+              A four-part journey through longing, soil, unlearning, and stillness. Written between quiet mornings and late Calcutta monsoons, <em>The Quiet Garden</em> is an invitation to listen to what is unsaid.
+            </p>
+            <div style="display: flex; gap: var(--space-4); margin-top: var(--space-4); flex-wrap: wrap;">
+              <a href="books.html#the-quiet-garden" class="btn-primary">Order Hardcover</a>
+              <a href="writings/the-river-knows.html" class="btn-secondary">Read Excerpt</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Books Showcase (Rupi Kaur Books Grid) -->
+    <section class="section-books" aria-labelledby="books-collection-heading">
+      <div class="container-wide">
+        <div style="text-align: center; margin-bottom: var(--space-12);">
+          <span class="section-label" style="display: block; margin-bottom: var(--space-2);">Published & Collected Works</span>
+          <h2 style="font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 300;">Books & Collections</h2>
+        </div>
+
+        <div class="books-grid">
+          <!-- Love Poems -->
+          <article class="book-card" id="card-love-poems">
+            <span class="book-badge">Poetry</span>
+            <div class="book-cover-wrap" style="aspect-ratio: 3/4;">
+              <svg class="book-cover-art" viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor"/>
+              </svg>
+              <h3 class="book-cover-title" style="font-size: 1.35rem;">love poems</h3>
+              <span class="book-cover-author">audrita</span>
+            </div>
+            <h3 class="book-card-title">Love Poems</h3>
+            <span class="book-card-theme">Intimacy, Ache & Devotion</span>
+            <p class="book-card-excerpt">“you touched the parts of me that had learned to survive without light and told them they were soft.”</p>
+            <div class="book-card-actions">
+              <a href="books.html#love-poems" class="btn-secondary" style="flex: 1;">Explore Book</a>
+            </div>
+          </article>
+
+          <!-- The Sun & Her Words -->
+          <article class="book-card" id="card-sun-words">
+            <span class="book-badge">Poetry</span>
+            <div class="book-cover-wrap" style="aspect-ratio: 3/4;">
+              <svg class="book-cover-art" viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <circle cx="12" cy="12" r="5" stroke="currentColor"/>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor"/>
+              </svg>
+              <h3 class="book-cover-title" style="font-size: 1.35rem;">the sun &<br />her words</h3>
+              <span class="book-cover-author">audrita</span>
+            </div>
+            <h3 class="book-card-title">The Sun & Her Words</h3>
+            <span class="book-card-theme">Wilting, Falling, Rooting, Rising</span>
+            <p class="book-card-excerpt">A meditation on grief, ancestral ties, and the golden hour that always follows the storm.</p>
+            <div class="book-card-actions">
+              <a href="books.html#the-sun-and-her-words" class="btn-secondary" style="flex: 1;">Explore Book</a>
+            </div>
+          </article>
+
+          <!-- Home & Belonging -->
+          <article class="book-card" id="card-home-body">
+            <span class="book-badge">Poetry & Prose</span>
+            <div class="book-cover-wrap" style="aspect-ratio: 3/4;">
+              <svg class="book-cover-art" viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor"/>
+                <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor"/>
+              </svg>
+              <h3 class="book-cover-title" style="font-size: 1.35rem;">home &<br />belonging</h3>
+              <span class="book-cover-author">audrita</span>
+            </div>
+            <h3 class="book-card-title">Home & Belonging</h3>
+            <span class="book-card-theme">Mind, Heart, Rest, Awakening</span>
+            <p class="book-card-excerpt">Conversations with the body and the tender work of forgiving oneself for growing slowly.</p>
+            <div class="book-card-actions">
+              <a href="books.html#home-and-belonging" class="btn-secondary" style="flex: 1;">Explore Book</a>
+            </div>
+          </article>
+
+          <!-- Healing Through Words -->
+          <article class="book-card" id="card-healing">
+            <span class="book-badge">Guided Journal</span>
+            <div class="book-cover-wrap" style="aspect-ratio: 3/4;">
+              <svg class="book-cover-art" viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M12 19l7-7 3 3-7 7-3-3z" stroke="currentColor"/>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke="currentColor"/>
+                <path d="M2 2l7.586 7.586" stroke="currentColor"/>
+                <circle cx="11" cy="11" r="2" stroke="currentColor"/>
+              </svg>
+              <h3 class="book-cover-title" style="font-size: 1.25rem;">healing<br />through words</h3>
+              <span class="book-cover-author">audrita</span>
+            </div>
+            <h3 class="book-card-title">Healing Through Words</h3>
+            <span class="book-card-theme">Guided Writing Prompts & Exercises</span>
+            <p class="book-card-excerpt">A companion for anyone wishing to write through sorrow, unlock intuition, and cultivate their voice.</p>
+            <div class="book-card-actions">
+              <a href="books.html#healing-through-words" class="btn-secondary" style="flex: 1;">Explore Book</a>
+            </div>
+          </article>
+
+          <!-- Boxed Sets -->
+          <article class="book-card" id="card-boxed-sets">
+            <span class="book-badge">Collector Edition</span>
+            <div class="book-cover-wrap" style="aspect-ratio: 3/4;">
+              <svg class="book-cover-art" viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <rect x="3" y="3" width="7" height="18" stroke="currentColor"/>
+                <rect x="10" y="3" width="7" height="18" stroke="currentColor"/>
+                <rect x="17" y="3" width="4" height="18" stroke="currentColor"/>
+              </svg>
+              <h3 class="book-cover-title" style="font-size: 1.25rem;">boxed sets</h3>
+              <span class="book-cover-author">the trilogy</span>
+            </div>
+            <h3 class="book-card-title">Collector's Boxed Set</h3>
+            <span class="book-card-theme">Clothbound Three-Volume Slipcase</span>
+            <p class="book-card-excerpt">Hand-stamped linen slipcase containing <em>The Quiet Garden</em>, <em>Love Poems</em>, and <em>Home & Belonging</em>.</p>
+            <div class="book-card-actions">
+              <a href="books.html#boxed-sets" class="btn-secondary" style="flex: 1;">Explore Sets</a>
+            </div>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-10);">
+          <a href="books.html" class="counter-link">
+            <span class="counter-label">Browse all releases and editions →</span>
           </a>
         </div>
       </div>
     </section>
 
-    <section class="section-garden-home" aria-labelledby="garden-heading">
+    <!-- BB Writer & Linera Lucas Preserved Whitespace Poetry Feature -->
+    <section class="section-poetry-whitespace" aria-label="Featured Poem">
       <div class="container">
-        <h2 class="section-label" id="garden-heading">From the Garden</h2>
-        <div class="garden-fragments">
-          <blockquote class="garden-fragment">
-            <p>I wonder why some people feel like places.</p>
-          </blockquote>
-          <blockquote class="garden-fragment">
-            <p>Maybe silence is not the absence of sound, but the presence of something too full for words.</p>
-          </blockquote>
-          <blockquote class="garden-fragment">
-            <p>The sky looked like it had forgiven something.</p>
-          </blockquote>
+        <div class="poetry-stage">
+          <svg class="poetry-stage-art" viewBox="0 0 24 24" fill="none" stroke-width="1.1">
+            <path d="M12 2C8 6 4 10 4 15a8 8 0 0 0 16 0c0-5-4-9-8-13z" stroke="currentColor"/>
+            <path d="M12 22V12" stroke="currentColor"/>
+            <path d="M12 12c-2-2-4-2-6-1" stroke="currentColor"/>
+            <path d="M12 16c2-2 4-2 6-1" stroke="currentColor"/>
+          </svg>
+
+          <!-- Deliberate line breaks and spacing like Linera Lucas -->
+          <div class="poetry-verse">
+there is a kind of listening
+that does not ask the river
+to explain its drowning.
+
+it simply sits on the bank
+and lets the water
+speak in ripples.
+
+what we hold tightly
+slips between our fingers.
+what we leave open
+learns to stay.
+          </div>
+
+          <span class="poetry-author-credit">— Audrita · from <em>The Quiet Garden</em></span>
         </div>
-        <a href="garden.html" class="text-link">Visit the garden →</a>
       </div>
     </section>
 
+    <!-- Author Spotlight (Features Audrita's Actual Photo) -->
+    <section class="section-author" aria-labelledby="author-heading">
+      <div class="container-wide">
+        <div class="author-spotlight">
+          <div class="author-portrait-frame">
+            <img src="images/audrita.jpg" alt="Audrita Mukherjee resting her chin on her hand, smiling gently" class="author-portrait-img" />
+            <p class="author-portrait-caption">Audrita Mukherjee · writer, poet, and keeper of the quiet garden</p>
+          </div>
+          <div>
+            <span class="section-label" id="author-heading">About The Writer</span>
+            <h2 style="font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 300; margin: var(--space-2) 0 var(--space-5);">
+              Writing from the quiet spaces between words.
+            </h2>
+            <p style="font-family: var(--font-serif); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-text-muted); margin-bottom: var(--space-4);">
+              Audrita Mukherjee is a writer and poet whose work traces the tender intersections of love, silence, grief, and self-restoration. Deeply influenced by Bengali literary lyricism and contemporary English verse, she builds sanctuaries in sentences.
+            </p>
+            <p style="font-family: var(--font-serif); font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--color-text-muted); margin-bottom: var(--space-6);">
+              She believes that a poem is not an explanation, but an invitation — a porch light left on in the rain.
+            </p>
+            <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+              <a href="about.html" class="btn-primary">Read My Story</a>
+              <a href="photo-album.html" class="btn-secondary">Photo Album</a>
+              <a href="traveling-book.html" class="btn-secondary">The Traveling Book</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Digital Garden Philosophy ("First 50 are for herself") -->
+    <section class="section-garden-home" aria-labelledby="garden-home-heading">
+      <div class="container">
+        <span class="section-label" id="garden-home-heading">Digital Garden Philosophy</span>
+        <h2 style="font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 300; margin: var(--space-2) 0 var(--space-4);">
+          The First 50 Are For Herself
+        </h2>
+        <p style="font-family: var(--font-serif); font-size: var(--text-base); color: var(--color-text-muted); line-height: var(--leading-relaxed); margin-bottom: var(--space-8);">
+          In an era where every thought is hurried to market and optimized for algorithms, this garden is an intentional antidote. Here, ideas are not published for applause — they are planted to sprout slowly. The first 50 entries are written solely for herself.
+        </p>
+
+        <div class="garden-fragments">
+          <blockquote class="garden-fragment">
+            <p>I wonder why some people feel like places you have visited before you were born.</p>
+          </blockquote>
+          <blockquote class="garden-fragment">
+            <p>Maybe silence is not the absence of sound, but the presence of something too full for vowels.</p>
+          </blockquote>
+          <blockquote class="garden-fragment">
+            <p>To let a word sit unsaid for three days is to learn what it was really trying to say.</p>
+          </blockquote>
+        </div>
+
+        <div class="garden-counter" style="margin-top: var(--space-10);">
+          <a href="garden.html" class="counter-link" aria-label="Visit the Garden — 05 of 50 planted">
+            <span class="counter-number">05 / 50</span>
+            <span class="counter-label">planted in the garden · enter here →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music & Spoken Word Audio Player (Rupi Kaur style audio bar) -->
+    <section class="section-spoken-word" aria-labelledby="music-heading">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: var(--space-8);">
+          <span class="section-label" id="music-heading">Words In Voice</span>
+          <h2 style="font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 300;">Spoken Verses & Ambient Soundscapes</h2>
+        </div>
+
+        <div class="audio-player-component">
+          <div class="audio-header">
+            <div>
+              <p class="audio-track-title">01. The River Knows (Spoken with Cello)</p>
+              <span class="audio-track-artist">Audrita Mukherjee · 02:44</span>
+            </div>
+            <a href="music.html" class="btn-secondary" style="font-size: 0.65rem; padding: 2px 8px;">All Tracks</a>
+          </div>
+          <div class="audio-controls">
+            <button class="audio-play-btn" id="audio-play-btn" aria-label="Play audio poem">▶</button>
+            <div class="waveform-container">
+              <div class="waveform-bar" style="height: 30%;"></div>
+              <div class="waveform-bar" style="height: 60%;"></div>
+              <div class="waveform-bar" style="height: 90%;"></div>
+              <div class="waveform-bar" style="height: 40%;"></div>
+              <div class="waveform-bar" style="height: 75%;"></div>
+              <div class="waveform-bar" style="height: 50%;"></div>
+              <div class="waveform-bar" style="height: 85%;"></div>
+              <div class="waveform-bar" style="height: 35%;"></div>
+              <div class="waveform-bar" style="height: 95%;"></div>
+              <div class="waveform-bar" style="height: 60%;"></div>
+              <div class="waveform-bar" style="height: 45%;"></div>
+              <div class="waveform-bar" style="height: 80%;"></div>
+              <div class="waveform-bar" style="height: 30%;"></div>
+              <div class="waveform-bar" style="height: 65%;"></div>
+              <div class="waveform-bar" style="height: 50%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Shop Showcase (Art, Apparel, Stationery, Tattoos) -->
+    <section class="section-shop" aria-labelledby="shop-heading">
+      <div class="container-wide">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-10); flex-wrap: wrap; gap: var(--space-4);">
+          <div>
+            <span class="section-label" id="shop-heading">Literary Creations</span>
+            <h2 style="font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 300;">The Shop</h2>
+          </div>
+          <a href="shop.html" class="counter-link"><span class="counter-label">Explore full boutique →</span></a>
+        </div>
+
+        <div class="shop-grid">
+          <!-- Art Print -->
+          <article class="shop-card">
+            <div class="shop-card-media">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor"/>
+                <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor"/>
+                <polyline points="21 15 16 10 5 21" stroke="currentColor"/>
+              </svg>
+            </div>
+            <div class="shop-card-content">
+              <span class="shop-card-category">Fine Art Print</span>
+              <h3 class="shop-card-title">“The River” Letterpress Print</h3>
+              <p class="shop-card-price">₹1,400</p>
+              <div class="shop-card-action">
+                <button class="btn-primary btn-add-to-cart" data-title="The River Letterpress Print" data-price="1400" style="width: 100%;">Add to Bag</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Stationery -->
+          <article class="shop-card">
+            <div class="shop-card-media">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor"/>
+              </svg>
+            </div>
+            <div class="shop-card-content">
+              <span class="shop-card-category">Stationery & Journal</span>
+              <h3 class="shop-card-title">Linen Writer's Notebook (Foil)</h3>
+              <p class="shop-card-price">₹850</p>
+              <div class="shop-card-action">
+                <button class="btn-primary btn-add-to-cart" data-title="Linen Writer's Notebook" data-price="850" style="width: 100%;">Add to Bag</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Clothing -->
+          <article class="shop-card">
+            <div class="shop-card-media">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10a2 2 0 002 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z" stroke="currentColor"/>
+              </svg>
+            </div>
+            <div class="shop-card-content">
+              <span class="shop-card-category">Clothing & Apparel</span>
+              <h3 class="shop-card-title">“The Quiet Garden” Sweatshirt</h3>
+              <p class="shop-card-price">₹2,400</p>
+              <div class="shop-card-action">
+                <button class="btn-primary btn-add-to-cart" data-title="Quiet Garden Sweatshirt" data-price="2400" style="width: 100%;">Add to Bag</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tattoos -->
+          <article class="shop-card">
+            <div class="shop-card-media">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor"/>
+              </svg>
+            </div>
+            <div class="shop-card-content">
+              <span class="shop-card-category">Tattoos & Adornment</span>
+              <h3 class="shop-card-title">Botanical Poetry Tattoos (Set of 4)</h3>
+              <p class="shop-card-price">₹450</p>
+              <div class="shop-card-action">
+                <button class="btn-primary btn-add-to-cart" data-title="Botanical Poetry Tattoos" data-price="450" style="width: 100%;">Add to Bag</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing / Newsletter Sign-up -->
     <section class="section-closing">
       <div class="container">
-        <p class="closing-line">Let the words grow at their own pace.</p>
+        <p class="closing-line">
+          Words that are still becoming.
+        </p>
+        <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-text-faint); margin-top: var(--space-4); font-size: var(--text-sm);">
+          Letters from Audrita arrive once each season. No noise. Only quiet poems and newly planted seeds.
+        </p>
       </div>
     </section>
 
   </main>
 
+  <!-- Site Footer -->
   <footer class="site-footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="footer-name">Audrita Mukherjee</p>
-        <p class="footer-tagline">A quiet archive of becoming.</p>
-        <p class="footer-copy">Made slowly. Written honestly. Kept here. · 2026</p>
+    <div class="container footer-content">
+      <div class="footer-left">
+        <p class="footer-copy">© 2026 Audrita Mukherjee. All words and creations reserved.</p>
+        <p class="footer-tagline">A quiet place where the first 50 are for herself.</p>
       </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="books.html">Books</a>
+        <a href="about.html">About</a>
+        <a href="shop.html">Shop</a>
+        <a href="garden.html">Garden</a>
+        <a href="writings.html">Writings</a>
+        <a href="tour.html">Tour</a>
+      </nav>
     </div>
   </footer>
 

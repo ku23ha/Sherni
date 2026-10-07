@@ -66,6 +66,10 @@
   padding: 0;
 }
 
+.nav-item-dropdown {
+  position: relative;
+}
+
 .nav-link {
   font-family: var(--font-sans);
   font-size: var(--text-sm);
@@ -76,6 +80,9 @@
   text-decoration: none;
   position: relative;
   padding-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
@@ -101,6 +108,120 @@
 
 .nav-link[aria-current="page"] {
   color: var(--color-text);
+}
+
+.nav-link .nav-arrow {
+  font-size: 0.6rem;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.nav-item-dropdown:hover .nav-link .nav-arrow {
+  transform: rotate(180deg);
+}
+
+/* Nav dropdown menus */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) 0;
+  min-width: 230px;
+  list-style: none;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out),
+              transform var(--duration-base) var(--ease-out),
+              visibility var(--duration-base);
+  z-index: 120;
+}
+
+.nav-item-dropdown:hover .nav-dropdown,
+.nav-item-dropdown:focus-within .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown li {
+  margin: 0;
+}
+
+.nav-dropdown-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.nav-dropdown-link:hover {
+  background-color: var(--color-bg-alt);
+  color: var(--color-accent);
+}
+
+.nav-dropdown-link .dropdown-tag {
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  color: var(--color-text-faint);
+}
+
+/* Nav utility actions */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-cart-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.nav-cart-btn:hover {
+  color: var(--color-text);
+}
+
+.cart-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  font-size: 0.62rem;
+  background-color: var(--color-accent);
+  color: #fff;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  line-height: 1;
 }
 
 /* Theme toggle */
@@ -532,3 +653,670 @@
   font-style: italic;
   color: var(--color-text-muted);
 }
+
+/* ── Top Announcement Bar ────────────────────────────────── */
+.top-announcement {
+  background-color: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border-light);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: center;
+  overflow: hidden;
+}
+
+.top-announcement a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Cart Drawer & Backdrop ──────────────────────────────── */
+.cart-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(30, 28, 25, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-out),
+              visibility var(--duration-base);
+}
+
+.cart-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--color-bg);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+  z-index: 210;
+  transform: translateX(100%);
+  transition: transform var(--duration-base) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-backdrop.is-open .cart-drawer {
+  transform: translateX(0);
+}
+
+.cart-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-style: italic;
+  font-weight: 400;
+  margin: 0;
+}
+
+.cart-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+}
+
+.cart-empty {
+  text-align: center;
+  padding: var(--space-12) 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-md);
+}
+
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  gap: var(--space-3);
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.cart-item-meta {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.cart-item-remove {
+  background: transparent;
+  border: none;
+  color: var(--color-text-faint);
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.cart-footer {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-alt);
+}
+
+.cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  font-weight: 500;
+}
+
+.btn-checkout {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity var(--duration-fast);
+  text-decoration: none;
+}
+
+.btn-checkout:hover {
+  opacity: 0.88;
+}
+
+/* ── Book Card Components (Rupi Kaur editorial style) ────── */
+.book-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-6);
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+  position: relative;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border);
+}
+
+.book-cover-wrap {
+  aspect-ratio: 2 / 3;
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-book);
+  border-radius: 2px 6px 6px 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+}
+
+.book-cover-wrap::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: linear-gradient(to right, rgba(0,0,0,0.18), rgba(0,0,0,0.02) 80%, transparent);
+}
+
+.book-cover-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-2);
+}
+
+.book-cover-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.book-cover-author {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.book-cover-art {
+  width: 48px;
+  height: 48px;
+  margin: var(--space-4) 0;
+  color: var(--color-accent);
+  stroke: currentColor;
+}
+
+.book-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+}
+
+.book-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  margin-bottom: var(--space-1);
+}
+
+.book-card-theme {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+
+.book-card-excerpt {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  flex: 1;
+}
+
+.book-card-actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text);
+  background-color: var(--color-bg-alt);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-bg);
+  background-color: var(--color-text);
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+}
+
+/* ── Minimalist Poetry Stage (BB Writer & Linera Lucas) ──── */
+.poetry-stage {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+}
+
+.poetry-stage-art {
+  display: inline-block;
+  width: 54px;
+  height: 54px;
+  margin-bottom: var(--space-8);
+  color: var(--color-accent);
+}
+
+.poetry-verse {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.8vw, 1.5rem);
+  line-height: 2.1;
+  color: var(--color-text);
+  margin-bottom: var(--space-8);
+  text-align: left;
+  display: inline-block;
+  white-space: pre-line;
+}
+
+.poetry-author-credit {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  display: block;
+}
+
+/* ── Shop Products Grid ─────────────────────────────────── */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-8);
+}
+
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+
+.shop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.shop-card-media {
+  aspect-ratio: 1;
+  background-color: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.shop-card-media svg {
+  width: 68px;
+  height: 68px;
+  color: var(--color-accent);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.shop-card:hover .shop-card-media svg {
+  transform: scale(1.08);
+}
+
+.shop-card-content {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.shop-card-category {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-1);
+}
+
+.shop-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  margin-bottom: var(--space-2);
+}
+
+.shop-card-price {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.shop-card-action {
+  margin-top: auto;
+}
+
+/* ── Audio & Music Player Widget ────────────────────────── */
+.audio-player-component {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.audio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.audio-track-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  margin: 0;
+}
+
+.audio-track-artist {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.audio-play-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform var(--duration-fast);
+}
+
+.audio-play-btn:hover {
+  transform: scale(1.05);
+}
+
+.waveform-container {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 36px;
+  flex: 1;
+}
+
+.waveform-bar {
+  width: 3px;
+  height: 20%;
+  background-color: var(--color-border);
+  border-radius: var(--radius-full);
+  transition: height 0.2s ease, background-color 0.2s ease;
+}
+
+.audio-playing .waveform-bar {
+  background-color: var(--color-accent);
+  animation: wavePulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes wavePulse {
+  0% { height: 15%; }
+  50% { height: 95%; }
+  100% { height: 30%; }
+}
+
+/* ── Author Spotlight (Featuring Audrita's Photo) ────────── */
+.author-spotlight {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .author-spotlight {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.author-portrait-frame {
+  position: relative;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.author-portrait-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  display: block;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-light);
+  filter: contrast(1.02);
+}
+
+.author-portrait-caption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  text-align: center;
+  margin-top: var(--space-3);
+}
+
+/* ── Tour & Literary Gatherings ─────────────────────────── */
+.tour-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.tour-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  gap: var(--space-4);
+}
+
+.tour-date-col {
+  min-width: 120px;
+}
+
+.tour-date {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: block;
+}
+
+.tour-city {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.tour-venue {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ── Photo Album & Gallery Grid ─────────────────────────── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.gallery-card {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  aspect-ratio: 4 / 3;
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.gallery-card:hover img {
+  transform: scale(1.04);
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+  color: #fff;
+  padding: var(--space-4);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-sm);
+}
+

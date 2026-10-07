@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — Audrita Mukherjee</title>
-  <meta name="description" content="About Audrita Mukherjee — a quiet literary space for words that are still becoming." />
-  <meta name="robots" content="noindex, nofollow" />
+  <title>About Me & My Story — Audrita Mukherjee</title>
+  <meta name="description" content="The story of author and poet Audrita Mukherjee. Roots, silence, writing philosophy, and the garden." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Noto+Serif+Bengali:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -16,127 +16,172 @@
 </head>
 <body>
 
+  <!-- Header Navigation -->
   <header class="site-header" role="banner">
     <nav class="nav-container" aria-label="Primary navigation">
       <a href="index.html" class="nav-logo" aria-label="Audrita — Home">
         <span class="nav-logo-name">Audrita</span>
         <span class="nav-logo-mark" aria-hidden="true">·</span>
       </a>
+
       <ul class="nav-links" role="list">
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
-        <li><a href="about.html" class="nav-link" aria-current="page">About</a></li>
-        <li><a href="garden.html" class="nav-link">Garden</a></li>
-        <li>
-          <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-            <span class="theme-icon" aria-hidden="true">◐</span>
-          </button>
+        <li class="nav-item-dropdown">
+          <a href="books.html" class="nav-link">Books <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="books.html" class="nav-dropdown-link">All Books</a></li>
+            <li><a href="books.html#love-poems" class="nav-dropdown-link">Love Poems <span class="dropdown-tag">Poetry</span></a></li>
+            <li><a href="books.html#the-quiet-garden" class="nav-dropdown-link">The Quiet Garden <span class="dropdown-tag">Debut</span></a></li>
+            <li><a href="books.html#the-sun-and-her-words" class="nav-dropdown-link">The Sun & Her Words</a></li>
+            <li><a href="books.html#home-and-belonging" class="nav-dropdown-link">Home & Belonging</a></li>
+            <li><a href="books.html#healing-through-words" class="nav-dropdown-link">Healing Through Words</a></li>
+            <li><a href="books.html#boxed-sets" class="nav-dropdown-link">Boxed Sets <span class="dropdown-tag">Collector</span></a></li>
+          </ul>
         </li>
-      </ul>
-      <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-    <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">
-      <ul role="list">
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="about.html" class="nav-link" aria-current="page">About Me <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="about.html" class="nav-dropdown-link">My Story</a></li>
+            <li><a href="traveling-book.html" class="nav-dropdown-link">The Traveling Book</a></li>
+            <li><a href="photo-album.html" class="nav-dropdown-link">Photo Album</a></li>
+            <li><a href="music.html" class="nav-dropdown-link">Music & Words</a></li>
+            <li><a href="tour.html" class="nav-dropdown-link">Tour & Events</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="shop.html" class="nav-link">Shop <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="shop.html" class="nav-dropdown-link">All Creations</a></li>
+            <li><a href="shop.html#art" class="nav-dropdown-link">Art & Prints</a></li>
+            <li><a href="shop.html#clothing" class="nav-dropdown-link">Clothing</a></li>
+            <li><a href="shop.html#stationery" class="nav-dropdown-link">Stationery & Journals</a></li>
+            <li><a href="shop.html#tattoos" class="nav-dropdown-link">Tattoos</a></li>
+          </ul>
+        </li>
         <li><a href="garden.html" class="nav-link">Garden</a></li>
+        <li><a href="writings.html" class="nav-link">Writings</a></li>
       </ul>
-    </div>
+
+      <div class="nav-actions">
+        <button class="nav-cart-btn" aria-label="Open Shopping Bag">
+          <span>Bag</span>
+          <span class="cart-count-badge">0</span>
+        </button>
+        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
   </header>
 
-  <main id="main-content">
-    <div class="page-about">
-      <div class="container">
-
-        <header class="page-header">
-          <h1 class="page-title">About</h1>
-        </header>
-
-        <!-- Introduction -->
-        <section class="about-section" aria-labelledby="about-intro">
-          <p class="about-label" id="about-intro">The person behind the words</p>
-          <div class="about-body">
-            <p>
-              [Audrita's introduction goes here — written in her own voice, 
-              in the way she would describe herself to someone she has just met 
-              on a quiet evening.]
-            </p>
-            <p>
-              This site is a private record first. A place to notice how writing 
-              changes — how vocabulary shifts, how subjects return, how thinking 
-              deepens. The public parts are only what felt ready to be shared.
-            </p>
-          </div>
-        </section>
-
-        <!-- What I write about -->
-        <section class="about-section" aria-labelledby="about-subjects">
-          <p class="about-label" id="about-subjects">What I write about</p>
-          <ul class="about-subjects" role="list">
-            <li>Love.</li>
-            <li>Nature.</li>
-            <li>Silence.</li>
-            <li>Becoming.</li>
-            <li>Questions without answers.</li>
-          </ul>
-        </section>
-
-        <!-- Why I write -->
-        <section class="about-section" aria-labelledby="about-why">
-          <p class="about-label" id="about-why">Why I write</p>
-          <div class="about-body">
-            <p>
-              [Audrita's writing philosophy in her own words — 
-              why she writes, what writing means to her, 
-              and what she hopes to find in the practice.]
-            </p>
-          </div>
-        </section>
-
-        <!-- A line she believes in -->
-        <section class="about-section" aria-labelledby="about-belief">
-          <p class="about-label" id="about-belief">A line I believe in</p>
-          <blockquote class="about-belief">
-            [A line Audrita herself has written or deeply believes — 
-            replace this with her own words.]
-          </blockquote>
-        </section>
-
-        <!-- Currently -->
-        <section class="about-section" aria-labelledby="about-currently">
-          <p class="about-label" id="about-currently">Currently</p>
-          <div class="currently-grid">
-            <div class="currently-item">
-              <span class="currently-label">Reading</span>
-              <span class="currently-value">[Book title]</span>
-            </div>
-            <div class="currently-item">
-              <span class="currently-label">Thinking about</span>
-              <span class="currently-value">[A theme or question]</span>
-            </div>
-            <div class="currently-item">
-              <span class="currently-label">Learning</span>
-              <span class="currently-value">[Something she is exploring]</span>
-            </div>
-            <div class="currently-item">
-              <span class="currently-label">Writing</span>
-              <span class="currently-value">[Work in progress]</span>
-            </div>
-          </div>
-        </section>
-
+  <!-- Cart Drawer -->
+  <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true">
+    <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="Your Bag">
+      <div class="cart-header">
+        <h2 class="cart-title">Your Bag</h2>
+        <button class="cart-close-btn" id="cart-close-btn" aria-label="Close bag">×</button>
       </div>
+      <div class="cart-body">
+        <div id="cart-empty-notice" class="cart-empty"><p>Your bag is currently empty.</p></div>
+        <div id="cart-items-list"></div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-val">₹0</span></div>
+        <a href="shop.html" class="btn-checkout">Checkout · Order Now</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content" class="page-about">
+    <div class="container-wide">
+
+      <!-- Sub-navigation for About facets -->
+      <nav class="about-subnav" aria-label="About sections">
+        <a href="about.html" class="about-subnav-link is-active">My Story</a>
+        <a href="traveling-book.html" class="about-subnav-link">The Traveling Book</a>
+        <a href="photo-album.html" class="about-subnav-link">Photo Album</a>
+        <a href="music.html" class="about-subnav-link">Music & Words</a>
+        <a href="tour.html" class="about-subnav-link">Tour & Events</a>
+      </nav>
+
+      <!-- Author Spotlight Header -->
+      <div class="author-spotlight" style="margin-bottom: var(--space-20);">
+        <div class="author-portrait-frame">
+          <img src="images/audrita.jpg" alt="Audrita Mukherjee with chin resting on hand, smiling gently" class="author-portrait-img" />
+          <p class="author-portrait-caption">Audrita Mukherjee · author, poet, observer of light</p>
+        </div>
+        <div>
+          <span class="section-label">My Story</span>
+          <h1 style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4.5vw, 3.2rem); font-weight: 300; line-height: 1.15; margin: var(--space-2) 0 var(--space-6);">
+            “I began writing because speaking was sometimes too loud for what I had to say.”
+          </h1>
+          <p style="font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-relaxed); color: var(--color-text-muted); font-style: italic;">
+            Born into a culture steeped in rhythm, rain, and Rabindrasangeet, Audrita discovered early that words could hold the things hands were too small to carry.
+          </p>
+        </div>
+      </div>
+
+      <!-- Essay Narrative -->
+      <div style="max-width: 680px; margin: 0 auto;">
+        <article class="reading-body">
+          <p>
+            I write because the world moves too quickly for everything to be remembered, and yet some afternoons refuse to leave.
+          </p>
+          <p>
+            My childhood was soundtracked by afternoon downpours against green shutters in Bengal. In Bengali, we have words that cannot be translated cleanly into English — words like <em>অভিমান (Abhiman)</em>, the ache of hurt that can only exist between two people who love each other deeply. It was within this dual vocabulary that my poems found their home.
+          </p>
+
+          <h2 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 400; margin: var(--space-10) 0 var(--space-4);">
+            The Philosophy of The Quiet Garden
+          </h2>
+          <p>
+            When I decided to build this online home, I didn’t want an algorithm-driven storefront or a portfolio designed to scream for attention. I wanted a quiet room.
+          </p>
+          <p>
+            That is why <strong>the first 50 writings are for myself</strong>. It is a vow of artistic integrity: to cultivate thought without an audience in mind, to let fragments stay fragments until they are ready to bloom, and to remember that writing is first a spiritual practice, and only second a publication.
+          </p>
+
+          <blockquote style="margin: var(--space-8) 0; padding-left: var(--space-6); border-left: 2px solid var(--color-accent); font-family: var(--font-serif); font-size: var(--text-lg); font-style: italic; color: var(--color-text);">
+            “the ink does not ask to be liked.<br />
+            it only asks to be honest.”
+          </blockquote>
+
+          <h2 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 400; margin: var(--space-10) 0 var(--space-4);">
+            Beyond The Page
+          </h2>
+          <p>
+            In addition to writing collections, I believe in tactile art — from hand-pressed letterpress prints to our community project, <em>The Traveling Book</em>, where readers across the world annotate a single physical copy and mail it to the next stranger.
+          </p>
+          <p>
+            Thank you for being here, for stepping softly, and for taking the time to read words that are still becoming.
+          </p>
+
+          <div style="margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--color-border-light); display: flex; gap: var(--space-4); flex-wrap: wrap;">
+            <a href="books.html" class="btn-primary">Explore My Books</a>
+            <a href="traveling-book.html" class="btn-secondary">The Traveling Book</a>
+            <a href="photo-album.html" class="btn-secondary">Photo Album</a>
+          </div>
+        </article>
+      </div>
+
     </div>
   </main>
 
   <footer class="site-footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="footer-name">Audrita Mukherjee</p>
-        <p class="footer-tagline">A quiet archive of becoming.</p>
-        <p class="footer-copy">Made slowly. Written honestly. Kept here. · 2026</p>
+    <div class="container footer-content">
+      <div class="footer-left">
+        <p class="footer-copy">© 2026 Audrita Mukherjee.</p>
+        <p class="footer-tagline">A quiet place for words that are still becoming.</p>
       </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="shop.html">Shop</a>
+        <a href="garden.html">Garden</a>
+        <a href="writings.html">Writings</a>
+      </nav>
     </div>
   </footer>
 

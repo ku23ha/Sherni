@@ -1466,273 +1466,89 @@
 }
 
 /* ── Audrita's Writing Desk (Live Upload & Sanctuary Portal) ── */
-.writer-desk-bar {
-  display: flex;
-  justify-content: center;
-  margin: var(--space-6) 0 var(--space-10);
-}
-
-.btn-open-desk {
+/* ── Sleek Upload Poetry Buttons ── */
+.btn-nav-upload {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.btn-nav-upload:hover {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.archive-upload-bar {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-4) 0 var(--space-8);
+}
+
+.btn-archive-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  color: var(--color-text);
+  border-radius: var(--radius-full);
   font-family: var(--font-serif);
   font-size: var(--text-sm);
+  color: var(--color-text);
   font-style: italic;
-  border-radius: var(--radius-full);
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   transition: all var(--duration-base) var(--ease-out);
 }
 
-.btn-open-desk:hover {
+.btn-archive-upload span {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.btn-archive-upload:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
-.writer-desk-backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
-  z-index: 250;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-4);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity var(--duration-base) var(--ease-out),
-              visibility var(--duration-base) var(--ease-out);
+@keyframes poemPlantGlow {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(184, 115, 87, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
 }
 
-.writer-desk-backdrop.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+.poem-card-clean.is-newly-planted {
+  animation: poemPlantGlow 1.2s var(--ease-out) forwards;
 }
 
-.writer-desk-modal {
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-xl);
-  width: 100%;
-  max-width: 680px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: var(--space-8);
-  position: relative;
-  transform: translateY(12px) scale(0.98);
-  transition: transform var(--duration-base) var(--ease-out);
-}
-
-.writer-desk-backdrop.is-open .writer-desk-modal {
-  transform: translateY(0) scale(1);
-}
-
-.writer-desk-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--color-border-light);
-  padding-bottom: var(--space-4);
-  margin-bottom: var(--space-6);
-}
-
-.writer-desk-title {
-  font-family: var(--font-serif);
-  font-size: var(--text-xl);
-  font-weight: 400;
-  margin: 0;
-}
-
-.writer-desk-subtitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  font-style: italic;
-  margin: var(--space-1) 0 0;
-}
-
-.writer-desk-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
-}
-
-.writer-desk-close:hover {
-  color: var(--color-text);
-}
-
-.writer-form-group {
-  margin-bottom: var(--space-5);
-}
-
-.writer-label {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-2);
-}
-
-.writer-input,
-.writer-select,
-.writer-textarea {
-  width: 100%;
-  padding: var(--space-3);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
-  font-family: var(--font-serif);
-  font-size: var(--text-base);
-  transition: border-color var(--duration-fast) var(--ease-out);
-}
-
-.writer-input:focus,
-.writer-select:focus,
-.writer-textarea:focus {
-  outline: none;
-  border-color: var(--color-accent);
-}
-
-.writer-textarea {
-  min-height: 180px;
-  line-height: 1.8;
-  font-style: italic;
-  resize: vertical;
-}
-
-.writer-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border-light);
-  flex-wrap: wrap;
-}
-
-/* ── File Upload Section (Word doc & PDF) ── */
-.writer-tab-bar {
-  display: flex;
-  gap: var(--space-2);
-  margin-bottom: var(--space-5);
-  border-bottom: 1px solid var(--color-border-light);
-  padding-bottom: var(--space-2);
-}
-
-.writer-tab-btn {
-  background: none;
-  border: none;
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-muted);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.writer-tab-btn.is-active {
-  background-color: var(--color-bg-alt);
-  color: var(--color-text);
-  font-weight: 500;
-}
-
-.writer-upload-zone {
-  border: 2px dashed var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-8) var(--space-6);
-  text-align: center;
-  background-color: var(--color-surface);
-  cursor: pointer;
-  transition: border-color var(--duration-base) var(--ease-out), background-color var(--duration-base) var(--ease-out);
-  position: relative;
-  margin-bottom: var(--space-5);
-}
-
-.writer-upload-zone:hover,
-.writer-upload-zone.is-dragover {
-  border-color: var(--color-accent);
-  background-color: var(--color-bg-alt);
-}
-
-.writer-upload-icon {
-  width: 40px;
-  height: 40px;
-  margin: 0 auto var(--space-3);
-  color: var(--color-accent);
-  display: block;
-}
-
-.writer-upload-title {
-  font-family: var(--font-serif);
-  font-size: var(--text-base);
-  font-weight: 500;
-  margin: 0 0 var(--space-1);
-}
-
-.writer-upload-subtitle {
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-3);
-}
-
-.format-badges {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-}
-
-.format-badge {
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  letter-spacing: 0.05em;
-  padding: 2px 8px;
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-full);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-}
-
-.writer-file-input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
-.writer-upload-status {
-  margin-top: var(--space-3);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--text-xs);
-  color: var(--color-accent);
-}
 
 
 

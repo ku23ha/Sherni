@@ -42,6 +42,10 @@
       </ul>
 
       <div class="nav-actions">
+        <!-- Sleek Upload Poetry Button -->
+        <button class="btn-nav-upload" id="nav-upload-btn" aria-label="Upload poetry manuscript" title="Upload Word doc or PDF">
+          + Upload Poetry
+        </button>
         <!-- Dark / Light Theme Toggle -->
         <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
           <span class="theme-icon" aria-hidden="true">◐</span>
@@ -60,6 +64,7 @@
         <li><a href="garden.html" class="nav-link">The Garden</a></li>
         <li><a href="about.html" class="nav-link">About Me · My Story</a></li>
         <li><a href="photo-album.html" class="nav-link">Photo Album</a></li>
+        <li style="margin-top: var(--space-3);"><button class="btn-nav-upload" id="mobile-upload-btn" style="width: 100%; justify-content: center;">+ Upload Poetry</button></li>
       </ul>
     </div>
   </header>
@@ -212,7 +217,7 @@
     <section class="section-poetry-collection" id="poetry" aria-labelledby="poetry-heading">
       <div class="container-wide">
         
-        <div style="text-align: center; max-width: 680px; margin: 0 auto var(--space-6);">
+        <div style="text-align: center; max-width: 680px; margin: 0 auto var(--space-4);">
           <span class="section-label">Collected Verses</span>
           <h2 style="font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 300; margin: var(--space-2) 0 var(--space-3);" id="poetry-heading">
             Poetry Archive
@@ -222,10 +227,10 @@
           </p>
         </div>
 
-        <!-- Audrita's Writing & Upload Desk Trigger Bar -->
-        <div class="writer-desk-bar">
-          <button class="btn-open-desk" id="btn-open-desk" aria-label="Open Audrita's Writing Desk">
-            <span>❧</span> Audrita's Writing & Upload Desk · Plant New Verse
+        <!-- Sleek Upload Button Bar (Centered, Minimal, Directly Functional) -->
+        <div class="archive-upload-bar">
+          <button class="btn-archive-upload" id="archive-upload-btn" title="Upload your poem manuscript in Word (.docx) or PDF format">
+            <span>+</span> Upload Poetry (.docx / .pdf)
           </button>
         </div>
 
@@ -515,88 +520,8 @@ And that will be my last gift to him.</div>
     </div>
   </footer>
 
-  <!-- ── Audrita's Writing Desk (Live Upload & Sanctuary Portal) ── -->
-  <div class="writer-desk-backdrop" id="writer-desk-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="writer-desk-modal">
-      <div class="writer-desk-header">
-        <div>
-          <h3 class="writer-desk-title">Audrita's Writing Desk</h3>
-          <p class="writer-desk-subtitle">Upload manuscript files or compose softly into your archive.</p>
-        </div>
-        <button class="writer-desk-close" id="writer-desk-close" aria-label="Close writing desk">×</button>
-      </div>
-
-      <!-- Mode Selector Tabs -->
-      <div class="writer-tab-bar" role="tablist">
-        <button type="button" class="writer-tab-btn is-active" id="tab-btn-upload">Upload Record (Word / PDF / Text)</button>
-        <button type="button" class="writer-tab-btn" id="tab-btn-write">Write by Hand</button>
-      </div>
-
-      <!-- File Upload Dropzone Section -->
-      <div id="upload-panel">
-        <div class="writer-upload-zone" id="writer-dropzone">
-          <input type="file" id="writer-file-input" class="writer-file-input" accept=".docx,.doc,.pdf,.txt,.md,.rtf" />
-          <svg class="writer-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="12" y1="18" x2="12" y2="12"></line>
-            <line x1="9" y1="15" x2="15" y2="15"></line>
-          </svg>
-          <p class="writer-upload-title">Drop your Word doc (.docx), PDF, or text file here</p>
-          <p class="writer-upload-subtitle">or click to browse your manuscripts · auto-arranges into archive</p>
-          <div class="format-badges">
-            <span class="format-badge">Word (.docx)</span>
-            <span class="format-badge">PDF (.pdf)</span>
-            <span class="format-badge">Text (.txt / .md)</span>
-          </div>
-          <div id="upload-status" class="writer-upload-status" style="display: none;"></div>
-        </div>
-      </div>
-
-      <form id="writer-form">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-4);">
-          <div class="writer-form-group" style="margin-bottom: 0;">
-            <label class="writer-label" for="writer-lang">Language</label>
-            <select id="writer-lang" class="writer-select" required>
-              <option value="english">English</option>
-              <option value="hindi">हिंदी (Hindi)</option>
-            </select>
-          </div>
-          <div class="writer-form-group" style="margin-bottom: 0;">
-            <label class="writer-label" for="writer-tag">Theme / Tag</label>
-            <input type="text" id="writer-tag" class="writer-input" placeholder="e.g. Memory & Ganges, Solitude..." value="Memory & Solitude" required />
-          </div>
-        </div>
-
-        <div class="writer-form-group">
-          <label class="writer-label" for="writer-title">Poem Title</label>
-          <input type="text" id="writer-title" class="writer-input" placeholder="Give your verse a name..." required />
-        </div>
-
-        <div class="writer-form-group">
-          <label class="writer-label" for="writer-date">Date Written</label>
-          <input type="text" id="writer-date" class="writer-input" placeholder="e.g. 08 October 2026" />
-        </div>
-
-        <div class="writer-form-group">
-          <label class="writer-label" for="writer-verse">Verses (preserves line breaks and stanza spacing)</label>
-          <textarea id="writer-verse" class="writer-textarea" placeholder="write softly here...
-let each stanza breathe
-as you intended." required></textarea>
-        </div>
-
-        <div class="writer-actions">
-          <button type="button" class="btn-secondary" id="writer-export-btn" title="Export all your saved verses as backup file">
-            Backup Verses (JSON)
-          </button>
-          <div style="display: flex; gap: var(--space-3);">
-            <button type="button" class="btn-secondary" id="writer-cancel-btn">Cancel</button>
-            <button type="submit" class="btn-primary" id="writer-submit-btn">❧ Plant in Archive</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+  <!-- Invisible File Input: Native, instant, zero clutter -->
+  <input type="file" id="poetry-file-input" accept=".docx,.doc,.pdf,.txt,.md" style="display: none !important;" />
 
   <!-- Client-side parsing libraries for Word (.docx) and PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
@@ -604,3 +529,4 @@ as you intended." required></textarea>
   <script src="js/main.js"></script>
 </body>
 </html>
+

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Me & My Story — Audrita Mukherjee</title>
-  <meta name="description" content="The story of author and poet Audrita Mukherjee. Roots, silence, writing philosophy, and the garden." />
+  <meta name="description" content="The story of author and poet Audrita Mukherjee. Roots, silence, writing philosophy, and the quiet garden." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,6 +15,11 @@
   <link rel="stylesheet" href="css/pages.css" />
 </head>
 <body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <span>The Quiet Garden · words taking root in quiet earth · the first fifty are for herself</span>
+  </div>
 
   <!-- Header Navigation -->
   <header class="site-header" role="banner">
@@ -31,55 +36,41 @@
           <a href="about.html" class="nav-link" aria-current="page">About Me <span class="nav-arrow">▾</span></a>
           <ul class="nav-dropdown" role="list">
             <li><a href="about.html" class="nav-dropdown-link">My Story</a></li>
-            <li><a href="traveling-book.html" class="nav-dropdown-link">The Traveling Book</a></li>
             <li><a href="photo-album.html" class="nav-dropdown-link">Photo Album</a></li>
-            <li><a href="music.html" class="nav-dropdown-link">Music & Words</a></li>
-            <li><a href="tour.html" class="nav-dropdown-link">Tour & Events</a></li>
           </ul>
         </li>
       </ul>
 
       <div class="nav-actions">
-        <button class="nav-saved-btn" aria-label="View saved poems">
-          <span>Saved</span>
-          <span class="saved-count-badge">0</span>
-        </button>
-        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <!-- Dark / Light Theme Toggle -->
+        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
           <span class="theme-icon" aria-hidden="true">◐</span>
         </button>
-        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation">
+        <!-- Mobile Toggle -->
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </nav>
-  </header>
 
-  <!-- Saved Poems Drawer -->
-  <div class="saved-drawer-backdrop" id="saved-drawer-backdrop" aria-hidden="true">
-    <div class="saved-drawer" role="dialog" aria-modal="true" aria-label="Your Saved Verses">
-      <div class="saved-drawer-header">
-        <h2 class="saved-drawer-title">Saved Verses</h2>
-        <button class="saved-drawer-close-btn" id="saved-drawer-close-btn" aria-label="Close saved verses">×</button>
-      </div>
-      <div class="saved-drawer-body">
-        <div id="saved-empty-notice" class="saved-drawer-empty"><p>No saved verses yet.</p></div>
-        <div id="saved-items-list"></div>
-      </div>
+    <!-- Mobile Drawer -->
+    <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul role="list">
+        <li><a href="index.html#poetry" class="nav-link">Poetry (English & Hindi)</a></li>
+        <li><a href="garden.html" class="nav-link">The Garden</a></li>
+        <li><a href="about.html" class="nav-link">About Me · My Story</a></li>
+        <li><a href="photo-album.html" class="nav-link">Photo Album</a></li>
+      </ul>
     </div>
-  </div>
-    </div>
-  </div>
+  </header>
 
   <main id="main-content" class="page-about">
     <div class="container-wide">
 
-      <!-- Sub-navigation for About facets -->
+      <!-- Sub-navigation for About facets: Only My Story & Photo Album -->
       <nav class="about-subnav" aria-label="About sections">
         <a href="about.html" class="about-subnav-link is-active">My Story</a>
-        <a href="traveling-book.html" class="about-subnav-link">The Traveling Book</a>
         <a href="photo-album.html" class="about-subnav-link">Photo Album</a>
-        <a href="music.html" class="about-subnav-link">Music & Words</a>
-        <a href="tour.html" class="about-subnav-link">Tour & Events</a>
       </nav>
 
       <!-- Author Spotlight Header -->
@@ -125,19 +116,19 @@
           </blockquote>
 
           <h2 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 400; margin: var(--space-10) 0 var(--space-4);">
-            Beyond The Page
+            Quiet Cadence & Care
           </h2>
           <p>
-            In addition to writing collections, I believe in tactile art — from hand-pressed letterpress prints to our community project, <em>The Traveling Book</em>, where readers across the world annotate a single physical copy and mail it to the next stranger.
+            Words in English and Hindi are companions rather than competitors. In Hindi, words like <em>ठहराव (thehraav)</em> carry the weight of stillness in a hurried world. In English, precision carves out spaces where silence can be heard.
           </p>
           <p>
             Thank you for being here, for stepping softly, and for taking the time to read words that are still becoming.
           </p>
 
           <div style="margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--color-border-light); display: flex; gap: var(--space-4); flex-wrap: wrap;">
-            <a href="books.html" class="btn-primary">Explore My Books</a>
-            <a href="traveling-book.html" class="btn-secondary">The Traveling Book</a>
+            <a href="index.html#poetry" class="btn-primary">Explore Poetry Archive</a>
             <a href="photo-album.html" class="btn-secondary">Photo Album</a>
+            <a href="garden.html" class="btn-secondary">The Garden</a>
           </div>
         </article>
       </div>
@@ -152,11 +143,10 @@
         <p class="footer-tagline">A quiet place for words that are still becoming.</p>
       </div>
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="index.html">Home</a>
-        <a href="books.html">Books</a>
-        <a href="shop.html">Shop</a>
-        <a href="garden.html">Garden</a>
-        <a href="writings.html">Writings</a>
+        <a href="index.html#poetry">Poetry</a>
+        <a href="about.html">About Me</a>
+        <a href="photo-album.html">Photo Album</a>
+        <a href="garden.html">The Garden</a>
       </nav>
     </div>
   </footer>

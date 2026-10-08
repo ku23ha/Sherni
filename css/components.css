@@ -1177,42 +1177,6 @@
 
 /* ── Tour & Literary Gatherings ─────────────────────────── */
 .tour-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.tour-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid var(--color-border-light);
-  gap: var(--space-4);
-}
-
-.tour-date-col {
-  min-width: 120px;
-}
-
-.tour-date {
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  display: block;
-}
-
-.tour-city {
-  font-family: var(--font-serif);
-  font-size: var(--text-lg);
-  font-weight: 500;
-}
-
-.tour-venue {
-  font-family: var(--font-sans);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-}
-
 /* ── Photo Album & Gallery Grid ─────────────────────────── */
 .gallery-grid {
   display: grid;
@@ -1252,4 +1216,417 @@
   font-style: italic;
   font-size: var(--text-sm);
 }
+
+/* ── Calm Botanical & Celestial Hero Artwork ─────────────── */
+.hero-calm-art-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  background: radial-gradient(circle at center, var(--color-bg-alt) 0%, var(--color-surface) 70%, var(--color-bg) 100%);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-lg), 0 0 60px -20px rgba(184, 134, 11, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--space-6);
+  transition: box-shadow var(--duration-slow) var(--ease-out);
+}
+
+.hero-calm-art-wrapper:hover {
+  box-shadow: var(--shadow-xl), 0 0 80px -15px rgba(184, 134, 11, 0.25);
+}
+
+.calm-bloom-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.06));
+}
+
+/* Breathing animation for lotus petals */
+.calm-petals-core {
+  transform-origin: 200px 200px;
+  animation: calmBreathe 7s ease-in-out infinite;
+}
+
+.calm-petals-outer {
+  transform-origin: 200px 200px;
+  animation: calmBreatheOuter 9s ease-in-out infinite alternate;
+}
+
+.calm-aura-ring {
+  transform-origin: 200px 200px;
+  animation: auraSlowSpin 60s linear infinite;
+}
+
+.calm-aura-ring-reverse {
+  transform-origin: 200px 200px;
+  animation: auraSlowSpinRev 80s linear infinite;
+}
+
+.calm-center-glow {
+  transform-origin: 200px 200px;
+  animation: centerPulse 4s ease-in-out infinite;
+}
+
+@keyframes calmBreathe {
+  0%, 100% {
+    transform: scale(0.97) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.03) rotate(1.5deg);
+  }
+}
+
+@keyframes calmBreatheOuter {
+  0%, 100% {
+    transform: scale(0.96) rotate(0deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.025) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
+@keyframes auraSlowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes auraSlowSpinRev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes centerPulse {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Floating particles */
+.calm-particle {
+  animation: particleFloat 5s ease-in-out infinite alternate;
+}
+.calm-particle:nth-child(2) { animation-duration: 6.5s; animation-delay: -1.5s; }
+.calm-particle:nth-child(3) { animation-duration: 4.8s; animation-delay: -2.8s; }
+.calm-particle:nth-child(4) { animation-duration: 7.2s; animation-delay: -3.5s; }
+
+@keyframes particleFloat {
+  0% { transform: translateY(0px) scale(0.9); opacity: 0.4; }
+  100% { transform: translateY(-12px) scale(1.15); opacity: 0.9; }
+}
+
+.hero-art-caption {
+  text-align: center;
+  margin-top: var(--space-4);
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ── Poetry Subsections (English & Hindi) ─────────────────── */
+.poetry-subsections-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-top: var(--space-10);
+}
+
+.poetry-subsection {
+  position: relative;
+}
+
+.poetry-subsection-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.poetry-subsection-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.poetry-subsection-title.is-hindi {
+  font-family: 'Noto Serif Devanagari', var(--font-serif);
+  font-weight: 500;
+}
+
+.poetry-subsection-badge {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-accent);
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+.poetry-subsection-desc {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Pure literary poem card without copy/save icons */
+.poem-card-clean {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+  position: relative;
+}
+
+.poem-card-clean:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border);
+}
+
+.poem-card-clean .poem-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px dashed var(--color-border-light);
+}
+
+.poem-card-clean .poem-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  margin: 0 0 var(--space-5);
+  color: var(--color-text);
+}
+
+.poem-card-clean .poem-verse-text {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--color-text);
+  white-space: pre-line;
+  font-style: italic;
+  flex-grow: 1;
+}
+
+.poem-card-clean .poem-verse-text.is-hindi {
+  font-family: 'Noto Serif Devanagari', var(--font-serif);
+  font-style: normal;
+  line-height: 1.95;
+  font-size: 1.05rem;
+}
+
+.poem-card-clean .poem-card-footer {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--color-border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.poem-card-clean .poem-card-date {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* ── Audrita's Writing Desk (Live Upload & Sanctuary Portal) ── */
+.writer-desk-bar {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-6) 0 var(--space-10);
+}
+
+.btn-open-desk {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  font-style: italic;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.btn-open-desk:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.writer-desk-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out),
+              visibility var(--duration-base) var(--ease-out);
+}
+
+.writer-desk-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.writer-desk-modal {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-8);
+  position: relative;
+  transform: translateY(12px) scale(0.98);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.writer-desk-backdrop.is-open .writer-desk-modal {
+  transform: translateY(0) scale(1);
+}
+
+.writer-desk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.writer-desk-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  margin: 0;
+}
+
+.writer-desk-subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: var(--space-1) 0 0;
+}
+
+.writer-desk-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.writer-desk-close:hover {
+  color: var(--color-text);
+}
+
+.writer-form-group {
+  margin-bottom: var(--space-5);
+}
+
+.writer-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.writer-input,
+.writer-select,
+.writer-textarea {
+  width: 100%;
+  padding: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.writer-input:focus,
+.writer-select:focus,
+.writer-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.writer-textarea {
+  min-height: 180px;
+  line-height: 1.8;
+  font-style: italic;
+  resize: vertical;
+}
+
+.writer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-light);
+  flex-wrap: wrap;
+}
+
 

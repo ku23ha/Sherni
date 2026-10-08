@@ -1,12 +1,12 @@
 /* ============================================================
    AUDRITA — THE QUIET GARDEN
-   Global JavaScript
+   Global JavaScript & Sanctuary Writing Desk
    ============================================================ */
 
 (function () {
   'use strict';
 
-  // ── Theme Toggle ──────────────────────────────────────────
+  // ── Theme Management ──────────────────────────────────────
   const THEME_KEY = 'audrita-theme';
   const html = document.documentElement;
 
@@ -31,7 +31,6 @@
       setTheme(stored);
       return;
     }
-    // Respect system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setTheme('dark');
     } else {
@@ -43,7 +42,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
 
-    // Theme toggle button
+    // ── Theme toggle button ─────────────────────────────────
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
       themeToggle.addEventListener('click', function () {
@@ -52,7 +51,7 @@
       });
     }
 
-    // ── Mobile menu ───────────────────────────────────────
+    // ── Mobile menu drawer ──────────────────────────────────
     const mobileToggle = document.getElementById('mobile-menu-toggle');
     const mobileDrawer = document.getElementById('mobile-drawer');
 
@@ -63,7 +62,6 @@
         mobileDrawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
       });
 
-      // Close on link click
       mobileDrawer.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function () {
           mobileDrawer.classList.remove('is-open');
@@ -73,7 +71,7 @@
       });
     }
 
-    // ── Nav logo mark animation ───────────────────────────
+    // ── Nav logo mark animation ─────────────────────────────
     const logoMark = document.querySelector('.nav-logo-mark');
     const navLogo = document.querySelector('.nav-logo');
     if (logoMark && navLogo) {
@@ -81,63 +79,11 @@
         logoMark.textContent = '✦';
       });
       navLogo.addEventListener('mouseleave', function () {
-        // Delay restoring so the rotation animation completes
         setTimeout(function () {
           logoMark.textContent = '·';
         }, 280);
       });
     }
-
-    // ── Writing filter (writings page) ────────────────────
-    const filterPills = document.querySelectorAll('.filter-pill');
-    const writingItems = document.querySelectorAll('.writing-item[data-type]');
-
-    if (filterPills.length && writingItems.length) {
-      filterPills.forEach(function (pill) {
-        pill.addEventListener('click', function () {
-          const filter = pill.getAttribute('data-filter');
-
-          // Update active state
-          filterPills.forEach(function (p) { p.classList.remove('is-active'); });
-          pill.classList.add('is-active');
-
-          // Filter items
-          writingItems.forEach(function (item) {
-            const type = item.getAttribute('data-type');
-            if (filter === 'all' || type === filter) {
-              item.style.display = '';
-            } else {
-              item.style.display = 'none';
-            }
-          });
-
-          // Show/hide year headers
-          document.querySelectorAll('.archive-year').forEach(function (yearEl) {
-            const sibling = yearEl.nextElementSibling;
-            // Check if any visible items follow this year header
-            let yearVisible = false;
-            let el = yearEl.nextElementSibling;
-            while (el && !el.classList.contains('archive-year')) {
-              if (el.style.display !== 'none') {
-                yearVisible = true;
-                break;
-              }
-              el = el.nextElementSibling;
-            }
-            yearEl.style.display = yearVisible ? '' : 'none';
-          });
-        });
-      });
-    }
-
-    // ── Active nav link ───────────────────────────────────
-    const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-link').forEach(function (link) {
-      const href = link.getAttribute('href');
-      if (href && (currentPath.endsWith(href) || currentPath.endsWith(href.replace('.html', '')))) {
-        link.setAttribute('aria-current', 'page');
-      }
-    });
 
     // ── Toast Notifications ──────────────────────────────────
     let toastTimeout = null;
@@ -154,145 +100,8 @@
       if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
         toast.classList.remove('is-visible');
-      }, 2600);
+      }, 3200);
     }
-
-    // ── Saved Poetry System (Local Persistence) ───────────────
-    const SAVED_KEY = 'audrita-saved-poems';
-    let savedPoems = [];
-    try {
-      const stored = localStorage.getItem(SAVED_KEY);
-      if (stored) savedPoems = JSON.parse(stored);
-    } catch (e) {}
-
-    const savedDrawerBackdrop = document.getElementById('saved-drawer-backdrop');
-    const savedToggleBtns = document.querySelectorAll('.nav-saved-btn, .open-saved-btn');
-    const savedCloseBtn = document.getElementById('saved-drawer-close-btn');
-    const savedCountBadges = document.querySelectorAll('.saved-count-badge');
-    const savedItemsList = document.getElementById('saved-items-list');
-    const savedEmptyNotice = document.getElementById('saved-empty-notice');
-
-    function persistSavedPoems() {
-      try {
-        localStorage.setItem(SAVED_KEY, JSON.stringify(savedPoems));
-      } catch (e) {}
-      updateSavedUI();
-    }
-
-    function updateSavedUI() {
-      // Update badges
-      savedCountBadges.forEach(badge => {
-        badge.textContent = savedPoems.length;
-      });
-
-      // Update button states in poem cards
-      document.querySelectorAll('.btn-save-poem').forEach(btn => {
-        const id = btn.getAttribute('data-id');
-        const isSaved = savedPoems.some(p => p.id === id);
-        if (isSaved) {
-          btn.classList.add('is-saved');
-          btn.innerHTML = '♥ Saved';
-          btn.setAttribute('aria-label', 'Remove from saved');
-        } else {
-          btn.classList.remove('is-saved');
-          btn.innerHTML = '♡ Save';
-          btn.setAttribute('aria-label', 'Save poem to collection');
-        }
-      });
-
-      if (!savedItemsList) return;
-
-      if (savedPoems.length === 0) {
-        savedItemsList.innerHTML = '';
-        if (savedEmptyNotice) savedEmptyNotice.style.display = 'block';
-        return;
-      }
-
-      if (savedEmptyNotice) savedEmptyNotice.style.display = 'none';
-
-      savedItemsList.innerHTML = savedPoems.map((p, idx) => `
-        <div class="saved-poem-item">
-          <div class="saved-poem-title">${p.title}</div>
-          <div class="saved-poem-snippet">${p.snippet}</div>
-          <div class="saved-poem-actions">
-            <button class="btn-icon-action btn-copy-saved" data-text="${encodeURIComponent(p.text)}">⎘ Copy</button>
-            <button class="saved-poem-remove" data-id="${p.id}">remove</button>
-          </div>
-        </div>
-      `).join('');
-
-      // Wire remove buttons in drawer
-      savedItemsList.querySelectorAll('.saved-poem-remove').forEach(btn => {
-        btn.addEventListener('click', function () {
-          const id = this.getAttribute('data-id');
-          savedPoems = savedPoems.filter(p => p.id !== id);
-          persistSavedPoems();
-          showToast('Removed from saved verses');
-        });
-      });
-
-      // Wire copy buttons in drawer
-      savedItemsList.querySelectorAll('.btn-copy-saved').forEach(btn => {
-        btn.addEventListener('click', function () {
-          const text = decodeURIComponent(this.getAttribute('data-text'));
-          navigator.clipboard.writeText(text).then(() => {
-            showToast('Verse copied to clipboard ⎘');
-          });
-        });
-      });
-    }
-
-    function openSavedDrawer() {
-      if (savedDrawerBackdrop) savedDrawerBackdrop.classList.add('is-open');
-    }
-
-    function closeSavedDrawer() {
-      if (savedDrawerBackdrop) savedDrawerBackdrop.classList.remove('is-open');
-    }
-
-    savedToggleBtns.forEach(btn => btn.addEventListener('click', openSavedDrawer));
-    if (savedCloseBtn) savedCloseBtn.addEventListener('click', closeSavedDrawer);
-    if (savedDrawerBackdrop) {
-      savedDrawerBackdrop.addEventListener('click', function (e) {
-        if (e.target === savedDrawerBackdrop) closeSavedDrawer();
-      });
-    }
-
-    // Wire poem card save buttons
-    document.querySelectorAll('.btn-save-poem').forEach(btn => {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        const id = this.getAttribute('data-id');
-        const title = this.getAttribute('data-title');
-        const text = this.getAttribute('data-verse') || '';
-        const snippet = text.split('\n').slice(0, 3).join('\n') + (text.split('\n').length > 3 ? '...' : '');
-
-        const existingIdx = savedPoems.findIndex(p => p.id === id);
-        if (existingIdx > -1) {
-          savedPoems.splice(existingIdx, 1);
-          showToast('Removed from saved verses');
-        } else {
-          savedPoems.push({ id, title, text, snippet });
-          showToast('Poem saved to your collection ♡');
-        }
-        persistSavedPoems();
-      });
-    });
-
-    // Wire copy buttons on cards
-    document.querySelectorAll('.btn-copy-verse').forEach(btn => {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        const verse = this.getAttribute('data-verse') || '';
-        navigator.clipboard.writeText(verse).then(() => {
-          showToast('Verse copied to clipboard ⎘');
-        }).catch(() => {
-          showToast('Could not copy to clipboard');
-        });
-      });
-    });
-
-    updateSavedUI();
 
     // ── Audio Player Simulation ──────────────────────────────
     const playBtn = document.getElementById('audio-play-btn');
@@ -305,6 +114,7 @@
           audioComponent.classList.add('audio-playing');
           playBtn.innerHTML = '❚❚';
           playBtn.setAttribute('aria-label', 'Pause audio poem');
+          showToast('Playing spoken verse · Cello resonance');
         } else {
           audioComponent.classList.remove('audio-playing');
           playBtn.innerHTML = '▶';
@@ -313,30 +123,285 @@
       });
     }
 
-    // ── Generic Filter Pills (Books & Shop) ──────────────────
-    document.querySelectorAll('.filter-container').forEach(container => {
-      const pills = container.querySelectorAll('.filter-pill');
-      const targetGrid = document.querySelector(container.getAttribute('data-target-grid'));
-      if (!targetGrid) return;
-      const items = targetGrid.querySelectorAll('.filterable-item');
+    // ── Poetry Filter Pills (Subsections & Category) ──────────
+    const filterPills = document.querySelectorAll('.poetry-filter-bar .filter-pill');
+    const englishSub = document.getElementById('english-poetry-sub');
+    const hindiSub = document.getElementById('hindi-poetry-sub');
+    const allPoemCards = document.querySelectorAll('.poem-card-clean');
 
-      pills.forEach(pill => {
+    if (filterPills.length) {
+      filterPills.forEach(pill => {
         pill.addEventListener('click', function () {
-          pills.forEach(p => p.classList.remove('is-active'));
+          filterPills.forEach(p => p.classList.remove('is-active'));
           this.classList.add('is-active');
           const filter = this.getAttribute('data-filter');
 
-          items.forEach(item => {
-            const category = item.getAttribute('data-category');
-            if (filter === 'all' || category === filter || (category && category.includes(filter))) {
-              item.style.display = '';
+          if (filter === 'all') {
+            if (englishSub) englishSub.style.display = '';
+            if (hindiSub) hindiSub.style.display = '';
+            document.querySelectorAll('.poem-card-clean').forEach(card => card.style.display = '');
+            return;
+          }
+
+          if (filter === 'english') {
+            if (englishSub) englishSub.style.display = '';
+            if (hindiSub) hindiSub.style.display = 'none';
+            document.querySelectorAll('#poems-grid-english .poem-card-clean').forEach(card => card.style.display = '');
+            return;
+          }
+
+          if (filter === 'hindi') {
+            if (englishSub) englishSub.style.display = 'none';
+            if (hindiSub) hindiSub.style.display = '';
+            document.querySelectorAll('#poems-grid-hindi .poem-card-clean').forEach(card => card.style.display = '');
+            return;
+          }
+
+          // Category filter (e.g. love, silence)
+          let visibleEnglish = 0;
+          let visibleHindi = 0;
+
+          document.querySelectorAll('#poems-grid-english .poem-card-clean').forEach(card => {
+            const cat = card.getAttribute('data-category') || '';
+            if (cat.includes(filter)) {
+              card.style.display = '';
+              visibleEnglish++;
             } else {
-              item.style.display = 'none';
+              card.style.display = 'none';
             }
           });
+
+          document.querySelectorAll('#poems-grid-hindi .poem-card-clean').forEach(card => {
+            const cat = card.getAttribute('data-category') || '';
+            if (cat.includes(filter)) {
+              card.style.display = '';
+              visibleHindi++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          if (englishSub) englishSub.style.display = visibleEnglish > 0 ? '' : 'none';
+          if (hindiSub) hindiSub.style.display = visibleHindi > 0 ? '' : 'none';
         });
       });
-    });
+    }
+
+    // ── Audrita's Writing Desk (Live Upload & Persistence) ────
+    const POEMS_STORAGE_KEY = 'audrita_custom_poems_v1';
+    const deskBackdrop = document.getElementById('writer-desk-backdrop');
+    const openDeskBtn = document.getElementById('btn-open-desk');
+    const closeDeskBtn = document.getElementById('writer-desk-close');
+    const cancelDeskBtn = document.getElementById('writer-cancel-btn');
+    const writerForm = document.getElementById('writer-form');
+    const exportBtn = document.getElementById('writer-export-btn');
+    const dateInput = document.getElementById('writer-date');
+
+    // Pre-fill date with poetic formatting
+    if (dateInput && !dateInput.value) {
+      dateInput.value = new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    function openDesk() {
+      if (deskBackdrop) {
+        deskBackdrop.classList.add('is-open');
+        deskBackdrop.setAttribute('aria-hidden', 'false');
+        const titleInput = document.getElementById('writer-title');
+        if (titleInput) titleInput.focus();
+      }
+    }
+
+    function closeDesk() {
+      if (deskBackdrop) {
+        deskBackdrop.classList.remove('is-open');
+        deskBackdrop.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    if (openDeskBtn) openDeskBtn.addEventListener('click', openDesk);
+    if (closeDeskBtn) closeDeskBtn.addEventListener('click', closeDesk);
+    if (cancelDeskBtn) cancelDeskBtn.addEventListener('click', closeDesk);
+
+    if (deskBackdrop) {
+      deskBackdrop.addEventListener('click', function (e) {
+        if (e.target === deskBackdrop) closeDesk();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && deskBackdrop.classList.contains('is-open')) {
+          closeDesk();
+        }
+      });
+    }
+
+    // Helper to get custom stored poems
+    function getStoredPoems() {
+      try {
+        const stored = localStorage.getItem(POEMS_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    // Helper to save custom poems
+    function saveStoredPoems(list) {
+      try {
+        localStorage.setItem(POEMS_STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    // Render a poem card into the DOM
+    function renderPoemCard(poem, isPrepend = false) {
+      const isHindi = poem.language === 'hindi';
+      const targetGrid = isHindi ? document.getElementById('poems-grid-hindi') : document.getElementById('poems-grid-english');
+      if (!targetGrid) return;
+
+      const card = document.createElement('article');
+      card.className = 'poem-card-clean filterable-item';
+      card.setAttribute('data-category', `${poem.language} ${poem.tag.toLowerCase()}`);
+      card.id = `poem-custom-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+      card.innerHTML = `
+        <div class="poem-card-header">
+          <div class="poem-card-meta">
+            <span class="poem-card-lang" ${isHindi ? 'style="color: var(--color-accent); font-weight: 500;"' : ''}>${isHindi ? 'हिंदी' : 'EN'}</span>
+            <span class="poem-card-tag">${poem.tag}</span>
+          </div>
+        </div>
+        <h4 class="poem-card-title ${isHindi ? 'is-hindi' : ''}">${escapeHTML(poem.title)}</h4>
+        <div class="poem-verse-text ${isHindi ? 'is-hindi' : ''}">${escapeHTML(poem.verse)}</div>
+        <div class="poem-card-footer">
+          <span class="poem-card-date">${escapeHTML(poem.date)}</span>
+        </div>
+      `;
+
+      if (isPrepend) {
+        targetGrid.prepend(card);
+      } else {
+        targetGrid.appendChild(card);
+      }
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Load initial stored poems on page load
+    const existingCustomPoems = getStoredPoems();
+    existingCustomPoems.forEach(p => renderPoemCard(p, false));
+
+    // Update garden count display
+    function updateCounterDisplay() {
+      const counterEl = document.getElementById('garden-counter-display');
+      if (counterEl) {
+        const total = 6 + getStoredPoems().length;
+        const totalStr = total < 10 ? `0${total}` : total;
+        counterEl.textContent = `${totalStr} / 50`;
+      }
+    }
+    updateCounterDisplay();
+
+    // Handle form submission
+    if (writerForm) {
+      writerForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const lang = document.getElementById('writer-lang').value;
+        const tag = document.getElementById('writer-tag').value.trim() || 'Silence & Water';
+        const title = document.getElementById('writer-title').value.trim();
+        const date = document.getElementById('writer-date').value.trim() || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+        const verse = document.getElementById('writer-verse').value.trim();
+
+        if (!title || !verse) {
+          showToast('Please enter both a title and your verses');
+          return;
+        }
+
+        const newPoem = {
+          id: 'custom-' + Date.now(),
+          language: lang,
+          tag: tag,
+          title: title,
+          date: date,
+          verse: verse,
+          created_at: new Date().toISOString()
+        };
+
+        // 1. Save to local storage
+        const currentList = getStoredPoems();
+        currentList.unshift(newPoem);
+        saveStoredPoems(currentList);
+
+        // 2. Render immediately at the top of the grid
+        renderPoemCard(newPoem, true);
+        updateCounterDisplay();
+
+        // 3. Post to backend API /api/poems (Vercel / Supabase sync)
+        try {
+          fetch('/api/poems', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newPoem)
+          }).then(res => res.json()).then(data => {
+            console.log('Saved to cloud/backend:', data);
+          }).catch(err => {
+            console.warn('API sync deferred to local storage:', err);
+          });
+        } catch (err) {}
+
+        // 4. Feedback and reset
+        closeDesk();
+        writerForm.reset();
+        if (dateInput) {
+          dateInput.value = new Date().toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          });
+        }
+
+        showToast('✦ Verse quietly planted in Audrita\'s archive');
+
+        // Scroll gracefully to the newly added poem
+        const targetSection = lang === 'hindi' ? document.getElementById('hindi-poetry-sub') : document.getElementById('english-poetry-sub');
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    // Handle export / backup
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        const stored = getStoredPoems();
+        const payload = {
+          author: 'Audrita Mukherjee',
+          project: 'The Quiet Garden',
+          backup_date: new Date().toISOString(),
+          custom_poems: stored
+        };
+
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(payload, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute('href', dataStr);
+        downloadAnchor.setAttribute('download', `audrita_poetry_archive_${new Date().toISOString().slice(0, 10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+
+        showToast('Downloaded poetry backup JSON');
+      });
+    }
 
   });
 
@@ -350,4 +415,3 @@
   }
 
 })();
-

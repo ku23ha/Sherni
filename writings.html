@@ -16,6 +16,11 @@
 </head>
 <body>
 
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <span>The Quiet Garden · words taking root in quiet earth · the first fifty are for herself</span>
+  </div>
+
   <header class="site-header" role="banner">
     <nav class="nav-container" aria-label="Primary navigation">
       <a href="index.html" class="nav-logo" aria-label="Audrita — Home">
@@ -30,34 +35,28 @@
           <a href="about.html" class="nav-link">About Me <span class="nav-arrow">▾</span></a>
           <ul class="nav-dropdown" role="list">
             <li><a href="about.html" class="nav-dropdown-link">My Story</a></li>
-            <li><a href="traveling-book.html" class="nav-dropdown-link">The Traveling Book</a></li>
             <li><a href="photo-album.html" class="nav-dropdown-link">Photo Album</a></li>
-            <li><a href="music.html" class="nav-dropdown-link">Music & Words</a></li>
-            <li><a href="tour.html" class="nav-dropdown-link">Tour & Events</a></li>
           </ul>
         </li>
       </ul>
 
       <div class="nav-actions">
-        <button class="nav-saved-btn" aria-label="View saved poems">
-          <span>Saved</span>
-          <span class="saved-count-badge">0</span>
-        </button>
-        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <!-- Dark / Light Theme Toggle -->
+        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
           <span class="theme-icon" aria-hidden="true">◐</span>
         </button>
-        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation">
+        <!-- Mobile Toggle -->
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </nav>
     <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">
       <ul role="list">
-        <li><a href="books.html" class="nav-link">Books</a></li>
-        <li><a href="about.html" class="nav-link">About Me</a></li>
-        <li><a href="shop.html" class="nav-link">Shop</a></li>
-        <li><a href="garden.html" class="nav-link">Garden</a></li>
-        <li><a href="writings.html" class="nav-link">Writings</a></li>
+        <li><a href="index.html#poetry" class="nav-link">Poetry (English & Hindi)</a></li>
+        <li><a href="garden.html" class="nav-link">The Garden</a></li>
+        <li><a href="about.html" class="nav-link">About Me · My Story</a></li>
+        <li><a href="photo-album.html" class="nav-link">Photo Album</a></li>
       </ul>
     </div>
   </header>
@@ -152,12 +151,17 @@
   </main>
 
   <footer class="site-footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="footer-name">Audrita Mukherjee</p>
-        <p class="footer-tagline">A quiet archive of becoming.</p>
-        <p class="footer-copy">Made slowly. Written honestly. Kept here. · 2026</p>
+    <div class="container footer-content">
+      <div class="footer-left">
+        <p class="footer-copy">© 2026 Audrita Mukherjee. All words reserved.</p>
+        <p class="footer-tagline">A quiet place where the first 50 are for herself.</p>
       </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html#poetry">Poetry</a>
+        <a href="about.html">About Me</a>
+        <a href="photo-album.html">Photo Album</a>
+        <a href="garden.html">The Garden</a>
+      </nav>
     </div>
   </footer>
 

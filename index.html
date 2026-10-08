@@ -227,20 +227,10 @@
           </p>
         </div>
 
-        <!-- Sleek Upload Button Bar (Centered, Minimal, Directly Functional) -->
-        <div class="archive-upload-bar">
-          <button class="btn-archive-upload" id="archive-upload-btn" title="Upload your poem manuscript in Word (.docx) or PDF format">
-            <span>+</span> Upload Poetry (.docx / .pdf)
-          </button>
-        </div>
-
-        <!-- Filter Pills -->
+        <!-- Filter Pills: English Poetry & हिंदी कविता -->
         <div class="poetry-filter-bar filter-container" data-target-grid=".poetry-subsections-container">
-          <button class="filter-pill is-active" data-filter="all">All Verses</button>
-          <button class="filter-pill" data-filter="english">English Poetry</button>
+          <button class="filter-pill is-active" data-filter="english">English Poetry</button>
           <button class="filter-pill" data-filter="hindi">हिंदी कविता</button>
-          <button class="filter-pill" data-filter="memory">Memory & Ganges</button>
-          <button class="filter-pill" data-filter="maktub">मक़्तूब & देहलीज़</button>
         </div>
 
         <!-- Subsections Container -->
@@ -251,7 +241,6 @@
             <header class="poetry-subsection-header">
               <h3 class="poetry-subsection-title">
                 <span>English Poetry</span>
-                <span class="poetry-subsection-badge">English</span>
               </h3>
               <p class="poetry-subsection-desc">verses of silence, memory, and quiet devotion</p>
             </header>
@@ -259,7 +248,7 @@
             <div class="poems-grid" id="poems-grid-english">
 
               <!-- Poem: Favor (by Audrita Mukherjee) -->
-              <article class="poem-card-clean filterable-item" data-category="english memory love" id="poem-favor">
+              <article class="poem-card-clean filterable-item" data-category="english" id="poem-favor">
                 <div class="poem-card-header">
                   <div class="poem-card-meta">
                     <span class="poem-card-lang">EN</span>
@@ -293,11 +282,10 @@ And that will be my last gift to him.</div>
           </div>
 
           <!-- ── Subsection 2: हिंदी कविता (Hindi Poetry) ── -->
-          <div class="poetry-subsection" id="hindi-poetry-sub" data-lang="hindi">
+          <div class="poetry-subsection" id="hindi-poetry-sub" data-lang="hindi" style="display: none;">
             <header class="poetry-subsection-header">
               <h3 class="poetry-subsection-title is-hindi">
                 <span>हिंदी कविता</span>
-                <span class="poetry-subsection-badge">हिंदी</span>
               </h3>
               <p class="poetry-subsection-desc">अल्फ़ाज़, मक़्तूब, राम रेखा और देहलीज़ की बातें</p>
             </header>

@@ -250,31 +250,94 @@
 }
 
 .garden-all-fragments {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-10);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .garden-all-fragments {
+    grid-template-columns: 1fr;
+  }
 }
 
 .garden-entry {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--color-accent) !important;
+  padding: var(--space-8) var(--space-8);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-base) var(--ease-out);
+}
+
+.garden-entry:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border);
+  transform: translateY(-2px);
+}
+
+.garden-entry-meta-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.garden-entry-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  margin-bottom: var(--space-4);
+  color: var(--color-text);
+}
+
+.garden-entry-title.is-hindi {
+  font-family: 'Noto Serif Devanagari', var(--font-serif);
+  font-weight: 500;
 }
 
 .garden-entry-text {
   font-family: var(--font-serif);
-  font-size: var(--text-lg);
+  font-size: 1.05rem;
   font-style: italic;
   font-weight: 300;
-  line-height: var(--leading-snug);
+  line-height: 1.85;
   color: var(--color-text);
+  white-space: pre-line;
+  margin-bottom: var(--space-6);
+}
+
+.garden-entry-text.is-hindi {
+  font-family: 'Noto Serif Devanagari', var(--font-serif);
+  font-style: normal;
+  line-height: 1.95;
+  font-size: 1.05rem;
 }
 
 .garden-entry-date {
   font-family: var(--font-sans);
   font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
   color: var(--color-text-faint);
+  margin-top: auto;
+}
+
+.garden-entry--reflection {
+  border-left-color: var(--color-border) !important;
+  background: var(--color-bg-alt);
+}
+
+.garden-entry--reflection .garden-entry-text {
+  font-size: 1.15rem;
+  line-height: 1.75;
 }
 
 /* ── 404 PAGE ─────────────────────────────────────────────── */

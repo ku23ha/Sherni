@@ -122,64 +122,34 @@
     }
 
     // ── Poetry Filter Pills (Subsections & Category) ──────────
+    // ── Poetry Filter Pills (English Poetry vs हिंदी कविता) ──
     const filterPills = document.querySelectorAll('.poetry-filter-bar .filter-pill');
     const englishSub = document.getElementById('english-poetry-sub');
     const hindiSub = document.getElementById('hindi-poetry-sub');
 
+    function switchPoetryTab(targetLang) {
+      filterPills.forEach(p => {
+        if (p.getAttribute('data-filter') === targetLang) {
+          p.classList.add('is-active');
+        } else {
+          p.classList.remove('is-active');
+        }
+      });
+
+      if (targetLang === 'hindi') {
+        if (hindiSub) hindiSub.style.display = '';
+        if (englishSub) englishSub.style.display = 'none';
+      } else {
+        if (englishSub) englishSub.style.display = '';
+        if (hindiSub) hindiSub.style.display = 'none';
+      }
+    }
+
     if (filterPills.length) {
       filterPills.forEach(pill => {
         pill.addEventListener('click', function () {
-          filterPills.forEach(p => p.classList.remove('is-active'));
-          this.classList.add('is-active');
           const filter = this.getAttribute('data-filter');
-
-          if (filter === 'all') {
-            if (englishSub) englishSub.style.display = '';
-            if (hindiSub) hindiSub.style.display = '';
-            document.querySelectorAll('.poem-card-clean').forEach(card => card.style.display = '');
-            return;
-          }
-
-          if (filter === 'english') {
-            if (englishSub) englishSub.style.display = '';
-            if (hindiSub) hindiSub.style.display = 'none';
-            document.querySelectorAll('#poems-grid-english .poem-card-clean').forEach(card => card.style.display = '');
-            return;
-          }
-
-          if (filter === 'hindi') {
-            if (englishSub) englishSub.style.display = 'none';
-            if (hindiSub) hindiSub.style.display = '';
-            document.querySelectorAll('#poems-grid-hindi .poem-card-clean').forEach(card => card.style.display = '');
-            return;
-          }
-
-          // Category filter (e.g. memory, maktub, love)
-          let visibleEnglish = 0;
-          let visibleHindi = 0;
-
-          document.querySelectorAll('#poems-grid-english .poem-card-clean').forEach(card => {
-            const cat = card.getAttribute('data-category') || '';
-            if (cat.includes(filter)) {
-              card.style.display = '';
-              visibleEnglish++;
-            } else {
-              card.style.display = 'none';
-            }
-          });
-
-          document.querySelectorAll('#poems-grid-hindi .poem-card-clean').forEach(card => {
-            const cat = card.getAttribute('data-category') || '';
-            if (cat.includes(filter)) {
-              card.style.display = '';
-              visibleHindi++;
-            } else {
-              card.style.display = 'none';
-            }
-          });
-
-          if (englishSub) englishSub.style.display = visibleEnglish > 0 ? '' : 'none';
-          if (hindiSub) hindiSub.style.display = visibleHindi > 0 ? '' : 'none';
+          switchPoetryTab(filter);
         });
       });
     }
@@ -305,6 +275,7 @@
         title: title,
         date: authorDate,
         verse: verseBody,
+        isCustom: true,
         created_at: new Date().toISOString()
       };
 
@@ -313,11 +284,14 @@
       currentList.unshift(newPoem);
       saveStoredPoems(currentList);
 
-      // 2. Render immediately at the top of the matching poetry subsection
+      // 2. Switch tab to match the uploaded language
+      switchPoetryTab(language);
+
+      // 3. Render immediately at the top of the matching poetry subsection
       renderPoemCard(newPoem, true);
       updateCounterDisplay();
 
-      // 3. Post to backend API /api/poems (Vercel & Supabase sync)
+      // 4. Post to backend API /api/poems (Vercel & Supabase sync)
       try {
         fetch('/api/poems', {
           method: 'POST',
@@ -330,13 +304,12 @@
         });
       } catch (err) {}
 
-      // 4. Poetic confirmation toast
+      // 5. Poetic confirmation toast
       showToast(`❧ "${title}" quietly planted in Audrita's archive`);
 
-      // 5. Scroll smoothly to the newly planted poem
+      // 6. Scroll smoothly to the newly planted poem
       const targetSub = isHindi ? document.getElementById('hindi-poetry-sub') : document.getElementById('english-poetry-sub');
       if (targetSub) {
-        targetSub.style.display = '';
         const newlyRenderedCard = document.getElementById(newPoem.id);
         if (newlyRenderedCard) {
           setTimeout(() => {
@@ -374,8 +347,16 @@
 
       const card = document.createElement('article');
       card.className = 'poem-card-clean filterable-item';
-      card.setAttribute('data-category', `${poem.language} ${poem.tag ? poem.tag.toLowerCase() : ''}`);
+      card.setAttribute('data-category', poem.language);
       card.id = poem.id || `poem-custom-${Date.now()}`;
+
+      const removeActionHtml = poem.isCustom ? `
+        <div class="poem-card-actions">
+          <button class="btn-remove-poem" data-id="${poem.id}" data-title="${escapeHTML(poem.title)}" aria-label="Remove poem from archive" title="Remove this poem">
+            ✕ Remove
+          </button>
+        </div>
+      ` : '';
 
       card.innerHTML = `
         <div class="poem-card-header">
@@ -389,6 +370,7 @@
         <div class="poem-card-footer">
           <span class="poem-card-date">${escapeHTML(poem.date || (isHindi ? 'औद्रिता मुखर्जी' : 'Audrita Mukherjee'))}</span>
         </div>
+        ${removeActionHtml}
       `;
 
       if (isPrepend) {
@@ -397,6 +379,35 @@
         targetGrid.appendChild(card);
       }
     }
+
+    // Listen for click on Remove Poem buttons
+    document.addEventListener('click', function (e) {
+      const removeBtn = e.target.closest('.btn-remove-poem');
+      if (!removeBtn) return;
+      e.preventDefault();
+
+      const poemId = removeBtn.getAttribute('data-id');
+      const poemTitle = removeBtn.getAttribute('data-title') || 'Verse';
+      if (!poemId) return;
+
+      if (window.confirm(`Do you wish to remove "${poemTitle}" from your poetry archive?`)) {
+        const stored = getStoredPoems();
+        const updated = stored.filter(p => p.id !== poemId);
+        saveStoredPoems(updated);
+
+        const card = document.getElementById(poemId);
+        if (card) {
+          card.style.transition = 'all 0.3s ease-out';
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(12px)';
+          setTimeout(() => {
+            card.remove();
+            updateCounterDisplay();
+          }, 300);
+        }
+        showToast(`❧ "${poemTitle}" quietly removed from archive`);
+      }
+    });
 
     function escapeHTML(str) {
       if (!str) return '';
@@ -410,7 +421,10 @@
 
     // Load initial stored custom poems on page load
     const existingCustomPoems = getStoredPoems();
-    existingCustomPoems.forEach(p => renderPoemCard(p, false));
+    existingCustomPoems.forEach(p => {
+      p.isCustom = true; // allow removing previously uploaded custom poems
+      renderPoemCard(p, false);
+    });
 
     // Update garden count display (2 core canonical poems: Favor & Maktub + custom additions)
     function updateCounterDisplay() {

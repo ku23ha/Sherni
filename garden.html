@@ -64,29 +64,29 @@
 
   <main id="main-content">
     <div class="page-garden">
-      <div class="container">
+      <div class="container container--wide">
 
         <header class="page-header" style="text-align: center; max-width: 680px; margin: 0 auto var(--space-12);">
           <span class="section-label">Planted Observations</span>
           <h1 class="page-title" style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 300; margin: var(--space-2) 0 var(--space-4);">
             The Garden
           </h1>
-          <p class="garden-intro" style="font-family: var(--font-serif); font-size: var(--text-base); color: var(--color-text-muted); font-style: italic;">
+          <p class="garden-intro" style="font-family: var(--font-serif); font-size: var(--text-base); color: var(--color-text-muted); font-style: italic; margin-left: auto; margin-right: auto;">
             This is not an archive. It is a place where thoughts arrive before they become anything. Unfinished. Uncertain. Still breathing.
           </p>
         </header>
 
         <div class="garden-all-fragments" role="list">
 
-          <!-- Garden Entry: Favor -->
-          <div class="garden-entry" role="listitem" style="border-left: 2px solid var(--color-accent); padding-left: var(--space-6);">
-            <span style="font-family: var(--font-sans); font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-accent); display: block; margin-bottom: var(--space-2);">
+          <!-- Garden Entry 1: Favor (English) -->
+          <article class="garden-entry" role="listitem">
+            <span class="garden-entry-meta-label">
               English Verse · Planted in the Garden
             </span>
-            <h2 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 400; margin-bottom: var(--space-3);">
+            <h2 class="garden-entry-title">
               Favor
             </h2>
-            <div class="garden-entry-text" style="white-space: pre-line; line-height: 1.85; font-style: italic;">
+            <div class="garden-entry-text">
 Do me a favor, will you please?
 Take his wedding picture
 Clad in white
@@ -106,17 +106,17 @@ Without a name
 And that will be my last gift to him.
             </div>
             <time class="garden-entry-date" datetime="2026-10-08">Audrita Mukherjee</time>
-          </div>
+          </article>
 
-          <!-- Garden Entry: मक़्तूब / Maktub -->
-          <div class="garden-entry" role="listitem" style="border-left: 2px solid var(--color-accent); padding-left: var(--space-6); margin-top: var(--space-12);">
-            <span style="font-family: var(--font-sans); font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-accent); display: block; margin-bottom: var(--space-2);">
+          <!-- Garden Entry 2: मक़्तूब / Maktub (Hindi) -->
+          <article class="garden-entry" role="listitem">
+            <span class="garden-entry-meta-label">
               हिंदी कविता · बग़ीचे में रोपी गई
             </span>
-            <h2 style="font-family: 'Noto Serif Devanagari', var(--font-serif); font-size: var(--text-xl); font-weight: 500; margin-bottom: var(--space-3);">
+            <h2 class="garden-entry-title is-hindi">
               मक़्तूब / Maktub
             </h2>
-            <div class="garden-entry-text" style="white-space: pre-line; line-height: 1.95; font-family: 'Noto Serif Devanagari', var(--font-serif); font-size: 1.05rem;">
+            <div class="garden-entry-text is-hindi">
 ये कैसा वरदान दिया रब ने
 चाहे कितनी गाँठों से बाँधे ये दरवाज़े,
 सीली लकीरों से ये दीवारें,
@@ -181,22 +181,29 @@ And that will be my last gift to him.
 ख़ुद ही ख़ुद को वरदान दिया उसने।
             </div>
             <time class="garden-entry-date" datetime="2026-10-08">औद्रिता मुखर्जी</time>
-          </div>
+          </article>
 
-          <!-- Garden Reflections -->
-          <div class="garden-entry" role="listitem" style="margin-top: var(--space-12);">
+          <!-- Garden Entry 3: Reflection on White & The Ganges -->
+          <article class="garden-entry garden-entry--reflection" role="listitem">
+            <span class="garden-entry-meta-label">
+              Quiet Fragment · Solitude
+            </span>
             <p class="garden-entry-text">
               “White is not just celebration. It is what we wrap our loved ones in before we give them to the fire.”
             </p>
-            <time class="garden-entry-date" datetime="2026-10-08">On White & The Ganges</time>
-          </div>
+            <time class="garden-entry-date" datetime="2026-10-08">On White &amp; The Ganges</time>
+          </article>
 
-          <div class="garden-entry" role="listitem">
-            <p class="garden-entry-text" style="font-family: 'Noto Serif Devanagari', var(--font-serif);">
+          <!-- Garden Entry 4: Reflection on देहलीज़ और राम रेखा -->
+          <article class="garden-entry garden-entry--reflection" role="listitem">
+            <span class="garden-entry-meta-label">
+              विचार खंड · मौन
+            </span>
+            <p class="garden-entry-text is-hindi">
               “ये लक्ष्मण रेखा नहीं थी, जो कोई और उसके लिए खींच जाए... ये राम रेखा थी, अपने ही केंद्र से खींची हुई।”
             </p>
             <time class="garden-entry-date" datetime="2026-10-08">देहलीज़ और राम रेखा</time>
-          </div>
+          </article>
 
         </div>
 

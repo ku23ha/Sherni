@@ -1549,6 +1549,38 @@
   animation: poemPlantGlow 1.2s var(--ease-out) forwards;
 }
 
+/* Remove button for uploaded poems */
+.poem-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border-light);
+}
+
+.btn-remove-poem {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-remove-poem:hover {
+  color: #b33939;
+  border-color: rgba(179, 57, 57, 0.25);
+  background: rgba(179, 57, 57, 0.06);
+}
+
 
 
 

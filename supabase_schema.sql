@@ -6,7 +6,7 @@ create table if not exists public.poems (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   language text not null default 'english', -- 'english' or 'hindi'
-  tag text not null default 'Silence & Water',
+  tag text not null default 'Memory & Solitude',
   verse text not null,
   date text not null,
   notes text,
@@ -29,39 +29,96 @@ create policy "Allow insert poems"
   for insert
   with check (true);
 
--- Sample initial entries
+-- Canonical poems by Audrita Mukherjee
 insert into public.poems (title, language, tag, verse, date) values
 (
-  'The River Knows',
+  'Favor',
   'english',
-  'Silence & Water',
-  'there is a kind of listening
-that does not ask the river
-to explain its drowning.
+  'Memory & The Ganges',
+  'Do me a favor, will you please?
+Take his wedding picture
+Clad in white
+In my land
+White is not just celebration
+It is what we wrap our loved ones in
+Before we give them to the fire
 
-it simply sits on the bank
-and lets the water
-speak in ripples.
+Do me a favor, will you please?
+Bring me the ashes from the fire
+That stood witness to his next life
+I will carry it to the Ganges
+And release what loved him quietly,
+Faithfully,
+Without a name
 
-what we hold tightly
-slips between our fingers.
-what we leave open
-learns to stay.',
-  '07 October 2026'
+And that will be my last gift to him.',
+  'Audrita Mukherjee'
 ),
 (
-  'कुछ अनकहे अल्फ़ाज़',
+  'मक़्तूब / Maktub',
   'hindi',
-  'ख़ामोशी & इश्क़',
-  'कुछ बातें हवाओं के हवाले छोड़ दी हैं,
-हर सवाल का जवाब अल्फ़ाज़ नहीं होते।
+  'मक़्तूब & राम रेखा',
+  'ये कैसा वरदान दिया रब ने
+चाहे कितनी गाँठों से बाँधे ये दरवाज़े,
+सीली लकीरों से ये दीवारें,
+दस्तक आने में देर न लगती।
 
-कभी शाम की चाय पर बैठना मेरे साथ,
-जो ख़ामोश रह जाएँ, वही असली क़िस्से हैं।
+और कहीं पुरानी आदतों से रह जाए कोई किवाड़ खुली,
+तो घुस आते मेहमान नए।
+घर के चौराहे से आती ख़ुशबू इतनी,
+गुलाब और पीले फूलों से महकता बग़ीचा,
+बरगद की छाँव की ठंडक,
+और घरवाली की दया से रखा हुआ वो मीठा पानी,
+बाहर की कड़ी धूप में सबको मोह लेता।
 
-तुमने छुआ था उस हिस्से को
-जो बरसों से अंधेरे में रहने का आदी था,
-और हौले से कहा —
-तुम टूटे नहीं, सिर्फ़ संवर रहे हो।',
-  '24 September 2026'
+आने को तो सब आते हैं
+घर का राशन, पानी, चाव से खाते।
+और जब वो माक़्तूब मानकर
+उनके आगे के सफ़र के लिए पोटलियों में खाना बाँध देती,
+कुछ हसीन यादें भी छोड़ देती
+"माक़्तूब है ये," मानकर, उन्हें अलविदा कह देती।
+
+हर कोई दस्तक देता चला आता
+पर किसी ने अंदरवाले से मिलकर पूछा ही नहीं।
+शायद उन्हें लगता था इसके पास भला किस बात की कमी होगी?
+सब आते-जाते रहे।
+कोई ठहरा नहीं।
+
+घरवाली अनुभव की सीढ़ियाँ चढ़ती गई
+हर पायदान पर थोड़ी और ख़ाली होती।
+एहसास हुआ अब कोई ठहरने नहीं आएगा—
+पर उस दिन उसने किवाड़ बंद नहीं किए
+उसने राम का नाम लिया।
+और देहलीज़ पर एक लकीर खींच दी।
+
+ये लक्ष्मण रेखा नहीं थी,
+जो कोई और उसके लिए खींच जाए,
+ये राम रेखा थी,
+अपने ही केंद्र से खींची हुई।
+
+धीरे-धीरे विश्वास की जड़ें फिर से पकड़ने लगीं।
+कमरों से उन छलिया परछाइयों की यादें
+आँसुओं में घुलने लगीं
+बहती रहीं वो यादें, आँसुओं के साथ देहलीज़ के पार।
+और जब सब बह गया
+बस प्रेम रहा, बस राम रहे।
+
+कुछ दिन आँगन ख़ामोश था,
+देहलीज़ चुप रही।
+आँगन फिर से महक उठा।
+गुलाब की झाड़ियाँ फिर खिलीं,
+अमरूद के पेड़ों पर भँवरे लौट आए।
+
+अब भी दस्तक आती है।
+पर देहलीज़ पूछती है,
+"तुम राशन माँगने आए हो, या ठहरने?"
+
+जो पार कर सके वो रेखा, वही अंदर आता है।
+बाक़ी लौट जाते हैं।
+घरवाली अब भी राम का नाम जपती है
+पर अब वो नाम दरवाज़ा नहीं खोलता,
+उसे थामे रखता है।
+
+ख़ुद ही ख़ुद को वरदान दिया उसने।',
+  'औद्रिता मुखर्जी'
 );

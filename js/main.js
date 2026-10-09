@@ -1121,6 +1121,61 @@
       }
     });
 
+    // ── Universal Sanctuary Backup & Device Sync System ────────
+    const btnExportSanctuary = document.getElementById('btn-export-sanctuary');
+    const btnImportSanctuary = document.getElementById('btn-import-sanctuary');
+    const inputImportSanctuary = document.getElementById('input-import-sanctuary');
+
+    if (btnExportSanctuary) {
+      btnExportSanctuary.addEventListener('click', function () {
+        const payload = {
+          version: 'audrita-sanctuary-v1',
+          exportedAt: new Date().toISOString(),
+          poems: getStoredPoems(),
+          canonicalMap: getCanonicalCustomizations(),
+          voiceTracks: getStoredVoiceTracks(),
+          photos: getStoredPhotos()
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `audrita-sanctuary-backup-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('📥 Sanctuary backup downloaded successfully');
+      });
+    }
+
+    if (btnImportSanctuary && inputImportSanctuary) {
+      btnImportSanctuary.addEventListener('click', function () {
+        inputImportSanctuary.click();
+      });
+
+      inputImportSanctuary.addEventListener('change', function (e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+          try {
+            const data = JSON.parse(evt.target.result);
+            if (data.poems) saveStoredPoems(data.poems);
+            if (data.canonicalMap) saveCanonicalCustomizations(data.canonicalMap);
+            if (data.voiceTracks) saveStoredVoiceTracks(data.voiceTracks);
+            if (data.photos) saveStoredPhotos(data.photos);
+
+            showToast('📤 Sanctuary restored! Refreshing in 1s...');
+            setTimeout(() => window.location.reload(), 1200);
+          } catch (err) {
+            alert('Invalid backup file. Please select a valid audrita-sanctuary-backup.json file.');
+          }
+        };
+        reader.readAsText(file);
+      });
+    }
 
   });
 

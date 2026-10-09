@@ -1602,30 +1602,478 @@
   background: rgba(179, 57, 57, 0.06);
 }
 
-/* Minimalist remove icon for poetry cards */
-.btn-remove-poem-icon {
-  background: transparent;
-  border: none;
-  font-size: 14px;
-  line-height: 1;
-  color: var(--color-text-faint);
+/* Minimalist & Accessible Poem Controls (Edit & Remove) */
+.poem-card-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.btn-poem-ctrl {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
   cursor: pointer;
-  padding: 4px 6px;
+  transition: all var(--duration-fast) var(--ease-out);
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.btn-poem-ctrl:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.btn-poem-ctrl.btn-poem-remove {
+  color: var(--color-text-faint);
+}
+
+.btn-poem-ctrl.btn-poem-remove:hover {
+  border-color: rgba(179, 57, 57, 0.4);
+  color: #b33939;
+  background-color: rgba(179, 57, 57, 0.08);
+}
+
+/* ── Editorial Modal System (Poetry Customizer, Google Drive Album, Voice Verses) ── */
+.editorial-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(20, 18, 16, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-out), visibility var(--duration-base) var(--ease-out);
+}
+
+.editorial-modal-backdrop.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.editorial-modal-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl), 0 20px 50px rgba(0, 0, 0, 0.18);
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(20px) scale(0.98);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.editorial-modal-backdrop.is-active .editorial-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.editorial-modal-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editorial-modal-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.editorial-modal-close {
+  background: transparent;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-full);
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.editorial-modal-close:hover {
+  border-color: var(--color-border);
+  color: var(--color-text);
+  background-color: var(--color-bg-alt);
+}
+
+.editorial-modal-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.editorial-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editorial-form-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.editorial-form-input,
+.editorial-form-textarea,
+.editorial-form-select {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  padding: 10px 14px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.editorial-form-textarea {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.8;
+  resize: vertical;
+  min-height: 220px;
+}
+
+.editorial-form-input:focus,
+.editorial-form-textarea:focus,
+.editorial-form-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(74, 103, 65, 0.15);
+}
+
+.editorial-form-hint {
+  font-family: var(--font-serif);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.editorial-modal-footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-alt);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.editorial-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+.btn-modal-cancel {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-modal-cancel:hover {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.btn-modal-save {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent);
+  color: #ffffff;
+  border: 1px solid var(--color-accent);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-modal-save:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-modal-tool {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px dashed var(--color-accent);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-modal-tool:hover {
+  background: rgba(74, 103, 65, 0.08);
+}
+
+/* ── Google Drive Album Badge & Storage Link ── */
+.badge-drive-storage {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background-color: rgba(74, 103, 65, 0.08);
+  border: 1px solid rgba(74, 103, 65, 0.2);
+  border-radius: var(--radius-full);
+  padding: 2px 7px;
+  margin-top: 4px;
+}
+
+/* ── Bengali Philosophical Alpana Mandala Animations ── */
+.calm-bloom-svg {
+  transition: transform 1.2s var(--ease-out);
+}
+
+.hero-calm-art-wrapper:hover .calm-bloom-svg {
+  transform: scale(1.035);
+}
+
+/* Bengali Prana (প্রাণ) Meditative Breath */
+.bengali-prana-breathe {
+  transform-origin: 200px 200px;
+  animation: bengaliPranaBreathe 9s ease-in-out infinite;
+}
+
+@keyframes bengaliPranaBreathe {
+  0%, 100% {
+    transform: scale(0.97) rotate(0deg);
+    filter: drop-shadow(0 0 10px rgba(184, 115, 87, 0.2));
+  }
+  50% {
+    transform: scale(1.038) rotate(2deg);
+    filter: drop-shadow(0 0 24px rgba(184, 115, 87, 0.45));
+  }
+}
+
+/* Bengali Alpana Rice-paste Dots Rotation */
+.alpona-ring-dots {
+  transform-origin: 200px 200px;
+  animation: alponaOrbitClockwise 75s linear infinite;
+}
+
+.alpona-ring-dots-rev {
+  transform-origin: 200px 200px;
+  animation: alponaOrbitCounter 90s linear infinite;
+}
+
+@keyframes alponaOrbitClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes alponaOrbitCounter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Bengali Sacred Poramati/Amber Aura Glow */
+.alpona-aura-pulse {
+  transform-origin: 200px 200px;
+  animation: alponaAuraPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes alponaAuraPulse {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+/* ── Voice Verses (Spoken Word) Hub ── */
+.voice-verses-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.btn-add-voice {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-add-voice:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: var(--color-bg-alt);
+  transform: translateY(-1px);
+}
+
+.voice-verses-playlist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.voice-track-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.voice-track-card:hover {
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.voice-track-card.is-playing {
+  border-color: var(--color-accent);
+  background-color: var(--color-bg-alt);
+}
+
+.voice-track-info {
+  flex-grow: 1;
+}
+
+.voice-track-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin: 0 0 2px;
+  color: var(--color-text);
+}
+
+.voice-track-meta {
+  font-family: var(--font-serif);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-style: italic;
+  display: flex;
+  gap: var(--space-3);
+}
+
+.voice-track-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.btn-track-play {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btn-track-play:hover {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  border-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.voice-track-card.is-playing .btn-track-play {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  border-color: var(--color-accent);
+}
+
+.btn-remove-voice-track {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-text-faint);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
   border-radius: var(--radius-full);
   transition: all var(--duration-fast) var(--ease-out);
-  margin-left: auto;
-  opacity: 0.6;
 }
 
-.poem-card-clean:hover .btn-remove-poem-icon {
-  opacity: 1;
-}
-
-.btn-remove-poem-icon:hover {
+.btn-remove-voice-track:hover {
   color: #b33939;
-  background: rgba(179, 57, 57, 0.08);
-  transform: scale(1.15);
+  border-color: rgba(179, 57, 57, 0.3);
+  background-color: rgba(179, 57, 57, 0.08);
 }
+
 
 
 

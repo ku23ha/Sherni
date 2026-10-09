@@ -92,111 +92,163 @@
           </div>
 
           <!-- Right Column: Calming, Sensitive Blooming Artwork Representing Audrita -->
+          <!-- Right Column: Bengali Philosophical Alpana Mandala Representing Audrita -->
           <div class="hero-editorial-portrait">
-            <div class="hero-calm-art-wrapper" role="img" aria-label="A delicate, breathing botanical bloom radiating calm and gentle light">
+            <div class="hero-calm-art-wrapper" role="img" aria-label="A meditative Bengali Alpana lotus mandala radiating calm philosophical reflection, rooted in Bengali heritage">
               <svg class="calm-bloom-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <radialGradient id="auraGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.35" />
-                    <stop offset="50%" stop-color="var(--color-accent-soft)" stop-opacity="0.14" />
+                  <!-- Deep Bengali Poramati Terracotta & Amber Sacred Aura -->
+                  <radialGradient id="alponaAuraGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#b87333" stop-opacity="0.32" />
+                    <stop offset="45%" stop-color="var(--color-accent)" stop-opacity="0.18" />
+                    <stop offset="75%" stop-color="#b08860" stop-opacity="0.08" />
                     <stop offset="100%" stop-color="transparent" stop-opacity="0" />
                   </radialGradient>
-                  <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#fff9e6" stop-opacity="0.95" />
-                    <stop offset="60%" stop-color="var(--color-accent)" stop-opacity="0.45" />
+                  <!-- Sacred Inner Bindu Light -->
+                  <radialGradient id="alponaBinduGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#fffdf7" stop-opacity="0.98" />
+                    <stop offset="40%" stop-color="#ffd599" stop-opacity="0.85" />
+                    <stop offset="75%" stop-color="#b87333" stop-opacity="0.4" />
                     <stop offset="100%" stop-color="transparent" stop-opacity="0" />
                   </radialGradient>
-                  <linearGradient id="petalGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.38" />
+                  <!-- Outer Alpana Lotus Petal Gradient: Moss to Warm Terracotta -->
+                  <linearGradient id="alponaPetalGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.42" />
+                    <stop offset="50%" stop-color="#7a5c3a" stop-opacity="0.22" />
                     <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.08" />
                   </linearGradient>
-                  <linearGradient id="petalGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="var(--color-text)" stop-opacity="0.22" />
+                  <!-- Inner Bengali Rice-Paste Ivory & Amber Gradient -->
+                  <linearGradient id="alponaPetalGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#556b2f" stop-opacity="0.3" />
+                    <stop offset="60%" stop-color="#c49a6c" stop-opacity="0.2" />
                     <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.06" />
                   </linearGradient>
                 </defs>
 
-                <!-- Radiant background aura -->
-                <circle cx="200" cy="200" r="172" fill="url(#auraGlow)" />
+                <!-- Radiant Pulsating Sacred Background Aura -->
+                <circle class="alpona-aura-pulse" cx="200" cy="200" r="176" fill="url(#alponaAuraGlow)" />
 
-                <!-- Concentric slow rotating sacred rings -->
-                <g class="calm-aura-ring">
-                  <circle cx="200" cy="200" r="150" stroke="var(--color-accent)" stroke-width="0.8" stroke-dasharray="3 6" opacity="0.45" />
-                  <circle cx="200" cy="200" r="128" stroke="var(--color-border)" stroke-width="0.6" stroke-dasharray="1 5" opacity="0.6" />
-                  <circle cx="200" cy="200" r="96" stroke="var(--color-accent)" stroke-width="0.5" opacity="0.35" />
+                <!-- Concentric Sacred Bengali Alpana Rings (Celestial Cyclical Time) -->
+                <g class="alpona-ring-dots">
+                  <circle cx="200" cy="200" r="162" stroke="#b87333" stroke-width="0.85" stroke-dasharray="3 7" opacity="0.48" />
+                  <circle cx="200" cy="200" r="144" stroke="var(--color-accent)" stroke-width="0.75" stroke-dasharray="1 6" opacity="0.65" />
+                  <circle cx="200" cy="200" r="124" stroke="var(--color-border)" stroke-width="0.6" stroke-dasharray="4 8" opacity="0.55" />
                 </g>
-                <g class="calm-aura-ring-reverse">
-                  <circle cx="200" cy="200" r="162" stroke="var(--color-border-light)" stroke-width="0.5" stroke-dasharray="2 8" opacity="0.5" />
-                </g>
-
-                <!-- Floating stardust dew particles -->
-                <circle class="calm-particle" cx="130" cy="110" r="2.2" fill="var(--color-accent)" opacity="0.75" />
-                <circle class="calm-particle" cx="270" cy="120" r="1.8" fill="var(--color-accent)" opacity="0.65" />
-                <circle class="calm-particle" cx="110" cy="260" r="2.5" fill="var(--color-accent)" opacity="0.55" />
-                <circle class="calm-particle" cx="290" cy="270" r="2.0" fill="var(--color-accent)" opacity="0.8" />
-                <circle class="calm-particle" cx="200" cy="65" r="2.4" fill="var(--color-accent)" opacity="0.85" />
-                <circle class="calm-particle" cx="200" cy="335" r="1.6" fill="var(--color-accent)" opacity="0.5" />
-
-                <!-- Outer Lotus Petals (8 symmetrically blooming petals) -->
-                <g class="calm-petals-outer">
-                  <g transform="rotate(0 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(45 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(90 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(135 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(180 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(225 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(270 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
-                  <g transform="rotate(315 200 200)">
-                    <path d="M200 200 C185 140 170 100 200 60 C230 100 215 140 200 200 Z" fill="url(#petalGrad1)" stroke="var(--color-accent)" stroke-width="0.75" />
-                  </g>
+                <g class="alpona-ring-dots-rev">
+                  <circle cx="200" cy="200" r="172" stroke="var(--color-border-light)" stroke-width="0.5" stroke-dasharray="2 10" opacity="0.4" />
+                  <circle cx="200" cy="200" r="102" stroke="#b08860" stroke-width="0.6" stroke-dasharray="3 5" opacity="0.38" />
                 </g>
 
-                <!-- Core Inner Lotus Petals (interleaved 8 gentle petals) -->
-                <g class="calm-petals-core">
-                  <g transform="rotate(22.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(67.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(112.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(157.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(202.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(247.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(292.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                  <g transform="rotate(337.5 200 200)">
-                    <path d="M200 200 C188 150 178 115 200 85 C222 115 212 150 200 200 Z" fill="url(#petalGrad2)" stroke="var(--color-accent)" stroke-width="0.9" />
-                  </g>
-                </g>
+                <!-- Floating Shimmering Stardust Dew / Lotus Pollen -->
+                <circle class="calm-particle" cx="120" cy="98" r="2.2" fill="#c49a6c" opacity="0.8" />
+                <circle class="calm-particle" cx="280" cy="115" r="1.8" fill="var(--color-accent)" opacity="0.7" />
+                <circle class="calm-particle" cx="95" cy="255" r="2.4" fill="var(--color-accent)" opacity="0.65" />
+                <circle class="calm-particle" cx="305" cy="268" r="2.0" fill="#b87333" opacity="0.85" />
+                <circle class="calm-particle" cx="200" cy="55" r="2.6" fill="#c49a6c" opacity="0.9" />
+                <circle class="calm-particle" cx="200" cy="345" r="1.8" fill="var(--color-accent)" opacity="0.6" />
 
-                <!-- Center Radiant Stamen & Glow -->
-                <circle class="calm-center-glow" cx="200" cy="200" r="28" fill="url(#centerGlow)" />
-                <circle cx="200" cy="200" r="11" fill="var(--color-accent)" opacity="0.8" />
-                <circle cx="200" cy="200" r="4" fill="#ffffff" opacity="0.95" />
+                <!-- Bengali Prana (প্রাণ) Meditative Breathing Mandala Unit -->
+                <g class="bengali-prana-breathe">
+                  
+                  <!-- Outer 12-Fold Sacred Bengali Lotus Petals (Shashtha-Kona Alpana Symmetry) -->
+                  <g class="calm-petals-outer">
+                    <g transform="rotate(0 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(30 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(60 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(90 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(120 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(150 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(180 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(210 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(240 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(270 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(300 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                    <g transform="rotate(330 200 200)">
+                      <path d="M200 200 C182 135 168 95 200 52 C232 95 218 135 200 200 Z" fill="url(#alponaPetalGrad1)" stroke="var(--color-accent)" stroke-width="0.85" />
+                      <circle cx="200" cy="62" r="1.8" fill="#c49a6c" opacity="0.8" />
+                    </g>
+                  </g>
+
+                  <!-- Inner Interleaved Rice-Paste Grain & Lotus Petals -->
+                  <g class="calm-petals-core">
+                    <g transform="rotate(15 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(45 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(75 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(105 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(135 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(165 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(195 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(225 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(255 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(285 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(315 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                    <g transform="rotate(345 200 200)">
+                      <path d="M200 200 C186 148 174 112 200 78 C226 112 214 148 200 200 Z" fill="url(#alponaPetalGrad2)" stroke="#b87333" stroke-width="0.75" />
+                    </g>
+                  </g>
+
+                  <!-- Sacred Center Bindu (The philosophical point of quiet contemplation) -->
+                  <circle class="calm-center-glow" cx="200" cy="200" r="32" fill="url(#alponaBinduGlow)" />
+                  <circle cx="200" cy="200" r="13" fill="#b87333" opacity="0.85" />
+                  <circle cx="200" cy="200" r="5" fill="#fffdfa" opacity="0.98" />
+                  <!-- Sacred Bindu Core Ring -->
+                  <circle cx="200" cy="200" r="22" stroke="#ffffff" stroke-width="0.75" stroke-dasharray="2 3" opacity="0.7" />
+                </g>
               </svg>
             </div>
             <p class="hero-art-caption">
@@ -249,6 +301,9 @@
                     <span class="poem-card-lang">EN</span>
                     <span class="poem-card-tag">Memory & The Ganges</span>
                   </div>
+                  <div class="poem-card-controls">
+                    <button class="btn-poem-ctrl btn-poem-edit" data-id="poem-favor" title="Edit & Customize Verse">✎ Edit</button>
+                  </div>
                 </div>
                 <h4 class="poem-card-title">Favor</h4>
                 <div class="poem-verse-text">Do me a favor, will you please?
@@ -293,6 +348,9 @@ And that will be my last gift to him.</div>
                   <div class="poem-card-meta">
                     <span class="poem-card-lang" style="color: var(--color-accent); font-weight: 500;">हिंदी</span>
                     <span class="poem-card-tag">मक़्तूब & राम रेखा</span>
+                  </div>
+                  <div class="poem-card-controls">
+                    <button class="btn-poem-ctrl btn-poem-edit" data-id="poem-maktub" title="Edit & Customize Verse">✎ Edit</button>
                   </div>
                 </div>
                 <h4 class="poem-card-title is-hindi">मक़्तूब / Maktub</h4>
@@ -436,39 +494,26 @@ And that will be my last gift to him.</div>
       </div>
     </section>
 
-    <!-- Spoken Word Audio Player Bar (Ready for Audrita's upcoming voice) -->
-    <section class="section-spoken-word" aria-labelledby="audio-title">
+    <!-- Spoken Word Audio Player Bar (Words In Voice with Add & Remove feature) -->
+    <section class="section-spoken-word" id="spoken-word" aria-labelledby="audio-title">
       <div class="container">
-        <div style="text-align: center; margin-bottom: var(--space-6);">
-          <span class="section-label" id="audio-title">Words In Voice</span>
-          <h2 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 300;">Spoken Verses & Ambient Cello</h2>
+        <div class="voice-verses-header">
+          <div>
+            <span class="section-label" id="audio-title">Words In Voice</span>
+            <h2 style="font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.25rem); font-weight: 300; margin: 4px 0 0;">
+              Spoken Verses &amp; Ambient Cello
+            </h2>
+            <p style="font-family: var(--font-serif); font-size: var(--text-sm); color: var(--color-text-muted); font-style: italic; margin-top: 4px;">
+              Quiet recitations, Calcutta rain, and cello resonances.
+            </p>
+          </div>
+          <button class="btn-add-voice" id="btn-add-voice-track" title="Add a spoken verse recording">
+            <span>+</span> Add Spoken Verse
+          </button>
         </div>
 
-        <div class="audio-player-component">
-          <div class="audio-header">
-            <div>
-              <p class="audio-track-title">01. Favor (Spoken Verse)</p>
-              <span class="audio-track-artist">Audrita Mukherjee · Cello Accompaniment</span>
-            </div>
-          </div>
-          <div class="audio-controls">
-            <button class="audio-play-btn" id="audio-play-btn" aria-label="Play audio poem">▶</button>
-            <div class="waveform-container">
-              <div class="waveform-bar" style="height: 35%;"></div>
-              <div class="waveform-bar" style="height: 70%;"></div>
-              <div class="waveform-bar" style="height: 95%;"></div>
-              <div class="waveform-bar" style="height: 45%;"></div>
-              <div class="waveform-bar" style="height: 80%;"></div>
-              <div class="waveform-bar" style="height: 60%;"></div>
-              <div class="waveform-bar" style="height: 90%;"></div>
-              <div class="waveform-bar" style="height: 30%;"></div>
-              <div class="waveform-bar" style="height: 85%;"></div>
-              <div class="waveform-bar" style="height: 55%;"></div>
-              <div class="waveform-bar" style="height: 75%;"></div>
-              <div class="waveform-bar" style="height: 40%;"></div>
-              <div class="waveform-bar" style="height: 65%;"></div>
-            </div>
-          </div>
+        <div class="voice-verses-playlist" id="voice-verses-playlist">
+          <!-- Voice track cards rendered dynamically via js/main.js -->
         </div>
       </div>
     </section>
@@ -505,6 +550,94 @@ And that will be my last gift to him.</div>
 
   <!-- Invisible File Input: Native, instant, zero clutter -->
   <input type="file" id="poetry-file-input" accept=".docx,.doc,.pdf,.txt,.md" style="display: none !important;" />
+
+  <!-- ── Modal 1: Customize & Edit Poem Modal ── -->
+  <div class="editorial-modal-backdrop" id="modal-edit-poem" aria-hidden="true">
+    <div class="editorial-modal-card" role="dialog" aria-labelledby="modal-edit-title">
+      <div class="editorial-modal-header">
+        <h3 class="editorial-modal-title" id="modal-edit-title">Customize &amp; Edit Verse</h3>
+        <button class="editorial-modal-close" id="modal-edit-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="editorial-modal-body">
+        <input type="hidden" id="edit-poem-id" />
+        <div class="editorial-form-group">
+          <label class="editorial-form-label" for="edit-poem-title">Poem Title / शीर्षक</label>
+          <input type="text" id="edit-poem-title" class="editorial-form-input" placeholder="e.g. Favor, मक़्तूब" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+          <div class="editorial-form-group">
+            <label class="editorial-form-label" for="edit-poem-tag">Heading / Collection Tag</label>
+            <input type="text" id="edit-poem-tag" class="editorial-form-input" placeholder="e.g. Memory &amp; The Ganges, मक़्तूब &amp; देहलीज़" />
+          </div>
+          <div class="editorial-form-group">
+            <label class="editorial-form-label" for="edit-poem-lang">Language / भाषा</label>
+            <select id="edit-poem-lang" class="editorial-form-select">
+              <option value="english">English Poetry (EN)</option>
+              <option value="hindi">हिंदी कविता (Hindi)</option>
+            </select>
+          </div>
+        </div>
+        <div class="editorial-form-group">
+          <label class="editorial-form-label" for="edit-poem-date">Signature / Author / Date</label>
+          <input type="text" id="edit-poem-date" class="editorial-form-input" placeholder="e.g. Audrita Mukherjee" />
+        </div>
+        <div class="editorial-form-group">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <label class="editorial-form-label" for="edit-poem-verses">Verses &amp; Stanzas</label>
+            <button type="button" class="btn-modal-tool" id="btn-autoclean-stanzas" title="Remove excessive double spacing and format clean stanzas like Favor on the left">
+              ✨ Auto-Clean Stanzas
+            </button>
+          </div>
+          <textarea id="edit-poem-verses" class="editorial-form-textarea" placeholder="Paste or edit verses here..."></textarea>
+          <p class="editorial-form-hint">Tip: Lines in the same stanza have no blank lines. Press Enter twice to create a clean stanza break.</p>
+        </div>
+      </div>
+      <div class="editorial-modal-footer">
+        <span style="font-family: var(--font-serif); font-size: var(--text-xs); color: var(--color-text-faint); font-style: italic;">
+          Saved instantly to Audrita's archive
+        </span>
+        <div class="editorial-modal-actions">
+          <button type="button" class="btn-modal-cancel" id="btn-edit-poem-cancel">Cancel</button>
+          <button type="button" class="btn-modal-save" id="btn-edit-poem-save">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Modal 2: Add Spoken Verse Modal ── -->
+  <div class="editorial-modal-backdrop" id="modal-add-voice" aria-hidden="true">
+    <div class="editorial-modal-card" role="dialog" aria-labelledby="modal-voice-title">
+      <div class="editorial-modal-header">
+        <h3 class="editorial-modal-title" id="modal-voice-title">Add Spoken Verse</h3>
+        <button class="editorial-modal-close" id="modal-voice-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="editorial-modal-body">
+        <div class="editorial-form-group">
+          <label class="editorial-form-label" for="voice-new-title">Track Title</label>
+          <input type="text" id="voice-new-title" class="editorial-form-input" placeholder="e.g. Favor (Reading in Rain)" />
+        </div>
+        <div class="editorial-form-group">
+          <label class="editorial-form-label" for="voice-new-narrator">Narrator &amp; Ambient Notes</label>
+          <input type="text" id="voice-new-narrator" class="editorial-form-input" placeholder="e.g. Audrita Mukherjee · Rain &amp; Cello in C Minor" />
+        </div>
+        <div class="editorial-form-group">
+          <label class="editorial-form-label">Audio Source</label>
+          <input type="file" id="voice-file-input" accept="audio/*" class="editorial-form-input" style="margin-bottom: 6px;" />
+          <p class="editorial-form-hint">Or paste an audio link or Google Drive audio link below:</p>
+          <input type="url" id="voice-new-url" class="editorial-form-input" placeholder="https://... or Google Drive share link" />
+        </div>
+      </div>
+      <div class="editorial-modal-footer">
+        <div class="editorial-modal-actions">
+          <button type="button" class="btn-modal-cancel" id="btn-voice-cancel">Cancel</button>
+          <button type="button" class="btn-modal-save" id="btn-voice-save">Add Track</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio playback element -->
+  <audio id="global-voice-audio" preload="none" style="display: none;"></audio>
 
   <!-- Client-side parsing libraries for Word (.docx) and PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>

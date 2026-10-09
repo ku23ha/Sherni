@@ -1877,38 +1877,68 @@
 /* ── Bengali Philosophical Alpana Mandala Animations ── */
 .calm-bloom-svg {
   transition: transform 1.2s var(--ease-out);
+  overflow: visible;
 }
 
 .hero-calm-art-wrapper:hover .calm-bloom-svg {
-  transform: scale(1.035);
+  transform: scale(1.045);
 }
 
-/* Bengali Prana (প্রাণ) Meditative Breath */
+/* Bengali Prana (প্রাণ) Meditative Breath — Visible, graceful life cycle */
 .bengali-prana-breathe {
-  transform-origin: 200px 200px;
-  animation: bengaliPranaBreathe 9s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bengaliPranaBreathe 4.8s ease-in-out infinite;
 }
 
 @keyframes bengaliPranaBreathe {
-  0%, 100% {
-    transform: scale(0.97) rotate(0deg);
-    filter: drop-shadow(0 0 10px rgba(184, 115, 87, 0.2));
+  0% {
+    transform: scale(0.92) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(184, 115, 87, 0.25));
   }
   50% {
-    transform: scale(1.038) rotate(2deg);
-    filter: drop-shadow(0 0 24px rgba(184, 115, 87, 0.45));
+    transform: scale(1.07) rotate(3.5deg);
+    filter: drop-shadow(0 0 26px rgba(196, 154, 108, 0.55));
+  }
+  100% {
+    transform: scale(0.92) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(184, 115, 87, 0.25));
   }
 }
 
-/* Bengali Alpana Rice-paste Dots Rotation */
+/* Inner Lotus Petal Breathing */
+.calm-petals-inner {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bengaliInnerBloom 4.8s ease-in-out infinite reverse;
+}
+
+@keyframes bengaliInnerBloom {
+  0% {
+    transform: scale(0.94) rotate(0deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.08) rotate(-4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.94) rotate(0deg);
+    opacity: 0.85;
+  }
+}
+
+/* Bengali Alpana Sacred Orbit Rings — Elegant, visible celestial motion */
 .alpona-ring-dots {
-  transform-origin: 200px 200px;
-  animation: alponaOrbitClockwise 75s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: alponaOrbitClockwise 22s linear infinite;
 }
 
 .alpona-ring-dots-rev {
-  transform-origin: 200px 200px;
-  animation: alponaOrbitCounter 90s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: alponaOrbitCounter 28s linear infinite;
 }
 
 @keyframes alponaOrbitClockwise {
@@ -1921,21 +1951,32 @@
   to { transform: rotate(0deg); }
 }
 
-/* Bengali Sacred Poramati/Amber Aura Glow */
+/* Bengali Sacred Poramati/Amber Aura Glow Pulse */
 .alpona-aura-pulse {
-  transform-origin: 200px 200px;
-  animation: alponaAuraPulse 6s ease-in-out infinite alternate;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: alponaAuraPulse 3.8s ease-in-out infinite alternate;
 }
 
 @keyframes alponaAuraPulse {
   0% {
-    opacity: 0.35;
-    transform: scale(0.96);
+    opacity: 0.3;
+    transform: scale(0.92);
   }
   100% {
-    opacity: 0.75;
-    transform: scale(1.05);
+    opacity: 0.85;
+    transform: scale(1.08);
   }
+}
+
+/* Floating Pollen / Dew Particles */
+.calm-particle {
+  animation: pollenFloat 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes pollenFloat {
+  0% { transform: translateY(0); opacity: 0.4; }
+  100% { transform: translateY(-8px); opacity: 0.95; }
 }
 
 /* ── Voice Verses (Spoken Word) Hub ── */

@@ -497,12 +497,14 @@
       }
     }
 
-    // ── Poetry Customization & Edit Modal Logic ─────────────────
-    const modalEditPoem = document.getElementById('modal-edit-poem');
-    const modalEditClose = document.getElementById('modal-edit-close');
+    // ── Poetry Customization & Edit (Inline inside Poetry Archive) ─────────────────
+    const inlinePoetryEditor = document.getElementById('inline-poetry-editor');
+    const btnTogglePoetryEditor = document.getElementById('btn-toggle-poetry-editor');
+    const btnCloseInlineEditor = document.getElementById('btn-close-inline-editor');
     const btnEditPoemCancel = document.getElementById('btn-edit-poem-cancel');
     const btnEditPoemSave = document.getElementById('btn-edit-poem-save');
     const btnAutocleanStanzas = document.getElementById('btn-autoclean-stanzas');
+    const inlineEditorHeading = document.getElementById('inline-editor-heading');
 
     const editPoemIdInput = document.getElementById('edit-poem-id');
     const editPoemTitleInput = document.getElementById('edit-poem-title');
@@ -511,9 +513,8 @@
     const editPoemDateInput = document.getElementById('edit-poem-date');
     const editPoemVersesTextarea = document.getElementById('edit-poem-verses');
 
-    function openEditPoemModal(poemId) {
-      if (!modalEditPoem) return;
-      const card = document.getElementById(poemId);
+    function openEditPoemEditor(poemId) {
+      const card = document.getElementById(poemId) || document.getElementById('poem-favor');
       if (!card) return;
 
       const titleEl = card.querySelector('.poem-card-title');
@@ -522,35 +523,50 @@
       const dateEl = card.querySelector('.poem-card-date');
       const verseEl = card.querySelector('.poem-verse-text');
 
-      editPoemIdInput.value = poemId;
-      editPoemTitleInput.value = titleEl ? titleEl.textContent.trim() : '';
-      editPoemTagInput.value = tagEl ? tagEl.textContent.trim() : '';
-      editPoemDateInput.value = dateEl ? dateEl.textContent.trim() : '';
-      editPoemVersesTextarea.value = verseEl ? verseEl.textContent.trim() : '';
+      if (editPoemIdInput) editPoemIdInput.value = card.id;
+      if (editPoemTitleInput) editPoemTitleInput.value = titleEl ? titleEl.textContent.trim() : '';
+      if (editPoemTagInput) editPoemTagInput.value = tagEl ? tagEl.textContent.trim() : '';
+      if (editPoemDateInput) editPoemDateInput.value = dateEl ? dateEl.textContent.trim() : '';
+      if (editPoemVersesTextarea) editPoemVersesTextarea.value = verseEl ? verseEl.textContent.trim() : '';
 
       const isHindi = (langEl && langEl.textContent.includes('हिंदी')) || card.getAttribute('data-category') === 'hindi';
       if (editPoemLangSelect) {
         editPoemLangSelect.value = isHindi ? 'hindi' : 'english';
       }
+      if (inlineEditorHeading) {
+        inlineEditorHeading.textContent = `Customize & Edit: ${titleEl ? titleEl.textContent.trim() : 'Verse'}`;
+      }
 
-      modalEditPoem.classList.add('is-active');
-      modalEditPoem.setAttribute('aria-hidden', 'false');
-      editPoemTitleInput.focus();
+      if (inlinePoetryEditor) {
+        inlinePoetryEditor.style.display = 'block';
+        inlinePoetryEditor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      if (editPoemTitleInput) editPoemTitleInput.focus();
     }
 
-    function closeEditPoemModal() {
-      if (!modalEditPoem) return;
-      modalEditPoem.classList.remove('is-active');
-      modalEditPoem.setAttribute('aria-hidden', 'true');
+    function closeEditPoemEditor() {
+      if (inlinePoetryEditor) {
+        inlinePoetryEditor.style.display = 'none';
+      }
     }
 
-    if (modalEditClose) modalEditClose.addEventListener('click', closeEditPoemModal);
-    if (btnEditPoemCancel) btnEditPoemCancel.addEventListener('click', closeEditPoemModal);
-    if (modalEditPoem) {
-      modalEditPoem.addEventListener('click', function (e) {
-        if (e.target === modalEditPoem) closeEditPoemModal();
+    if (btnTogglePoetryEditor) {
+      btnTogglePoetryEditor.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (inlinePoetryEditor && inlinePoetryEditor.style.display !== 'none') {
+          closeEditPoemEditor();
+        } else {
+          // Open for active visible poem (Hindi tab or English tab)
+          const activeFilter = document.querySelector('.poetry-filter-bar .filter-pill.is-active');
+          const isHindiTab = activeFilter && activeFilter.getAttribute('data-filter') === 'hindi';
+          const defaultPoemId = isHindiTab ? 'poem-maktub' : 'poem-favor';
+          openEditPoemEditor(defaultPoemId);
+        }
       });
     }
+
+    if (btnCloseInlineEditor) btnCloseInlineEditor.addEventListener('click', closeEditPoemEditor);
+    if (btnEditPoemCancel) btnEditPoemCancel.addEventListener('click', closeEditPoemEditor);
 
     // Auto-clean stanzas button in modal
     if (btnAutocleanStanzas && editPoemVersesTextarea) {
@@ -620,7 +636,7 @@
           }
         }
 
-        closeEditPoemModal();
+        closeEditPoemEditor();
         showToast(`❧ "${newTitle}" headings & verses updated`);
       });
     }
@@ -632,7 +648,7 @@
       if (editBtn) {
         e.preventDefault();
         const poemId = editBtn.getAttribute('data-id');
-        if (poemId) openEditPoemModal(poemId);
+        if (poemId) openEditPoemEditor(poemId);
         return;
       }
 
@@ -769,6 +785,7 @@
       if (albumModalFileInput) albumModalFileInput.value = '';
       if (photoNewTitleInput) photoNewTitleInput.value = '';
       if (photoNewDateInput) photoNewDateInput.value = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      modalAddPhoto.style.display = 'flex';
       modalAddPhoto.classList.add('is-active');
       modalAddPhoto.setAttribute('aria-hidden', 'false');
     }
@@ -777,6 +794,7 @@
       if (!modalAddPhoto) return;
       modalAddPhoto.classList.remove('is-active');
       modalAddPhoto.setAttribute('aria-hidden', 'true');
+      modalAddPhoto.style.display = 'none';
     }
 
     if (albumAddBtn) {
@@ -908,8 +926,8 @@
     const VOICE_STORAGE_KEY = 'audrita_voice_verses_v1';
     const voicePlaylistContainer = document.getElementById('voice-verses-playlist');
     const btnAddVoiceTrack = document.getElementById('btn-add-voice-track');
-    const modalAddVoice = document.getElementById('modal-add-voice');
-    const modalVoiceClose = document.getElementById('modal-voice-close');
+    const inlineVoicePanel = document.getElementById('inline-voice-panel');
+    const btnCloseVoicePanel = document.getElementById('btn-close-voice-panel');
     const btnVoiceCancel = document.getElementById('btn-voice-cancel');
     const btnVoiceSave = document.getElementById('btn-voice-save');
     const voiceNewTitle = document.getElementById('voice-new-title');
@@ -979,30 +997,34 @@
 
     renderVoicePlaylist();
 
-    function openVoiceModal() {
-      if (!modalAddVoice) return;
+    function openVoicePanel() {
+      if (!inlineVoicePanel) return;
       if (voiceNewTitle) voiceNewTitle.value = '';
       if (voiceNewNarrator) voiceNewNarrator.value = 'Audrita Mukherjee · Quiet Recording';
       if (voiceFileInput) voiceFileInput.value = '';
       if (voiceNewUrl) voiceNewUrl.value = '';
-      modalAddVoice.classList.add('is-active');
-      modalAddVoice.setAttribute('aria-hidden', 'false');
+      inlineVoicePanel.style.display = 'block';
+      inlineVoicePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (voiceNewTitle) voiceNewTitle.focus();
     }
 
-    function closeVoiceModal() {
-      if (!modalAddVoice) return;
-      modalAddVoice.classList.remove('is-active');
-      modalAddVoice.setAttribute('aria-hidden', 'true');
+    function closeVoicePanel() {
+      if (!inlineVoicePanel) return;
+      inlineVoicePanel.style.display = 'none';
     }
 
-    if (btnAddVoiceTrack) btnAddVoiceTrack.addEventListener('click', openVoiceModal);
-    if (modalVoiceClose) modalVoiceClose.addEventListener('click', closeVoiceModal);
-    if (btnVoiceCancel) btnVoiceCancel.addEventListener('click', closeVoiceModal);
-    if (modalAddVoice) {
-      modalAddVoice.addEventListener('click', (e) => {
-        if (e.target === modalAddVoice) closeVoiceModal();
+    if (btnAddVoiceTrack) {
+      btnAddVoiceTrack.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (inlineVoicePanel && inlineVoicePanel.style.display !== 'none') {
+          closeVoicePanel();
+        } else {
+          openVoicePanel();
+        }
       });
     }
+    if (btnCloseVoicePanel) btnCloseVoicePanel.addEventListener('click', closeVoicePanel);
+    if (btnVoiceCancel) btnVoiceCancel.addEventListener('click', closeVoicePanel);
 
     if (btnVoiceSave) {
       btnVoiceSave.addEventListener('click', function () {
@@ -1029,7 +1051,7 @@
             currentList.push(newTrack);
             saveStoredVoiceTracks(currentList);
             renderVoicePlaylist();
-            closeVoiceModal();
+            closeVoicePanel();
             showToast(`🎙 "${title}" added to Spoken Verses`);
           };
           reader.readAsDataURL(file);
@@ -1040,7 +1062,7 @@
         currentList.push(newTrack);
         saveStoredVoiceTracks(currentList);
         renderVoicePlaylist();
-        closeVoiceModal();
+        closeVoicePanel();
         showToast(`🎙 "${title}" added to Spoken Verses`);
       });
     }

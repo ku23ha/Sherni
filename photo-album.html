@@ -16,11 +16,6 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <div class="top-announcement">
-    <span>The Quiet Garden · words taking root in quiet earth · the first fifty are for herself</span>
-  </div>
-
   <!-- Header Navigation -->
   <header class="site-header" role="banner">
     <nav class="nav-container" aria-label="Primary navigation">
@@ -42,6 +37,10 @@
       </ul>
 
       <div class="nav-actions">
+        <!-- Sleek Upload Poetry Button -->
+        <a href="index.html#poetry" class="btn-nav-upload" aria-label="Upload poetry manuscript" title="Upload Word doc or PDF">
+          + Upload Poetry
+        </a>
         <!-- Dark / Light Theme Toggle -->
         <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
           <span class="theme-icon" aria-hidden="true">◐</span>
@@ -69,79 +68,95 @@
 
       <!-- Sub-navigation for About facets: Only My Story & Photo Album -->
       <nav class="about-subnav" aria-label="About sections">
-        <a href="about.html" class="about-subnav-link">My Story</a>
-        <a href="photo-album.html" class="about-subnav-link is-active">Photo Album</a>
+        <div class="about-subnav-links">
+          <a href="about.html" class="about-subnav-link">My Story</a>
+          <a href="photo-album.html" class="about-subnav-link is-active">Photo Album</a>
+        </div>
       </nav>
 
-      <div class="text-center" style="max-width: 680px; margin: 0 auto var(--space-12);">
-        <span class="section-label">Visual Journal</span>
-        <h1 style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 300; margin: var(--space-2) 0 var(--space-4);">
-          Photo Album
-        </h1>
-        <p style="font-family: var(--font-serif); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-text-muted); font-style: italic;">
-          Glimpses from the writing room, quiet corners, worn journals, and the light that filters through.
-        </p>
+      <!-- Album Header with Title & Add Photo Action -->
+      <div class="album-header-bar">
+        <div>
+          <span class="section-label">Visual Journal</span>
+          <h1 style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 300; margin: var(--space-2) 0 var(--space-3);">
+            Photo Album
+          </h1>
+          <p style="font-family: var(--font-serif); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-text-muted); font-style: italic; max-width: 620px;">
+            Glimpses from the writing room, quiet corners, worn journals, and the light that filters through.
+          </p>
+        </div>
+        <div>
+          <!-- Sleek Add Photo button -->
+          <button class="btn-album-add" id="album-add-btn" title="Add a new photo to your album">
+            <span>+</span> Add Photo
+          </button>
+          <input type="file" id="album-file-input" accept="image/*" style="display: none !important;" />
+        </div>
       </div>
 
-      <!-- Gallery Grid -->
-      <div class="gallery-grid">
-        <div class="gallery-card" style="aspect-ratio: 3/4;">
-          <img src="images/audrita.jpg" alt="Audrita in gentle reflection" />
-          <div class="gallery-caption">Audrita Mukherjee · quiet afternoon portrait</div>
-        </div>
+      <!-- Pinterest-Style Masonry Gallery (Flowing Left-to-Right) -->
+      <div class="photo-masonry" id="photo-masonry-container">
 
-        <div class="gallery-card" style="display: flex; align-items: center; justify-content: center; background: var(--color-surface); padding: var(--space-8); text-align: center;">
-          <div>
-            <svg style="width: 48px; height: 48px; color: var(--color-accent); margin-bottom: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-            </svg>
-            <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-text); font-size: var(--text-md);">The Writing Desk</p>
-            <p style="font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase;">Where every draft begins by hand</p>
+        <!-- Photo 1: Audrita Mukherjee Portrait -->
+        <article class="photo-card" id="photo-audrita-portrait">
+          <button class="btn-remove-photo" data-id="photo-audrita-portrait" data-title="Audrita Mukherjee Portrait" title="Remove photo" aria-label="Remove photo">✕</button>
+          <div class="photo-card-img-wrap">
+            <img src="images/audrita.jpg" alt="Audrita Mukherjee in gentle contemplation" loading="lazy" />
           </div>
-        </div>
+          <div class="photo-card-caption">
+            <h3 class="photo-card-title">Audrita Mukherjee</h3>
+            <span class="photo-card-date">Author &amp; Poet · Calcutta</span>
+          </div>
+        </article>
 
-        <div class="gallery-card" style="display: flex; align-items: center; justify-content: center; background: var(--color-bg-alt); padding: var(--space-8); text-align: center;">
-          <div>
-            <svg style="width: 48px; height: 48px; color: var(--color-accent); margin-bottom: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-            </svg>
-            <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-text); font-size: var(--text-md);">The First Notebook</p>
-            <p style="font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase;">Handwritten verses from 2021</p>
+        <!-- Photo 2: The Writing Desk -->
+        <article class="photo-card" id="photo-writing-desk">
+          <button class="btn-remove-photo" data-id="photo-writing-desk" data-title="The Writing Desk" title="Remove photo" aria-label="Remove photo">✕</button>
+          <div class="photo-card-img-wrap">
+            <img src="images/writing_desk.jpg" alt="Minimalist wooden desk with open journal and fountain pen" loading="lazy" />
           </div>
-        </div>
+          <div class="photo-card-caption">
+            <h3 class="photo-card-title">The Writing Desk</h3>
+            <span class="photo-card-date">Morning Light · Where drafts begin</span>
+          </div>
+        </article>
 
-        <div class="gallery-card" style="display: flex; align-items: center; justify-content: center; background: var(--color-surface); padding: var(--space-8); text-align: center;">
-          <div>
-            <svg style="width: 48px; height: 48px; color: var(--color-accent); margin-bottom: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M12 2C8 6 4 10 4 15a8 8 0 0 0 16 0c0-5-4-9-8-13z"/>
-            </svg>
-            <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-text); font-size: var(--text-md);">Botanical Pressings</p>
-            <p style="font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase;">Leaves gathered along the Hooghly</p>
+        <!-- Photo 3: Rain on Window Pane -->
+        <article class="photo-card" id="photo-rain-window">
+          <button class="btn-remove-photo" data-id="photo-rain-window" data-title="Rain On The Window" title="Remove photo" aria-label="Remove photo">✕</button>
+          <div class="photo-card-img-wrap">
+            <img src="images/rain_window.jpg" alt="Raindrops running down window overlooking green garden" loading="lazy" />
           </div>
-        </div>
+          <div class="photo-card-caption">
+            <h3 class="photo-card-title">Rain On The Window</h3>
+            <span class="photo-card-date">Calcutta Monsoon · Quiet Solitude</span>
+          </div>
+        </article>
 
-        <div class="gallery-card" style="display: flex; align-items: center; justify-content: center; background: var(--color-bg-alt); padding: var(--space-8); text-align: center;">
-          <div>
-            <svg style="width: 48px; height: 48px; color: var(--color-accent); margin-bottom: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/>
-              <line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-text); font-size: var(--text-md);">The Proof Edition</p>
-            <p style="font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase;">First hardcover arrival from press</p>
+        <!-- Photo 4: Botanical Pressings -->
+        <article class="photo-card" id="photo-botanical-press">
+          <button class="btn-remove-photo" data-id="photo-botanical-press" data-title="Botanical Pressings" title="Remove photo" aria-label="Remove photo">✕</button>
+          <div class="photo-card-img-wrap">
+            <img src="images/botanical_press.jpg" alt="Pressed dried wildflowers inside an antique diary" loading="lazy" />
           </div>
-        </div>
+          <div class="photo-card-caption">
+            <h3 class="photo-card-title">Botanical Pressings</h3>
+            <span class="photo-card-date">Wild Jasmine &amp; Ferns · Autumn 2023</span>
+          </div>
+        </article>
 
-        <div class="gallery-card" style="display: flex; align-items: center; justify-content: center; background: var(--color-surface); padding: var(--space-8); text-align: center;">
-          <div>
-            <svg style="width: 48px; height: 48px; color: var(--color-accent); margin-bottom: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-            </svg>
-            <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-text); font-size: var(--text-md);">Evening Salon</p>
-            <p style="font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase;">Candlelit reading in Delhi</p>
+        <!-- Photo 5: Sacred Ganges At Twilight -->
+        <article class="photo-card" id="photo-river-ganges">
+          <button class="btn-remove-photo" data-id="photo-river-ganges" data-title="Sacred Ganges At Twilight" title="Remove photo" aria-label="Remove photo">✕</button>
+          <div class="photo-card-img-wrap">
+            <img src="images/river_ganges.jpg" alt="Quiet waters of the Ganges at twilight with rowing boat" loading="lazy" />
           </div>
-        </div>
+          <div class="photo-card-caption">
+            <h3 class="photo-card-title">River Ganges at Twilight</h3>
+            <span class="photo-card-date">On Favor &amp; Sacred Waters · Evening Silence</span>
+          </div>
+        </article>
+
       </div>
 
     </div>
@@ -150,7 +165,7 @@
   <footer class="site-footer">
     <div class="container footer-content">
       <div class="footer-left">
-        <p class="footer-copy">© 2026 Audrita Mukherjee.</p>
+        <p class="footer-copy">© 2026 Audrita Mukherjee. All words reserved.</p>
         <p class="footer-tagline">Frames of a quiet life.</p>
       </div>
       <nav class="footer-nav">

@@ -281,14 +281,14 @@
 
       // 1. Persist to localStorage
       const currentList = getStoredPoems();
-      currentList.unshift(newPoem);
+      currentList.push(newPoem);
       saveStoredPoems(currentList);
 
       // 2. Switch tab to match the uploaded language
       switchPoetryTab(language);
 
-      // 3. Render immediately at the top of the matching poetry subsection
-      renderPoemCard(newPoem, true);
+      // 3. Render next to Favor / existing poems with identical layout
+      renderPoemCard(newPoem, false);
       updateCounterDisplay();
 
       // 4. Post to backend API /api/poems (Vercel & Supabase sync)
@@ -339,7 +339,7 @@
       } catch (e) {}
     }
 
-    // Render a pristine poem card matching Favor and Maktub
+    // Render a pristine poem card arranged identically to Favor
     function renderPoemCard(poem, isPrepend = false) {
       const isHindi = poem.language === 'hindi';
       const targetGrid = isHindi ? document.getElementById('poems-grid-hindi') : document.getElementById('poems-grid-english');
@@ -350,12 +350,8 @@
       card.setAttribute('data-category', poem.language);
       card.id = poem.id || `poem-custom-${Date.now()}`;
 
-      const removeActionHtml = poem.isCustom ? `
-        <div class="poem-card-actions">
-          <button class="btn-remove-poem" data-id="${poem.id}" data-title="${escapeHTML(poem.title)}" aria-label="Remove poem from archive" title="Remove this poem">
-            ✕ Remove
-          </button>
-        </div>
+      const removeIconHtml = poem.isCustom ? `
+        <button class="btn-remove-poem-icon" data-id="${poem.id}" data-title="${escapeHTML(poem.title)}" aria-label="Remove poem" title="Remove poem">✕</button>
       ` : '';
 
       card.innerHTML = `
@@ -364,13 +360,13 @@
             <span class="poem-card-lang" ${isHindi ? 'style="color: var(--color-accent); font-weight: 500;"' : ''}>${isHindi ? 'हिंदी' : 'EN'}</span>
             <span class="poem-card-tag">${escapeHTML(poem.tag || (isHindi ? 'मक़्तूब & देहलीज़' : 'Memory & Solitude'))}</span>
           </div>
+          ${removeIconHtml}
         </div>
         <h4 class="poem-card-title ${isHindi ? 'is-hindi' : ''}">${escapeHTML(poem.title)}</h4>
         <div class="poem-verse-text ${isHindi ? 'is-hindi' : ''}">${escapeHTML(poem.verse)}</div>
         <div class="poem-card-footer">
           <span class="poem-card-date">${escapeHTML(poem.date || (isHindi ? 'औद्रिता मुखर्जी' : 'Audrita Mukherjee'))}</span>
         </div>
-        ${removeActionHtml}
       `;
 
       if (isPrepend) {
@@ -380,9 +376,9 @@
       }
     }
 
-    // Listen for click on Remove Poem buttons
+    // Listen for click on Remove Poem buttons (discreet minimalist icon)
     document.addEventListener('click', function (e) {
-      const removeBtn = e.target.closest('.btn-remove-poem');
+      const removeBtn = e.target.closest('.btn-remove-poem-icon, .btn-remove-poem');
       if (!removeBtn) return;
       e.preventDefault();
 
@@ -436,6 +432,114 @@
       }
     }
     updateCounterDisplay();
+
+    // ── Pinterest-Style Photo Album System (Add & Remove) ────
+    const PHOTO_STORAGE_KEY = 'audrita_custom_photos_v1';
+    const albumAddBtn = document.getElementById('album-add-btn');
+    const albumFileInput = document.getElementById('album-file-input');
+    const photoMasonryContainer = document.getElementById('photo-masonry-container');
+
+    function getStoredPhotos() {
+      try {
+        const stored = localStorage.getItem(PHOTO_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveStoredPhotos(list) {
+      try {
+        localStorage.setItem(PHOTO_STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    function renderPhotoCard(photo, isPrepend = false) {
+      if (!photoMasonryContainer) return;
+      const article = document.createElement('article');
+      article.className = 'photo-card is-custom-photo';
+      article.id = photo.id;
+      article.innerHTML = `
+        <button class="btn-remove-photo" data-id="${photo.id}" data-title="${escapeHTML(photo.title)}" title="Remove photo" aria-label="Remove photo">✕</button>
+        <div class="photo-card-img-wrap">
+          <img src="${photo.src}" alt="${escapeHTML(photo.title)}" loading="lazy" />
+        </div>
+        <div class="photo-card-caption">
+          <h3 class="photo-card-title">${escapeHTML(photo.title)}</h3>
+          <span class="photo-card-date">${escapeHTML(photo.date || 'Planted in Album')}</span>
+        </div>
+      `;
+      if (isPrepend) {
+        photoMasonryContainer.prepend(article);
+      } else {
+        photoMasonryContainer.appendChild(article);
+      }
+    }
+
+    if (albumAddBtn && albumFileInput) {
+      albumAddBtn.addEventListener('click', () => albumFileInput.click());
+
+      albumFileInput.addEventListener('change', function () {
+        if (this.files && this.files.length > 0) {
+          const file = this.files[0];
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const imgSrc = e.target.result;
+            const fileName = file.name.replace(/\.[^/.]+$/, '');
+            const titlePrompt = prompt('Enter a caption for this photograph:', fileName);
+            const title = titlePrompt && titlePrompt.trim() ? titlePrompt.trim() : (fileName || 'Visual Memory');
+
+            const newPhoto = {
+              id: 'photo-' + Date.now(),
+              src: imgSrc,
+              title: title,
+              date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+            };
+
+            const currentPhotos = getStoredPhotos();
+            currentPhotos.unshift(newPhoto);
+            saveStoredPhotos(currentPhotos);
+
+            renderPhotoCard(newPhoto, true);
+            showToast(`❧ Photo added to visual journal`);
+          };
+          reader.readAsDataURL(file);
+          this.value = '';
+        }
+      });
+    }
+
+    // Load custom photos on photo album page
+    if (photoMasonryContainer) {
+      const storedPhotos = getStoredPhotos();
+      storedPhotos.forEach(p => renderPhotoCard(p, true));
+
+      // Handle photo removal clicks
+      document.addEventListener('click', function (e) {
+        const removePhotoBtn = e.target.closest('.btn-remove-photo');
+        if (!removePhotoBtn) return;
+        e.preventDefault();
+
+        const photoId = removePhotoBtn.getAttribute('data-id');
+        const photoTitle = removePhotoBtn.getAttribute('data-title') || 'Photo';
+        if (!photoId) return;
+
+        if (confirm(`Remove "${photoTitle}" from photo album?`)) {
+          const stored = getStoredPhotos();
+          const updated = stored.filter(p => p.id !== photoId);
+          saveStoredPhotos(updated);
+
+          const card = document.getElementById(photoId);
+          if (card) {
+            card.style.transition = 'all 0.3s ease-out';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.92)';
+            setTimeout(() => card.remove(), 300);
+          }
+          showToast(`❧ Photo removed from album`);
+        }
+      });
+    }
 
   });
 

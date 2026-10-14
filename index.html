@@ -316,13 +316,14 @@
           </p>
         </div>
 
-        <!-- Filter Pills: English Poetry & हिंदी कविता + Inline Edit Trigger -->
-        <div class="poetry-filter-bar filter-container" data-target-grid=".poetry-subsections-container">
-          <button class="filter-pill is-active" data-filter="english">English Poetry</button>
-          <button class="filter-pill" data-filter="hindi">हिंदी कविता</button>
-          <button class="filter-pill" id="btn-toggle-poetry-editor" style="margin-left: auto; border-color: var(--color-accent); color: var(--color-accent); display: inline-flex; align-items: center; gap: 4px;" title="Customize headings and stanzas for current verses">
-            ✎ Customize / Edit Verses
-          </button>
+        <!-- Filter Pills: All 4 Verses, English, Hindi + Link to Full Archive -->
+        <div class="poetry-filter-bar filter-container" data-target-grid="#homepage-poems-grid">
+          <button class="filter-pill is-active" data-filter="all">All 4 Verses</button>
+          <button class="filter-pill" data-filter="english">English Poetry (2)</button>
+          <button class="filter-pill" data-filter="hindi">हिंदी कविता (2)</button>
+          <a href="poetry-archive.html" class="filter-pill btn-pill-all-archive" style="margin-left: auto; border-color: var(--color-accent); color: var(--color-accent); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 500;" title="Browse complete collection of verses">
+            ✦ Full Poetry Archive →
+          </a>
         </div>
 
         <!-- Inline Poetry Customizer Panel (Directly inside Poetry Archive) -->
@@ -378,33 +379,23 @@
           </div>
         </div>
 
-        <!-- Subsections Container -->
-        <div class="poetry-subsections-container">
+        <!-- ── 4 Featured Poems Grid (Shown Together At One Go) ── -->
+        <div class="homepage-four-poems-grid" id="homepage-poems-grid">
 
-          <!-- ── Subsection 1: English Poetry ── -->
-          <div class="poetry-subsection" id="english-poetry-sub" data-lang="english">
-            <header class="poetry-subsection-header">
-              <h3 class="poetry-subsection-title">
-                <span>English Poetry</span>
-              </h3>
-              <p class="poetry-subsection-desc">verses of silence, memory, and quiet devotion</p>
-            </header>
-
-            <div class="poems-grid" id="poems-grid-english">
-
-              <!-- Poem: Favor (by Audrita Mukherjee) -->
-              <article class="poem-card-clean filterable-item" data-category="english" id="poem-favor">
-                <div class="poem-card-header">
-                  <div class="poem-card-meta">
-                    <span class="poem-card-lang">EN</span>
-                    <span class="poem-card-tag">Memory & The Ganges</span>
-                  </div>
-                  <div class="poem-card-controls">
-                    <button class="btn-poem-ctrl btn-poem-edit" data-id="poem-favor" title="Edit & Customize Verse">✎ Edit</button>
-                  </div>
-                </div>
-                <h4 class="poem-card-title">Favor</h4>
-                <div class="poem-verse-text">Do me a favor, will you please?
+          <!-- 1. Poem: Favor (English) -->
+          <article class="poem-card-clean filterable-item" data-category="english" id="poem-favor">
+            <div class="poem-card-header">
+              <div class="poem-card-meta">
+                <span class="poem-card-lang">EN</span>
+                <span class="poem-card-tag">Memory &amp; The Ganges</span>
+              </div>
+              <div class="poem-card-controls">
+                <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-favor" title="Copy verse to clipboard">⎘ Copy</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-favor" title="Edit &amp; Customize Verse">✎ Edit</button>
+              </div>
+            </div>
+            <h4 class="poem-card-title">Favor</h4>
+            <div class="poem-verse-text">Do me a favor, will you please?
 Take his wedding picture
 Clad in white
 In my land
@@ -421,38 +412,26 @@ Faithfully,
 Without a name
 
 And that will be my last gift to him.</div>
-                <div class="poem-card-footer">
-                  <span class="poem-card-date">Audrita Mukherjee</span>
-                </div>
-              </article>
-
+            <div class="poem-card-footer">
+              <span class="poem-card-date">Audrita Mukherjee</span>
+              <span class="poem-card-place">Calcutta · Sacred Waters</span>
             </div>
-          </div>
+          </article>
 
-          <!-- ── Subsection 2: हिंदी कविता (Hindi Poetry) ── -->
-          <div class="poetry-subsection" id="hindi-poetry-sub" data-lang="hindi" style="display: none;">
-            <header class="poetry-subsection-header">
-              <h3 class="poetry-subsection-title is-hindi">
-                <span>हिंदी कविता</span>
-              </h3>
-              <p class="poetry-subsection-desc">अल्फ़ाज़, मक़्तूब, राम रेखा और देहलीज़ की बातें</p>
-            </header>
-
-            <div class="poems-grid" id="poems-grid-hindi">
-
-              <!-- Poem: मक़्तूब / Maktub (by Audrita Mukherjee) -->
-              <article class="poem-card-clean filterable-item" data-category="hindi maktub silence" id="poem-maktub">
-                <div class="poem-card-header">
-                  <div class="poem-card-meta">
-                    <span class="poem-card-lang" style="color: var(--color-accent); font-weight: 500;">हिंदी</span>
-                    <span class="poem-card-tag">मक़्तूब & राम रेखा</span>
-                  </div>
-                  <div class="poem-card-controls">
-                    <button class="btn-poem-ctrl btn-poem-edit" data-id="poem-maktub" title="Edit & Customize Verse">✎ Edit</button>
-                  </div>
-                </div>
-                <h4 class="poem-card-title is-hindi">मक़्तूब / Maktub</h4>
-                <div class="poem-verse-text is-hindi">ये कैसा वरदान दिया रब ने
+          <!-- 2. Poem: मक़्तूब / Maktub (Hindi) -->
+          <article class="poem-card-clean filterable-item" data-category="hindi" id="poem-maktub">
+            <div class="poem-card-header">
+              <div class="poem-card-meta">
+                <span class="poem-card-lang" style="color: var(--color-accent); font-weight: 500;">हिंदी</span>
+                <span class="poem-card-tag">मक़्तूब &amp; राम रेखा</span>
+              </div>
+              <div class="poem-card-controls">
+                <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-maktub" title="Copy verse to clipboard">⎘ Copy</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-maktub" title="Edit &amp; Customize Verse">✎ Edit</button>
+              </div>
+            </div>
+            <h4 class="poem-card-title is-hindi">मक़्तूब / Maktub</h4>
+            <div class="poem-verse-text is-hindi">ये कैसा वरदान दिया रब ने
 चाहे कितनी गाँठों से बाँधे ये दरवाज़े,
 सीली लकीरों से ये दीवारें,
 दस्तक आने में देर न लगती।
@@ -482,7 +461,7 @@ And that will be my last gift to him.</div>
 हर पायदान पर थोड़ी और ख़ाली होती।
 एहसास हुआ अब कोई ठहरने नहीं आएगा—
 पर उस दिन उसने किवाड़ बंद नहीं किए
-उसने राम का नाम लिया।
+ उसने राम का नाम लिया।
 और देहलीज़ पर एक लकीर खींच दी।
 
 ये लक्ष्मण रेखा नहीं थी,
@@ -514,14 +493,96 @@ And that will be my last gift to him.</div>
 उसे थामे रखता है।
 
 ख़ुद ही ख़ुद को वरदान दिया उसने।</div>
-                <div class="poem-card-footer">
-                  <span class="poem-card-date">औद्रिता मुखर्जी</span>
-                </div>
-              </article>
+            <div class="poem-card-footer">
+              <span class="poem-card-date">औद्रिता मुखर्जी</span>
+              <span class="poem-card-place">देहलीज़ · राम रेखा</span>
+            </div>
+          </article>
 
+          <!-- 3. Poem: The River Knows (English) -->
+          <article class="poem-card-clean filterable-item" data-category="english" id="poem-river-knows">
+            <div class="poem-card-header">
+              <div class="poem-card-meta">
+                <span class="poem-card-lang">EN</span>
+                <span class="poem-card-tag">River &amp; Solitude</span>
+              </div>
+              <div class="poem-card-controls">
+                <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-river-knows" title="Copy verse to clipboard">⎘ Copy</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-river-knows" title="Edit &amp; Customize Verse">✎ Edit</button>
+              </div>
+            </div>
+            <h4 class="poem-card-title">The River Knows</h4>
+            <div class="poem-verse-text">The river does not ask the bank
+For permission to depart,
+Nor does it measure what it leaves
+Inside the hollowed heart.
+
+It bends where morning bends the reeds,
+It carries silt and stone,
+And teaches every quiet grief
+To travel on alone.
+
+You ask me where the silence goes
+When love has had its say—
+Go ask the waters of the south
+That wash the grief away.</div>
+            <div class="poem-card-footer">
+              <span class="poem-card-date">Audrita Mukherjee</span>
+              <span class="poem-card-place">The Ganges at Twilight</span>
+            </div>
+          </article>
+
+          <!-- 4. Poem: देहलीज़ और दिया (Hindi) -->
+          <article class="poem-card-clean filterable-item" data-category="hindi" id="poem-dehleez-diya">
+            <div class="poem-card-header">
+              <div class="poem-card-meta">
+                <span class="poem-card-lang" style="color: var(--color-accent); font-weight: 500;">हिंदी</span>
+                <span class="poem-card-tag">देहलीज़, साँझ और इंतज़ार</span>
+              </div>
+              <div class="poem-card-controls">
+                <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-dehleez-diya" title="Copy verse to clipboard">⎘ Copy</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-dehleez-diya" title="Edit &amp; Customize Verse">✎ Edit</button>
+              </div>
+            </div>
+            <h4 class="poem-card-title is-hindi">देहलीज़ और दिया</h4>
+            <div class="poem-verse-text is-hindi">एक दीया था जो देहलीज़ पर
+हवा से डर कर नहीं,
+साँझ के भरोसे जलता रहा।
+
+ना कोई वादा था लौटने का,
+ना जाने वाले ने मुड़कर देखा,
+बस एक उम्मीद की हल्की सी लौ थी
+जो रात भर ख़ामोशी से बात करती रही।
+
+जब भोर हुई, तो तेल ख़त्म था,
+पर कमरा अँधेरे से हार नहीं माना था—
+कुछ रौशनी ऐसी होती है
+जो बुझने के बाद भी रास्ता दिखाती है।</div>
+            <div class="poem-card-footer">
+              <span class="poem-card-date">औद्रिता मुखर्जी</span>
+              <span class="poem-card-place">कलकत्ता · साँझ की देहलीज़</span>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ── Show More: Full Poetry Archive Redirection Banner ── -->
+        <div class="poetry-archive-cta-banner">
+          <div class="poetry-archive-cta-inner">
+            <div class="poetry-archive-cta-text">
+              <span class="cta-eyebrow">✦ Complete Verse Anthology</span>
+              <h3 class="cta-title">Explore Full Poetry Archive</h3>
+              <p class="cta-desc">
+                Viewing 4 featured poems at one go. Enter the full archive to search, browse by collection head, or select any verse from Audrita's entire collection.
+              </p>
+            </div>
+            <div class="poetry-archive-cta-actions">
+              <a href="poetry-archive.html" class="btn-explore-full-archive">
+                <span>Explore Full Poetry Archive</span>
+                <span class="cta-arrow" aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
-
         </div>
 
       </div>

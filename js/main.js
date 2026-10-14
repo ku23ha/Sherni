@@ -136,12 +136,30 @@
         }
       });
 
-      if (targetLang === 'hindi') {
-        if (hindiSub) hindiSub.style.display = '';
-        if (englishSub) englishSub.style.display = 'none';
-      } else {
-        if (englishSub) englishSub.style.display = '';
-        if (hindiSub) hindiSub.style.display = 'none';
+      const homePoemsGrid = document.getElementById('homepage-poems-grid');
+      if (homePoemsGrid) {
+        const cards = homePoemsGrid.querySelectorAll('.filterable-item');
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category') || '';
+          if (targetLang === 'all' || targetLang === category) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      if (englishSub && hindiSub) {
+        if (targetLang === 'hindi') {
+          hindiSub.style.display = '';
+          englishSub.style.display = 'none';
+        } else if (targetLang === 'english') {
+          englishSub.style.display = '';
+          hindiSub.style.display = 'none';
+        } else {
+          englishSub.style.display = '';
+          hindiSub.style.display = '';
+        }
       }
     }
 
@@ -149,7 +167,7 @@
       filterPills.forEach(pill => {
         pill.addEventListener('click', function () {
           const filter = this.getAttribute('data-filter');
-          switchPoetryTab(filter);
+          if (filter) switchPoetryTab(filter);
         });
       });
     }
@@ -708,48 +726,232 @@
     }
     updateCounterDisplay();
 
-    // ── Google Drive & Pinterest-Style Photo Album System ─────
-    // Converts any public Google Drive share link into a direct high-speed CDN image URL
-    // Solving local storage limits permanently for the long run.
-    function convertGoogleDriveUrl(url) {
-      if (!url) return '';
-      const trimmed = url.trim();
-      let match = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-      if (!match) match = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (!match) match = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        // High-resolution direct streaming endpoint from Google CDN
-        return `https://lh3.googleusercontent.com/d/${match[1]}`;
-      }
-      return trimmed;
-    }
-
+    // ── Visual Journal (Device Photo Upload, IndexedDB & Series Pagination) ─────
     const PHOTO_STORAGE_KEY = 'audrita_custom_photos_v1';
+    const REMOVED_PHOTOS_KEY = 'audrita_removed_photos_v1';
     const albumAddBtn = document.getElementById('album-add-btn');
     const photoMasonryContainer = document.getElementById('photo-masonry-container');
+    const albumCountBadge = document.getElementById('album-count-badge');
 
     const modalAddPhoto = document.getElementById('modal-add-photo');
     const modalPhotoClose = document.getElementById('modal-photo-close');
     const btnPhotoCancel = document.getElementById('btn-photo-cancel');
     const btnPhotoSave = document.getElementById('btn-photo-save');
-    const photoDriveUrlInput = document.getElementById('photo-drive-url');
+
     const albumModalFileInput = document.getElementById('album-modal-file-input');
     const photoNewTitleInput = document.getElementById('photo-new-title');
     const photoNewDateInput = document.getElementById('photo-new-date');
 
-    function getStoredPhotos() {
+    const photoDropzone = document.getElementById('photo-dropzone');
+    const dropzonePrompt = document.getElementById('dropzone-prompt');
+    const dropzonePreviewWrap = document.getElementById('dropzone-preview-wrap');
+    const dropzoneThumbsGrid = document.getElementById('dropzone-thumbs-grid');
+    const previewCountBadge = document.getElementById('preview-count-badge');
+    const btnChangePhoto = document.getElementById('btn-change-photo');
+
+    // Lightbox
+    const photoLightbox = document.getElementById('photo-lightbox');
+    const photoLightboxClose = document.getElementById('photo-lightbox-close');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDate = document.getElementById('lightbox-date');
+
+    // Pagination elements
+    const albumPaginationBar = document.getElementById('album-pagination-bar');
+    const albumPaginationProgress = document.getElementById('album-pagination-progress');
+    const btnShowMorePhotos = document.getElementById('btn-show-more-photos');
+    const btnShowMoreText = document.getElementById('btn-show-more-text');
+    const albumViewSelect = document.getElementById('album-view-select');
+
+    let visiblePhotoLimit = 10;
+    let selectedViewMode = '10';
+    let pendingPhotosList = []; // Array of { id, src, title, date }
+
+    // ── Rock-Solid IndexedDB Storage (Enables 50+ High-Res Photos With Zero Quota Limits) ──
+    const DB_NAME = 'AudritaPhotoJournalDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'photos';
+
+    function openPhotoDB() {
+      return new Promise((resolve) => {
+        if (!window.indexedDB) {
+          resolve(null);
+          return;
+        }
+        try {
+          const req = indexedDB.open(DB_NAME, DB_VERSION);
+          req.onupgradeneeded = function (e) {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+              db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+            }
+          };
+          req.onsuccess = function (e) {
+            resolve(e.target.result);
+          };
+          req.onerror = function () {
+            resolve(null);
+          };
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    }
+
+    async function getStoredPhotos() {
+      const db = await openPhotoDB();
+      if (!db) {
+        try {
+          const stored = localStorage.getItem(PHOTO_STORAGE_KEY);
+          return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+      return new Promise((resolve) => {
+        try {
+          const tx = db.transaction(STORE_NAME, 'readonly');
+          const store = tx.objectStore(STORE_NAME);
+          const req = store.getAll();
+          req.onsuccess = () => {
+            const list = req.result || [];
+            // Sort by created_at desc
+            list.sort((a, b) => (b.created_at || 0) - (a.created_at || 0));
+            resolve(list);
+          };
+          req.onerror = () => resolve([]);
+        } catch (e) {
+          resolve([]);
+        }
+      });
+    }
+
+    async function savePhotoItem(photo) {
+      const db = await openPhotoDB();
+      if (db) {
+        return new Promise((resolve) => {
+          try {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            store.put(photo);
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => resolve();
+          } catch (e) {
+            resolve();
+          }
+        });
+      } else {
+        try {
+          const current = JSON.parse(localStorage.getItem(PHOTO_STORAGE_KEY) || '[]');
+          current.unshift(photo);
+          localStorage.setItem(PHOTO_STORAGE_KEY, JSON.stringify(current));
+        } catch (e) {}
+      }
+    }
+
+    async function deletePhotoItem(id) {
+      const db = await openPhotoDB();
+      if (db) {
+        return new Promise((resolve) => {
+          try {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            store.delete(id);
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => resolve();
+          } catch (e) {
+            resolve();
+          }
+        });
+      } else {
+        try {
+          const current = JSON.parse(localStorage.getItem(PHOTO_STORAGE_KEY) || '[]');
+          const filtered = current.filter(p => p.id !== id);
+          localStorage.setItem(PHOTO_STORAGE_KEY, JSON.stringify(filtered));
+        } catch (e) {}
+      }
+    }
+
+    function getRemovedPhotos() {
       try {
-        const stored = localStorage.getItem(PHOTO_STORAGE_KEY);
+        const stored = localStorage.getItem(REMOVED_PHOTOS_KEY);
         return stored ? JSON.parse(stored) : [];
       } catch (e) {
         return [];
       }
     }
 
-    function saveStoredPhotos(list) {
+    function saveRemovedPhotos(list) {
       try {
-        localStorage.setItem(PHOTO_STORAGE_KEY, JSON.stringify(list));
+        localStorage.setItem(REMOVED_PHOTOS_KEY, JSON.stringify(list));
       } catch (e) {}
+    }
+
+    // Sequential Series Numbering (№ 01, № 02, № 03...) & 10-Batch Pagination
+    function updatePhotoSeriesAndPagination() {
+      if (!photoMasonryContainer) return;
+      const cards = Array.from(photoMasonryContainer.querySelectorAll('.photo-card'));
+      const total = cards.length;
+
+      // 1. Assign sequential series numbers in series order
+      cards.forEach((card, idx) => {
+        const num = idx + 1;
+        const numStr = num < 10 ? `№ 0${num}` : `№ ${num}`;
+        let badge = card.querySelector('.photo-series-badge');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'photo-series-badge';
+          card.prepend(badge);
+        }
+        badge.textContent = numStr;
+      });
+
+      // 2. Pagination visibility calculation (10 at a time or user selected batch)
+      let limit = (selectedViewMode === 'all') ? total : visiblePhotoLimit;
+
+      cards.forEach((card, idx) => {
+        if (idx < limit) {
+          if (card.style.display === 'none') {
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(12px)';
+            setTimeout(() => {
+              card.style.transition = 'all 0.35s ease-out';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, (idx % 10) * 40);
+          } else {
+            card.style.display = '';
+          }
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // 3. Update pagination progress indicator
+      const currentlyShowing = Math.min(limit, total);
+      if (albumPaginationProgress) {
+        albumPaginationProgress.textContent = `✦ Showing 1–${currentlyShowing} of ${total} photographs in series`;
+      }
+
+      // 4. Update "Show 10 More" button
+      if (btnShowMorePhotos) {
+        if (selectedViewMode === 'all' || currentlyShowing >= total) {
+          btnShowMorePhotos.style.display = 'none';
+        } else {
+          btnShowMorePhotos.style.display = 'inline-flex';
+          const remaining = total - currentlyShowing;
+          const nextBatch = Math.min(10, remaining);
+          if (btnShowMoreText) {
+            btnShowMoreText.textContent = `Show ${nextBatch} More (Remaining: ${remaining})`;
+          }
+        }
+      }
+
+      // 5. Header count badge
+      if (albumCountBadge) {
+        albumCountBadge.textContent = `✦ ${total} Visual ${total === 1 ? 'Memory' : 'Memories'} in Series`;
+      }
     }
 
     function renderPhotoCard(photo, isPrepend = false) {
@@ -757,19 +959,21 @@
       const article = document.createElement('article');
       article.className = 'photo-card is-custom-photo';
       article.id = photo.id;
-
-      const isDrive = photo.isDrive || (photo.src && photo.src.includes('googleusercontent.com'));
-      const driveBadgeHtml = isDrive ? `<span class="badge-drive-storage">☁️ Google Drive</span>` : '';
+      article.setAttribute('data-title', photo.title || 'Visual Memory');
+      article.setAttribute('data-date', photo.date || 'Visual Journal');
 
       article.innerHTML = `
-        <button class="btn-remove-photo" data-id="${photo.id}" data-title="${escapeHTML(photo.title)}" title="Remove photo" aria-label="Remove photo">✕</button>
-        <div class="photo-card-img-wrap">
+        <span class="photo-series-badge">№ 01</span>
+        <button class="btn-remove-photo" data-id="${photo.id}" data-title="${escapeHTML(photo.title)}" title="Remove photo from journal" aria-label="Remove photo">
+          <span class="remove-icon">✕</span>
+          <span class="remove-label">Remove</span>
+        </button>
+        <div class="photo-card-img-wrap" title="Click to view photograph in full contemplation">
           <img src="${photo.src}" alt="${escapeHTML(photo.title)}" loading="lazy" />
         </div>
         <div class="photo-card-caption">
           <h3 class="photo-card-title">${escapeHTML(photo.title)}</h3>
           <span class="photo-card-date">${escapeHTML(photo.date || 'Planted in Album')}</span>
-          ${driveBadgeHtml}
         </div>
       `;
       if (isPrepend) {
@@ -777,14 +981,25 @@
       } else {
         photoMasonryContainer.appendChild(article);
       }
+      updatePhotoSeriesAndPagination();
+    }
+
+    function resetModalFields() {
+      pendingPhotosList = [];
+      if (albumModalFileInput) albumModalFileInput.value = '';
+      if (photoNewTitleInput) photoNewTitleInput.value = '';
+      if (photoNewDateInput) {
+        photoNewDateInput.value = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' · Calcutta';
+      }
+      if (dropzoneThumbsGrid) dropzoneThumbsGrid.innerHTML = '';
+      if (dropzonePreviewWrap) dropzonePreviewWrap.style.display = 'none';
+      if (dropzonePrompt) dropzonePrompt.style.display = 'flex';
+      if (previewCountBadge) previewCountBadge.textContent = '0 Photos Selected';
     }
 
     function openPhotoModal() {
       if (!modalAddPhoto) return;
-      if (photoDriveUrlInput) photoDriveUrlInput.value = '';
-      if (albumModalFileInput) albumModalFileInput.value = '';
-      if (photoNewTitleInput) photoNewTitleInput.value = '';
-      if (photoNewDateInput) photoNewDateInput.value = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      resetModalFields();
       modalAddPhoto.style.display = 'flex';
       modalAddPhoto.classList.add('is-active');
       modalAddPhoto.setAttribute('aria-hidden', 'false');
@@ -797,6 +1012,163 @@
       modalAddPhoto.style.display = 'none';
     }
 
+    // Compress an image via HTML5 Canvas for fast rendering & smooth IndexedDB persistence
+    function compressImageFile(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            const maxDim = 1200;
+            let width = img.width;
+            let height = img.height;
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.84);
+            resolve(dataUrl);
+          };
+          img.onerror = () => resolve(e.target.result);
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Handles single or multiple selected files from device gallery / downloads
+    async function handleSelectedDeviceFiles(fileList) {
+      if (!fileList || !fileList.length) return;
+      const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+      if (!files.length) {
+        showToast('Please select valid image files (JPG, PNG, WEBP).');
+        return;
+      }
+
+      showToast(`Processing ${files.length} selected photograph${files.length > 1 ? 's' : ''}...`);
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const dataUrl = await compressImageFile(file);
+        if (!dataUrl) continue;
+
+        const rawName = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        const formattedTitle = rawName ? rawName.charAt(0).toUpperCase() + rawName.slice(1) : 'Visual Memory';
+
+        const item = {
+          id: 'photo-device-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6),
+          src: dataUrl,
+          title: formattedTitle,
+          date: photoNewDateInput ? photoNewDateInput.value.trim() : 'Calcutta Memory',
+          created_at: Date.now()
+        };
+        pendingPhotosList.push(item);
+      }
+
+      renderPendingThumbnails();
+    }
+
+    function renderPendingThumbnails() {
+      if (!dropzoneThumbsGrid || !dropzonePreviewWrap || !dropzonePrompt) return;
+      if (!pendingPhotosList.length) {
+        dropzonePreviewWrap.style.display = 'none';
+        dropzonePrompt.style.display = 'flex';
+        return;
+      }
+
+      dropzonePrompt.style.display = 'none';
+      dropzonePreviewWrap.style.display = 'flex';
+      dropzoneThumbsGrid.innerHTML = '';
+
+      if (previewCountBadge) {
+        previewCountBadge.textContent = `${pendingPhotosList.length} Photo${pendingPhotosList.length > 1 ? 's' : ''} Selected`;
+      }
+
+      // If exactly 1 photo and title field is empty, auto-fill caption
+      if (pendingPhotosList.length === 1 && photoNewTitleInput && !photoNewTitleInput.value.trim()) {
+        photoNewTitleInput.value = pendingPhotosList[0].title;
+      }
+
+      pendingPhotosList.forEach((item, index) => {
+        const thumbDiv = document.createElement('div');
+        thumbDiv.className = 'dropzone-thumb-item';
+        thumbDiv.innerHTML = `
+          <img src="${item.src}" alt="${escapeHTML(item.title)}" />
+          <button type="button" class="btn-thumb-remove" data-index="${index}" title="Remove this photo">✕</button>
+        `;
+        dropzoneThumbsGrid.appendChild(thumbDiv);
+      });
+    }
+
+    // Remove single thumbnail from pending selection
+    if (dropzoneThumbsGrid) {
+      dropzoneThumbsGrid.addEventListener('click', function (e) {
+        const btn = e.target.closest('.btn-thumb-remove');
+        if (btn) {
+          e.stopPropagation();
+          const idx = parseInt(btn.getAttribute('data-index'), 10);
+          if (!isNaN(idx) && idx >= 0 && idx < pendingPhotosList.length) {
+            pendingPhotosList.splice(idx, 1);
+            renderPendingThumbnails();
+          }
+        }
+      });
+    }
+
+    if (albumModalFileInput) {
+      albumModalFileInput.addEventListener('change', async function (e) {
+        if (e.target.files && e.target.files.length) {
+          await handleSelectedDeviceFiles(e.target.files);
+          this.value = ''; // Reset so same file can be re-selected if desired
+        }
+      });
+    }
+
+    if (btnChangePhoto && albumModalFileInput) {
+      btnChangePhoto.addEventListener('click', function (e) {
+        e.stopPropagation();
+        albumModalFileInput.click();
+      });
+    }
+
+    // Drag and drop on dropzone
+    if (photoDropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        photoDropzone.addEventListener(eventName, function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          photoDropzone.classList.add('is-dragover');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        photoDropzone.addEventListener(eventName, function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          photoDropzone.classList.remove('is-dragover');
+        });
+      });
+
+      photoDropzone.addEventListener('drop', async function (e) {
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length) {
+          await handleSelectedDeviceFiles(dt.files);
+        }
+      });
+    }
+
+    // Trigger modal or direct device upload on Add Photo button
     if (albumAddBtn) {
       albumAddBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -811,115 +1183,415 @@
       });
     }
 
-    // Save photo from Google Drive link or local upload
+    // Save chosen device photographs
     if (btnPhotoSave) {
-      btnPhotoSave.addEventListener('click', function () {
-        const driveUrl = photoDriveUrlInput ? photoDriveUrlInput.value.trim() : '';
-        const title = (photoNewTitleInput && photoNewTitleInput.value.trim()) ? photoNewTitleInput.value.trim() : 'Visual Memory';
-        const date = (photoNewDateInput && photoNewDateInput.value.trim()) ? photoNewDateInput.value.trim() : 'Calcutta Memory';
-
-        // 1. Google Drive Link provided
-        if (driveUrl) {
-          const directImgUrl = convertGoogleDriveUrl(driveUrl);
-          const newPhoto = {
-            id: 'photo-drive-' + Date.now(),
-            src: directImgUrl,
-            title: title,
-            date: date,
-            isDrive: true
-          };
-          const currentPhotos = getStoredPhotos();
-          currentPhotos.unshift(newPhoto);
-          saveStoredPhotos(currentPhotos);
-
-          renderPhotoCard(newPhoto, true);
-          closePhotoModal();
-          showToast('☁️ Photo linked permanently from Google Drive');
+      btnPhotoSave.addEventListener('click', async function () {
+        if (!pendingPhotosList.length) {
+          if (albumModalFileInput) {
+            albumModalFileInput.click();
+          } else {
+            showToast('Please select at least one photograph from your device.');
+          }
           return;
         }
 
-        // 2. Local device file uploaded
-        if (albumModalFileInput && albumModalFileInput.files && albumModalFileInput.files[0]) {
-          const file = albumModalFileInput.files[0];
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            // Compress using HTML5 Canvas to prevent browser localStorage quota limit
-            const img = new Image();
-            img.onload = function () {
-              const canvas = document.createElement('canvas');
-              const maxDim = 1200;
-              let width = img.width;
-              let height = img.height;
-              if (width > maxDim || height > maxDim) {
-                if (width > height) {
-                  height = Math.round((height * maxDim) / width);
-                  width = maxDim;
-                } else {
-                  width = Math.round((width * maxDim) / height);
-                  height = maxDim;
-                }
-              }
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0, width, height);
-              const compressedSrc = canvas.toDataURL('image/jpeg', 0.82);
+        const customTitle = photoNewTitleInput ? photoNewTitleInput.value.trim() : '';
+        const customDate = photoNewDateInput ? photoNewDateInput.value.trim() : '';
 
-              const newPhoto = {
-                id: 'photo-local-' + Date.now(),
-                src: compressedSrc,
-                title: title,
-                date: date,
-                isDrive: false
-              };
-              const currentPhotos = getStoredPhotos();
-              currentPhotos.unshift(newPhoto);
-              saveStoredPhotos(currentPhotos);
+        // Save each photo to IndexedDB and prepend to gallery
+        const count = pendingPhotosList.length;
+        for (let i = 0; i < pendingPhotosList.length; i++) {
+          const item = pendingPhotosList[i];
+          if (customTitle && count === 1) item.title = customTitle;
+          else if (customTitle && count > 1) item.title = `${customTitle} (${i + 1})`;
+          if (customDate) item.date = customDate;
 
-              renderPhotoCard(newPhoto, true);
-              closePhotoModal();
-              showToast('❧ Photo added to visual journal');
-            };
-            img.src = e.target.result;
-          };
-          reader.readAsDataURL(file);
-          return;
+          await savePhotoItem(item);
+          renderPhotoCard(item, true);
         }
 
-        showToast('Please paste a Google Drive link or select a photo file.');
+        closePhotoModal();
+        showToast(`❧ ${count} photograph${count > 1 ? 's' : ''} added in series to journal`);
       });
     }
 
-    // Load custom photos on photo album page
+    // Pagination controls: "Show 10 More" button & View Dropdown
+    if (btnShowMorePhotos) {
+      btnShowMorePhotos.addEventListener('click', function () {
+        visiblePhotoLimit += 10;
+        updatePhotoSeriesAndPagination();
+        showToast(`✦ Displaying next 10 photographs in series`);
+      });
+    }
+
+    if (albumViewSelect) {
+      albumViewSelect.addEventListener('change', function () {
+        selectedViewMode = this.value;
+        if (selectedViewMode !== 'all') {
+          visiblePhotoLimit = parseInt(selectedViewMode, 10) || 10;
+        }
+        updatePhotoSeriesAndPagination();
+      });
+    }
+
+    // Lightbox Contemplation View
+    function openLightbox(src, title, date) {
+      if (!photoLightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      if (lightboxTitle) lightboxTitle.textContent = title || '';
+      if (lightboxDate) lightboxDate.textContent = date || '';
+      photoLightbox.style.display = 'flex';
+      photoLightbox.classList.add('is-active');
+      photoLightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      if (!photoLightbox) return;
+      photoLightbox.classList.remove('is-active');
+      photoLightbox.setAttribute('aria-hidden', 'true');
+      photoLightbox.style.display = 'none';
+      if (lightboxImg) lightboxImg.src = '';
+    }
+
+    if (photoLightboxClose) photoLightboxClose.addEventListener('click', closeLightbox);
+    if (photoLightbox) {
+      photoLightbox.addEventListener('click', function (e) {
+        if (e.target === photoLightbox) closeLightbox();
+      });
+    }
+
+    // Global Keydown for Escape key (modal & lightbox)
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closePhotoModal();
+        closeLightbox();
+      }
+    });
+
+    // Initialize photo album from IndexedDB
     if (photoMasonryContainer) {
-      const storedPhotos = getStoredPhotos();
-      storedPhotos.forEach(p => renderPhotoCard(p, true));
+      // 1. Hide default photos previously deleted
+      const removedIds = getRemovedPhotos();
+      removedIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+      });
 
-      // Handle photo removal clicks
-      document.addEventListener('click', function (e) {
+      // 2. Fetch from IndexedDB and render
+      getStoredPhotos().then(stored => {
+        stored.forEach(p => renderPhotoCard(p, true));
+        updatePhotoSeriesAndPagination();
+      });
+
+      // 3. Delegate click events for photo deletion AND contemplation lightbox
+      photoMasonryContainer.addEventListener('click', async function (e) {
+        // A. Remove photo click
         const removePhotoBtn = e.target.closest('.btn-remove-photo');
-        if (!removePhotoBtn) return;
-        e.preventDefault();
+        if (removePhotoBtn) {
+          e.preventDefault();
+          e.stopPropagation();
 
-        const photoId = removePhotoBtn.getAttribute('data-id');
-        const photoTitle = removePhotoBtn.getAttribute('data-title') || 'Photo';
-        if (!photoId) return;
+          const photoId = removePhotoBtn.getAttribute('data-id');
+          const photoTitle = removePhotoBtn.getAttribute('data-title') || 'Photo';
+          if (!photoId) return;
 
-        if (confirm(`Remove "${photoTitle}" from photo album?`)) {
-          const stored = getStoredPhotos();
-          const updated = stored.filter(p => p.id !== photoId);
-          saveStoredPhotos(updated);
+          if (confirm(`Remove "${photoTitle}" from visual journal?`)) {
+            await deletePhotoItem(photoId);
 
-          const card = document.getElementById(photoId);
-          if (card) {
-            card.style.transition = 'all 0.3s ease-out';
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.92)';
-            setTimeout(() => card.remove(), 300);
+            // Record in removed registry so default photos stay removed
+            const currentRemoved = getRemovedPhotos();
+            if (!currentRemoved.includes(photoId)) {
+              currentRemoved.push(photoId);
+              saveRemovedPhotos(currentRemoved);
+            }
+
+            const card = document.getElementById(photoId);
+            if (card) {
+              card.style.transition = 'all 0.3s ease-out';
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.92)';
+              setTimeout(() => {
+                card.remove();
+                updatePhotoSeriesAndPagination();
+              }, 300);
+            }
+            showToast(`❧ Photo removed from journal`);
           }
-          showToast(`❧ Photo removed from album`);
+          return;
+        }
+
+        // B. Click to view photo in Contemplation Lightbox
+        const card = e.target.closest('.photo-card');
+        if (card) {
+          const img = card.querySelector('img');
+          if (img && img.src) {
+            const title = card.getAttribute('data-title') || (card.querySelector('.photo-card-title') ? card.querySelector('.photo-card-title').textContent : '');
+            const date = card.getAttribute('data-date') || (card.querySelector('.photo-card-date') ? card.querySelector('.photo-card-date').textContent : '');
+            openLightbox(img.src, title, date);
+          }
         }
       });
+    }
+
+    // ── Full Poetry Archive Page Interactive Suite (poetry-archive.html) ──
+    const poetryJumpSelect = document.getElementById('poetry-jump-select');
+    const poetrySearchInput = document.getElementById('poetry-search-input');
+    const btnClearSearch = document.getElementById('btn-clear-search');
+    const langFilterButtons = document.querySelectorAll('.archive-pill[data-lang-filter]');
+    const headFilterButtons = document.querySelectorAll('.archive-head-pill[data-head-filter]');
+    const poetrySortSelect = document.getElementById('poetry-sort-select');
+    const allPoemsGrid = document.getElementById('all-poems-grid');
+    const archiveTotalCount = document.getElementById('archive-total-count');
+    const visibleVersesCount = document.getElementById('visible-verses-count');
+    const archiveNoResults = document.getElementById('archive-no-results');
+    const btnResetFilters = document.getElementById('btn-reset-filters');
+    const btnArchiveAddPoem = document.getElementById('btn-archive-add-poem');
+    const btnToggleArchiveEditor = document.getElementById('btn-toggle-archive-editor');
+
+    let activeLangFilter = 'all';
+    let activeHeadFilter = 'all';
+    let currentSearchTerm = '';
+
+    function filterArchivePoems() {
+      if (!allPoemsGrid) return;
+      const cards = Array.from(allPoemsGrid.querySelectorAll('.archive-poem-entry'));
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const lang = card.getAttribute('data-lang') || 'english';
+        const head = card.getAttribute('data-head') || '';
+        const titleEl = card.querySelector('.poem-card-title');
+        const tagEl = card.querySelector('.poem-card-tag');
+        const verseEl = card.querySelector('.poem-verse-text');
+        const dateEl = card.querySelector('.poem-card-date');
+
+        const titleText = titleEl ? titleEl.textContent.toLowerCase() : '';
+        const tagText = tagEl ? tagEl.textContent.toLowerCase() : '';
+        const verseText = verseEl ? verseEl.textContent.toLowerCase() : '';
+        const dateText = dateEl ? dateEl.textContent.toLowerCase() : '';
+
+        // Check language filter
+        const matchLang = (activeLangFilter === 'all') || (lang === activeLangFilter);
+
+        // Check head filter
+        let matchHead = true;
+        if (activeHeadFilter !== 'all') {
+          if (activeHeadFilter === 'memory') matchHead = head.includes('memory') || tagText.includes('memory') || tagText.includes('ganges');
+          else if (activeHeadFilter === 'maktub') matchHead = head.includes('maktub') || tagText.includes('मक़्तूब') || tagText.includes('रेखा');
+          else if (activeHeadFilter === 'river') matchHead = head.includes('river') || tagText.includes('river') || tagText.includes('waters');
+          else if (activeHeadFilter === 'monsoon') matchHead = head.includes('monsoon') || tagText.includes('monsoon') || tagText.includes('rain');
+          else if (activeHeadFilter === 'dehleez') matchHead = head.includes('dehleez') || tagText.includes('देहलीज़') || tagText.includes('दिया');
+        }
+
+        // Check search term
+        let matchSearch = true;
+        if (currentSearchTerm) {
+          const q = currentSearchTerm.toLowerCase();
+          matchSearch = titleText.includes(q) || tagText.includes(q) || verseText.includes(q) || dateText.includes(q);
+        }
+
+        if (matchLang && matchHead && matchSearch) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update counters & empty state
+      if (visibleVersesCount) {
+        visibleVersesCount.textContent = `Showing ${visibleCount} of ${cards.length} verses`;
+      }
+      if (archiveTotalCount) {
+        archiveTotalCount.textContent = `✦ ${cards.length} Canonical & Custom Verses`;
+      }
+      if (archiveNoResults) {
+        archiveNoResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    // 1. Jump Selector Dropdown
+    if (poetryJumpSelect) {
+      poetryJumpSelect.addEventListener('change', function () {
+        const targetId = this.value;
+        if (!targetId) return;
+
+        // Reset search/filters if card is hidden
+        const targetCard = document.getElementById(targetId);
+        if (targetCard) {
+          if (targetCard.style.display === 'none') {
+            activeLangFilter = 'all';
+            activeHeadFilter = 'all';
+            currentSearchTerm = '';
+            if (poetrySearchInput) poetrySearchInput.value = '';
+            langFilterButtons.forEach(b => b.classList.toggle('is-active', b.getAttribute('data-lang-filter') === 'all'));
+            headFilterButtons.forEach(b => b.classList.toggle('is-active', b.getAttribute('data-head-filter') === 'all'));
+            filterArchivePoems();
+          }
+
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetCard.classList.add('is-jump-highlighted');
+          setTimeout(() => {
+            targetCard.classList.remove('is-jump-highlighted');
+          }, 2400);
+
+          showToast(`✦ Selected: ${targetCard.querySelector('.poem-card-title') ? targetCard.querySelector('.poem-card-title').textContent : 'Verse'}`);
+        }
+      });
+    }
+
+    // 2. Real-time Search Input
+    if (poetrySearchInput) {
+      poetrySearchInput.addEventListener('input', function () {
+        currentSearchTerm = this.value.trim();
+        if (btnClearSearch) btnClearSearch.style.display = currentSearchTerm ? 'block' : 'none';
+        filterArchivePoems();
+      });
+    }
+
+    if (btnClearSearch) {
+      btnClearSearch.addEventListener('click', function () {
+        if (poetrySearchInput) poetrySearchInput.value = '';
+        currentSearchTerm = '';
+        btnClearSearch.style.display = 'none';
+        filterArchivePoems();
+      });
+    }
+
+    // 3. Language Filter Pills
+    langFilterButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        langFilterButtons.forEach(b => b.classList.remove('is-active'));
+        this.classList.add('is-active');
+        activeLangFilter = this.getAttribute('data-lang-filter') || 'all';
+        filterArchivePoems();
+      });
+    });
+
+    // 4. Head Filter Pills
+    headFilterButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        headFilterButtons.forEach(b => b.classList.remove('is-active'));
+        this.classList.add('is-active');
+        activeHeadFilter = this.getAttribute('data-head-filter') || 'all';
+        filterArchivePoems();
+      });
+    });
+
+    // 5. Reset Filters Button
+    if (btnResetFilters) {
+      btnResetFilters.addEventListener('click', function () {
+        activeLangFilter = 'all';
+        activeHeadFilter = 'all';
+        currentSearchTerm = '';
+        if (poetrySearchInput) poetrySearchInput.value = '';
+        if (btnClearSearch) btnClearSearch.style.display = 'none';
+        if (poetryJumpSelect) poetryJumpSelect.value = '';
+        langFilterButtons.forEach(b => b.classList.toggle('is-active', b.getAttribute('data-lang-filter') === 'all'));
+        headFilterButtons.forEach(b => b.classList.toggle('is-active', b.getAttribute('data-head-filter') === 'all'));
+        filterArchivePoems();
+      });
+    }
+
+    // 6. Sort Select
+    if (poetrySortSelect && allPoemsGrid) {
+      poetrySortSelect.addEventListener('change', function () {
+        const sortVal = this.value;
+        const cards = Array.from(allPoemsGrid.querySelectorAll('.archive-poem-entry'));
+
+        cards.sort((a, b) => {
+          const titleA = (a.querySelector('.poem-card-title') ? a.querySelector('.poem-card-title').textContent : '').trim().toLowerCase();
+          const titleB = (b.querySelector('.poem-card-title') ? b.querySelector('.poem-card-title').textContent : '').trim().toLowerCase();
+          const headA = (a.getAttribute('data-head') || '').toLowerCase();
+          const headB = (b.getAttribute('data-head') || '').toLowerCase();
+
+          if (sortVal === 'title-asc') return titleA.localeCompare(titleB);
+          if (sortVal === 'head') return headA.localeCompare(headB);
+          return 0; // featured sequence
+        });
+
+        cards.forEach(card => allPoemsGrid.appendChild(card));
+        filterArchivePoems();
+      });
+    }
+
+    // 7. Copy verse to clipboard
+    document.addEventListener('click', function (e) {
+      const copyBtn = e.target.closest('.btn-poem-copy');
+      if (copyBtn) {
+        e.preventDefault();
+        const card = copyBtn.closest('article');
+        if (card) {
+          const title = card.querySelector('.poem-card-title') ? card.querySelector('.poem-card-title').textContent.trim() : '';
+          const verse = card.querySelector('.poem-verse-text') ? card.querySelector('.poem-verse-text').textContent.trim() : '';
+          const fullText = `${title}\n\n${verse}\n\n— Audrita Mukherjee`;
+          navigator.clipboard.writeText(fullText).then(() => {
+            showToast(`⎘ "${title}" copied to clipboard`);
+          }).catch(() => {
+            showToast('Unable to copy verse.');
+          });
+        }
+      }
+    });
+
+    // 8. Add poem actions on archive page
+    if (btnArchiveAddPoem) {
+      btnArchiveAddPoem.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (poetryFileInput) poetryFileInput.click();
+      });
+    }
+    if (btnToggleArchiveEditor) {
+      btnToggleArchiveEditor.addEventListener('click', function (e) {
+        e.preventDefault();
+        openEditPoemEditor('poem-favor');
+      });
+    }
+
+    // Render custom stored poems on poetry-archive.html
+    if (allPoemsGrid) {
+      const stored = getStoredPoems();
+      stored.forEach(p => {
+        if (!document.getElementById(p.id)) {
+          const card = document.createElement('article');
+          const isHindi = p.language === 'hindi';
+          card.className = 'poem-card-clean archive-poem-entry';
+          card.setAttribute('data-id', p.id);
+          card.setAttribute('data-lang', p.language || 'english');
+          card.setAttribute('data-head', 'custom');
+          card.id = p.id;
+
+          card.innerHTML = `
+            <div class="poem-card-header">
+              <div class="poem-card-meta">
+                <span class="poem-card-lang" ${isHindi ? 'style="color: var(--color-accent); font-weight: 500;"' : ''}>${isHindi ? 'हिंदी' : 'EN'}</span>
+                <span class="poem-card-tag">${escapeHTML(p.tag || 'Sanctuary Verse')}</span>
+              </div>
+              <div class="poem-card-controls">
+                <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="${p.id}" title="Copy verse to clipboard">⎘ Copy</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="${p.id}" title="Edit & Customize Verse">✎ Edit</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${p.id}" data-title="${escapeHTML(p.title)}" title="Remove poem">✕</button>
+              </div>
+            </div>
+            <h2 class="poem-card-title ${isHindi ? 'is-hindi' : ''}">${escapeHTML(p.title)}</h2>
+            <div class="poem-verse-text ${isHindi ? 'is-hindi' : ''}">${escapeHTML(p.verse)}</div>
+            <div class="poem-card-footer">
+              <span class="poem-card-date">${escapeHTML(p.date || 'Audrita Mukherjee')}</span>
+              <span class="poem-card-place">Personal Archive</span>
+            </div>
+          `;
+          allPoemsGrid.appendChild(card);
+
+          // Add to Jump Select options
+          if (poetryJumpSelect) {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+            opt.textContent = `${p.title} · ${p.tag || 'Personal Archive'}`;
+            poetryJumpSelect.appendChild(opt);
+          }
+        }
+      });
+      filterArchivePoems();
     }
 
     // ── Voice Verses (Words In Voice) Hub & Add/Remove System ──

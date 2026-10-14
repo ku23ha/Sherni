@@ -1214,6 +1214,11 @@
 
 /* ── Tour & Literary Gatherings ─────────────────────────── */
 .tour-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
 /* ── Photo Album & Gallery Grid ─────────────────────────── */
 .gallery-grid {
   display: grid;

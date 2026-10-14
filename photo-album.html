@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/tokens.css?v=20261009c" />
-  <link rel="stylesheet" href="css/base.css?v=20261009c" />
-  <link rel="stylesheet" href="css/components.css?v=20261009c" />
-  <link rel="stylesheet" href="css/pages.css?v=20261009c" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261012a" />
+  <link rel="stylesheet" href="css/base.css?v=20261012a" />
+  <link rel="stylesheet" href="css/components.css?v=20261012a" />
+  <link rel="stylesheet" href="css/pages.css?v=20261012a" />
 </head>
 <body>
 
@@ -78,19 +78,22 @@
       <div class="album-header-bar">
         <div>
           <span class="section-label">Visual Journal</span>
-          <h1 style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 300; margin: var(--space-2) 0 var(--space-3);">
+          <h1 style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 300; margin: var(--space-2) 0 var(--space-2);">
             Photo Album
           </h1>
-          <p style="font-family: var(--font-serif); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-text-muted); font-style: italic; max-width: 620px;">
+          <p style="font-family: var(--font-serif); font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-text-muted); font-style: italic; max-width: 620px; margin-bottom: var(--space-2);">
             Glimpses from the writing room, quiet corners, worn journals, and the light that filters through.
           </p>
+          <div class="album-header-meta">
+            <span class="album-badge-count" id="album-count-badge">✦ Curated Journal</span>
+          </div>
         </div>
         <div>
           <!-- Sleek Add Photo button -->
-          <button class="btn-album-add" id="album-add-btn" title="Add a new photo to your album">
-            <span>+</span> Add Photo
+          <button class="btn-album-add" id="album-add-btn" title="Add a new photograph or memory to your journal">
+            <span class="btn-album-add-icon">✦</span>
+            <span>Add Photo</span>
           </button>
-          <input type="file" id="album-file-input" accept="image/*" style="display: none !important;" />
         </div>
       </div>
 
@@ -98,9 +101,13 @@
       <div class="photo-masonry" id="photo-masonry-container">
 
         <!-- Photo 1: Audrita Mukherjee Portrait -->
-        <article class="photo-card" id="photo-audrita-portrait">
-          <button class="btn-remove-photo" data-id="photo-audrita-portrait" data-title="Audrita Mukherjee Portrait" title="Remove photo" aria-label="Remove photo">✕</button>
-          <div class="photo-card-img-wrap">
+        <article class="photo-card" id="photo-audrita-portrait" data-title="Audrita Mukherjee" data-date="Author &amp; Poet · Calcutta">
+          <span class="photo-series-badge">№ 01</span>
+          <button class="btn-remove-photo" data-id="photo-audrita-portrait" data-title="Audrita Mukherjee Portrait" title="Remove photo from journal" aria-label="Remove photo">
+            <span class="remove-icon">✕</span>
+            <span class="remove-label">Remove</span>
+          </button>
+          <div class="photo-card-img-wrap" title="Click to view photograph in full contemplation">
             <img src="images/audrita.jpg" alt="Audrita Mukherjee in gentle contemplation" loading="lazy" />
           </div>
           <div class="photo-card-caption">
@@ -110,9 +117,13 @@
         </article>
 
         <!-- Photo 2: The Writing Desk -->
-        <article class="photo-card" id="photo-writing-desk">
-          <button class="btn-remove-photo" data-id="photo-writing-desk" data-title="The Writing Desk" title="Remove photo" aria-label="Remove photo">✕</button>
-          <div class="photo-card-img-wrap">
+        <article class="photo-card" id="photo-writing-desk" data-title="The Writing Desk" data-date="Morning Light · Where drafts begin">
+          <span class="photo-series-badge">№ 02</span>
+          <button class="btn-remove-photo" data-id="photo-writing-desk" data-title="The Writing Desk" title="Remove photo from journal" aria-label="Remove photo">
+            <span class="remove-icon">✕</span>
+            <span class="remove-label">Remove</span>
+          </button>
+          <div class="photo-card-img-wrap" title="Click to view photograph in full contemplation">
             <img src="images/writing_desk.jpg" alt="Minimalist wooden desk with open journal and fountain pen" loading="lazy" />
           </div>
           <div class="photo-card-caption">
@@ -122,9 +133,13 @@
         </article>
 
         <!-- Photo 3: Rain on Window Pane -->
-        <article class="photo-card" id="photo-rain-window">
-          <button class="btn-remove-photo" data-id="photo-rain-window" data-title="Rain On The Window" title="Remove photo" aria-label="Remove photo">✕</button>
-          <div class="photo-card-img-wrap">
+        <article class="photo-card" id="photo-rain-window" data-title="Rain On The Window" data-date="Calcutta Monsoon · Quiet Solitude">
+          <span class="photo-series-badge">№ 03</span>
+          <button class="btn-remove-photo" data-id="photo-rain-window" data-title="Rain On The Window" title="Remove photo from journal" aria-label="Remove photo">
+            <span class="remove-icon">✕</span>
+            <span class="remove-label">Remove</span>
+          </button>
+          <div class="photo-card-img-wrap" title="Click to view photograph in full contemplation">
             <img src="images/rain_window.jpg" alt="Raindrops running down window overlooking green garden" loading="lazy" />
           </div>
           <div class="photo-card-caption">
@@ -134,9 +149,13 @@
         </article>
 
         <!-- Photo 4: Botanical Pressings -->
-        <article class="photo-card" id="photo-botanical-press">
-          <button class="btn-remove-photo" data-id="photo-botanical-press" data-title="Botanical Pressings" title="Remove photo" aria-label="Remove photo">✕</button>
-          <div class="photo-card-img-wrap">
+        <article class="photo-card" id="photo-botanical-press" data-title="Botanical Pressings" data-date="Wild Jasmine &amp; Ferns · Autumn 2023">
+          <span class="photo-series-badge">№ 04</span>
+          <button class="btn-remove-photo" data-id="photo-botanical-press" data-title="Botanical Pressings" title="Remove photo from journal" aria-label="Remove photo">
+            <span class="remove-icon">✕</span>
+            <span class="remove-label">Remove</span>
+          </button>
+          <div class="photo-card-img-wrap" title="Click to view photograph in full contemplation">
             <img src="images/botanical_press.jpg" alt="Pressed dried wildflowers inside an antique diary" loading="lazy" />
           </div>
           <div class="photo-card-caption">
@@ -146,9 +165,13 @@
         </article>
 
         <!-- Photo 5: Sacred Ganges At Twilight -->
-        <article class="photo-card" id="photo-river-ganges">
-          <button class="btn-remove-photo" data-id="photo-river-ganges" data-title="Sacred Ganges At Twilight" title="Remove photo" aria-label="Remove photo">✕</button>
-          <div class="photo-card-img-wrap">
+        <article class="photo-card" id="photo-river-ganges" data-title="River Ganges at Twilight" data-date="On Favor &amp; Sacred Waters · Evening Silence">
+          <span class="photo-series-badge">№ 05</span>
+          <button class="btn-remove-photo" data-id="photo-river-ganges" data-title="Sacred Ganges At Twilight" title="Remove photo from journal" aria-label="Remove photo">
+            <span class="remove-icon">✕</span>
+            <span class="remove-label">Remove</span>
+          </button>
+          <div class="photo-card-img-wrap" title="Click to view photograph in full contemplation">
             <img src="images/river_ganges.jpg" alt="Quiet waters of the Ganges at twilight with rowing boat" loading="lazy" />
           </div>
           <div class="photo-card-caption">
@@ -157,6 +180,27 @@
           </div>
         </article>
 
+      </div>
+
+      <!-- ── Series Pagination & Show More Controls ── -->
+      <div class="album-pagination-bar" id="album-pagination-bar">
+        <div class="pagination-progress-wrap">
+          <span class="pagination-progress-text" id="album-pagination-progress">✦ Showing 1–5 of 5 photographs in series</span>
+        </div>
+        <div class="pagination-actions-wrap">
+          <button type="button" class="btn-show-more-photos" id="btn-show-more-photos" style="display: none;">
+            <span class="btn-icon">✦</span>
+            <span id="btn-show-more-text">Show 10 More</span>
+          </button>
+        </div>
+        <div class="pagination-view-select-wrap">
+          <label for="album-view-select" class="pagination-select-label">View:</label>
+          <select id="album-view-select" class="pagination-select">
+            <option value="10" selected>Show 10 per batch</option>
+            <option value="20">Show 20 per batch</option>
+            <option value="all">Show All</option>
+          </select>
+        </div>
       </div>
 
     </div>
@@ -169,77 +213,98 @@
         <p class="footer-tagline">Frames of a quiet life.</p>
       </div>
       <nav class="footer-nav">
-        <a href="index.html#poetry">Poetry</a>
+        <a href="index.html">Home</a>
+        <a href="poetry-archive.html">Poetry Archive</a>
         <a href="about.html">About Me</a>
-        <a href="photo-album.html">Photo Album</a>
+        <a href="photo-album.html" class="is-active">Photo Album</a>
         <a href="garden.html">The Garden</a>
-        <button type="button" id="btn-export-sanctuary" class="footer-sync-btn" title="Download backup of your poems, voice verses, and customizations">📥 Backup</button>
+        <button type="button" id="btn-export-sanctuary" class="footer-sync-btn" title="Download backup of your photos, poems, and notes">📥 Backup</button>
         <button type="button" id="btn-import-sanctuary" class="footer-sync-btn" title="Transfer or restore backup on your laptop/phone">📤 Restore</button>
         <input type="file" id="input-import-sanctuary" accept=".json" style="display: none;" />
       </nav>
     </div>
   </footer>
 
-  <!-- ── Modal: Add Photo with Google Drive Storage Link ── -->
+  <!-- ── Modal: Add Photo to Visual Journal (Direct Device Upload) ── -->
   <div class="editorial-modal-backdrop" id="modal-add-photo" aria-hidden="true" style="display: none;">
-    <div class="editorial-modal-card" role="dialog" aria-labelledby="modal-photo-title">
+    <div class="editorial-modal-card photo-upload-modal-card" role="dialog" aria-labelledby="modal-photo-title">
       <div class="editorial-modal-header">
-        <h3 class="editorial-modal-title" id="modal-photo-title">Add To Visual Journal</h3>
+        <div>
+          <span class="modal-eyebrow">✦ Visual Journal Archive</span>
+          <h3 class="editorial-modal-title" id="modal-photo-title">Add Photos to Visual Journal</h3>
+          <p class="modal-subtitle">Browse device gallery, camera roll, or downloads to add frames to your journal.</p>
+        </div>
         <button class="editorial-modal-close" id="modal-photo-close" aria-label="Close modal">✕</button>
       </div>
       <div class="editorial-modal-body">
-        
-        <!-- Google Drive Recommendation Notice -->
-        <div style="background-color: var(--color-bg-alt); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-4); margin-bottom: var(--space-2);">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-            <span style="font-size: 1.1rem;">☁️</span>
-            <strong style="font-family: var(--font-serif); font-size: var(--text-base); color: var(--color-text);">Google Drive Permanent Storage</strong>
-            <span class="badge-drive-storage">Recommended</span>
+
+        <!-- Direct Device File Upload Dropzone -->
+        <div class="photo-dropzone" id="photo-dropzone">
+          <input type="file" id="album-modal-file-input" accept="image/*" multiple class="dropzone-file-input" />
+          <div class="dropzone-content" id="dropzone-prompt">
+            <div class="dropzone-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <span class="dropzone-headline">Choose Photographs from Device</span>
+            <span class="dropzone-browse-btn">📁 Browse Gallery or Downloads</span>
+            <span class="dropzone-hint">Tap to select one or multiple photos · JPG, PNG, WEBP</span>
           </div>
-          <p style="font-family: var(--font-serif); font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; margin: 0;">
-            Linking directly to your Google Drive prevents browser storage limits. Simply right-click any photo in Google Drive → <em>Share</em> → Set to <em>"Anyone with the link can view"</em> → Copy &amp; paste the link below.
-          </p>
+
+          <!-- Multi-photo Selection Live Preview Strip -->
+          <div class="dropzone-preview-wrap" id="dropzone-preview-wrap" style="display: none;">
+            <div class="dropzone-selected-header">
+              <span class="preview-badge" id="preview-count-badge">1 Photo Selected</span>
+              <button type="button" class="btn-change-photo" id="btn-change-photo">+ Add More Photos</button>
+            </div>
+            <div class="dropzone-thumbs-grid" id="dropzone-thumbs-grid">
+              <!-- Dynamically rendered preview thumbs -->
+            </div>
+          </div>
         </div>
 
-        <div class="editorial-form-group">
-          <label class="editorial-form-label" for="photo-drive-url">Google Drive Link or Image URL</label>
-          <input type="url" id="photo-drive-url" class="editorial-form-input" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" />
-        </div>
-
-        <div style="text-align: center; margin: var(--space-2) 0; position: relative;">
-          <span style="background-color: var(--color-surface); padding: 0 10px; font-family: var(--font-sans); font-size: var(--text-xs); color: var(--color-text-faint); text-transform: uppercase;">or upload from device</span>
-          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background-color: var(--color-border-light); z-index: -1;"></div>
-        </div>
-
-        <div class="editorial-form-group">
-          <label class="editorial-form-label" for="album-modal-file-input">Device Photo File</label>
-          <input type="file" id="album-modal-file-input" accept="image/*" class="editorial-form-input" />
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+        <!-- Optional Metadata Fields Duo -->
+        <div class="form-row-duo" style="margin-top: var(--space-4);">
           <div class="editorial-form-group">
-            <label class="editorial-form-label" for="photo-new-title">Caption / Title</label>
+            <label class="editorial-form-label" for="photo-new-title">Caption / Title (Optional)</label>
             <input type="text" id="photo-new-title" class="editorial-form-input" placeholder="e.g. Calcutta Monsoon Light" />
           </div>
           <div class="editorial-form-group">
-            <label class="editorial-form-label" for="photo-new-date">Date or Location</label>
+            <label class="editorial-form-label" for="photo-new-date">Date or Location (Optional)</label>
             <input type="text" id="photo-new-date" class="editorial-form-input" placeholder="e.g. October 2026 · Calcutta" />
           </div>
         </div>
 
       </div>
       <div class="editorial-modal-footer">
-        <span style="font-family: var(--font-serif); font-size: var(--text-xs); color: var(--color-text-faint); font-style: italic;">
-          Synced to Audrita's visual journal
+        <span class="modal-footer-note">
+          ❧ Added in sequential series to your private visual journal
         </span>
         <div class="editorial-modal-actions">
           <button type="button" class="btn-modal-cancel" id="btn-photo-cancel">Cancel</button>
-          <button type="button" class="btn-modal-save" id="btn-photo-save">Add to Album</button>
+          <button type="button" class="btn-modal-save" id="btn-photo-save">✦ Add to Journal</button>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="js/main.js?v=20261009c"></script>
+  <!-- ── Photo Contemplation Lightbox ── -->
+  <div class="photo-lightbox-backdrop" id="photo-lightbox" aria-hidden="true" style="display: none;">
+    <div class="photo-lightbox-content">
+      <button class="photo-lightbox-close" id="photo-lightbox-close" aria-label="Close photo view">✕</button>
+      <div class="photo-lightbox-img-wrap">
+        <img id="lightbox-img" src="" alt="" />
+      </div>
+      <div class="photo-lightbox-caption">
+        <h3 id="lightbox-title" class="lightbox-title"></h3>
+        <span id="lightbox-date" class="lightbox-date"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js?v=20261012a"></script>
 </body>
 </html>

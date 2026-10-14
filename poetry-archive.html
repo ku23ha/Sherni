@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poetry Archive — Audrita Mukherjee</title>
+  <meta name="description" content="The complete poetry anthology of Audrita Mukherjee. Verses in English and Hindi preserving stanza cadence, memory, and quiet devotion." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261013a" />
+  <link rel="stylesheet" href="css/base.css?v=20261013a" />
+  <link rel="stylesheet" href="css/components.css?v=20261013a" />
+  <link rel="stylesheet" href="css/pages.css?v=20261013a" />
+</head>
+<body>
+
+  <!-- ── Site Header ── -->
+  <header class="site-header" role="banner">
+    <nav class="nav-container" aria-label="Primary navigation">
+      <a href="index.html" class="nav-logo" aria-label="Audrita — Home">
+        <span class="nav-logo-name">Audrita</span>
+        <span class="nav-logo-mark" aria-hidden="true">·</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="poetry-archive.html" class="nav-link is-active" aria-current="page">Poetry Archive</a></li>
+        <li><a href="garden.html" class="nav-link">The Garden</a></li>
+        <li class="nav-item-dropdown">
+          <a href="about.html" class="nav-link">About Me <span class="nav-arrow">▾</span></a>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="about.html" class="nav-dropdown-link">My Story</a></li>
+            <li><a href="photo-album.html" class="nav-dropdown-link">Photo Album</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Sleek Upload Poetry Button -->
+        <button type="button" class="btn-nav-upload" id="nav-upload-btn" aria-label="Upload poetry manuscript" title="Upload Word doc or PDF">
+          + Upload Verse
+        </button>
+        <input type="file" id="poetry-file-input" accept=".docx,.pdf,.txt,.md" style="display: none;" />
+
+        <!-- Dark / Light Theme Toggle -->
+        <button class="nav-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <!-- Mobile Toggle -->
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="nav-mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul role="list">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="poetry-archive.html" class="nav-link is-active">Poetry Archive (English &amp; Hindi)</a></li>
+        <li><a href="garden.html" class="nav-link">The Garden</a></li>
+        <li><a href="about.html" class="nav-link">About Me · My Story</a></li>
+        <li><a href="photo-album.html" class="nav-link">Photo Album</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ── Main Poetry Archive ── -->
+  <main id="main-content" class="page-poetry-archive">
+    <div class="container-wide">
+
+      <!-- Breadcrumbs & Eyebrow -->
+      <div class="poetry-archive-hero">
+        <span class="section-label">✦ Complete Verse Sanctuary</span>
+        <h1 class="poetry-archive-main-title">Full Poetry Archive</h1>
+        <p class="poetry-archive-main-subtitle">
+          All collected poems in English and Hindi. Select by title, browse by collection head, or search quiet stanzas.
+        </p>
+
+        <!-- Archive Stats Counter Pill -->
+        <div class="poetry-archive-stats-bar">
+          <span class="stats-pill" id="archive-total-count">✦ 6 Canonical &amp; Custom Verses</span>
+          <span class="stats-sep">·</span>
+          <span class="stats-note">Preserving stanza breath, pause, and ink</span>
+        </div>
+      </div>
+
+      <!-- ── Comprehensive Interactive Filter & Selector Suite ── -->
+      <section class="poetry-control-station" aria-label="Filter and select poems">
+
+        <!-- Top Row: Select Poem Dropdown & Live Search -->
+        <div class="poetry-station-top">
+          <!-- Jump to Poem Selector Dropdown -->
+          <div class="station-field station-jump-wrap">
+            <label for="poetry-jump-select" class="station-label">
+              <span>Select Poem by Name / Title</span>
+              <span class="station-hint">Jump directly to verse</span>
+            </label>
+            <div class="station-select-wrapper">
+              <select id="poetry-jump-select" class="station-select" aria-label="Select poem by title">
+                <option value="">— Choose a poem to view / jump to —</option>
+                <optgroup label="English Poetry (EN)">
+                  <option value="poem-favor">Favor · Memory &amp; The Ganges</option>
+                  <option value="poem-river-knows">The River Knows · Rivers &amp; Solitude</option>
+                  <option value="poem-before-rain">Before the Rain · Calcutta Monsoon</option>
+                  <option value="poem-colour-seven">The Colour of Seven · Light &amp; Silence</option>
+                </optgroup>
+                <optgroup label="हिंदी कविता (Hindi Poetry)">
+                  <option value="poem-maktub">मक़्तूब / Maktub · मक़्तूब &amp; राम रेखा</option>
+                  <option value="poem-dehleez-diya">देहलीज़ और दिया · देहलीज़, साँझ और इंतज़ार</option>
+                </optgroup>
+              </select>
+              <span class="select-chevron">▾</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Search Input -->
+          <div class="station-field station-search-wrap">
+            <label for="poetry-search-input" class="station-label">
+              <span>Search Archive</span>
+              <span class="station-hint">Filter by title, head, or line</span>
+            </label>
+            <div class="station-input-wrapper">
+              <span class="station-input-icon">🔍</span>
+              <input type="search" id="poetry-search-input" class="station-input" placeholder="Type title, head tag, or verse line..." autocomplete="off" />
+              <button type="button" id="btn-clear-search" class="station-clear-btn" style="display: none;" title="Clear search">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Row: Language Pills & Collection Head Filter Pills -->
+        <div class="poetry-station-filters">
+          
+          <!-- Language Filters -->
+          <div class="station-filter-group">
+            <span class="filter-group-label">Language:</span>
+            <div class="filter-pill-row" id="lang-filter-row">
+              <button type="button" class="archive-pill is-active" data-lang-filter="all">All Verses</button>
+              <button type="button" class="archive-pill" data-lang-filter="english">English Poetry (EN)</button>
+              <button type="button" class="archive-pill" data-lang-filter="hindi">हिंदी कविता</button>
+            </div>
+          </div>
+
+          <!-- Collection Head / Topic Filters -->
+          <div class="station-filter-group">
+            <span class="filter-group-label">Collection Head:</span>
+            <div class="filter-pill-row" id="head-filter-row">
+              <button type="button" class="archive-head-pill is-active" data-head-filter="all">All Heads</button>
+              <button type="button" class="archive-head-pill" data-head-filter="memory">Memory &amp; Ganges</button>
+              <button type="button" class="archive-head-pill" data-head-filter="maktub">मक़्तूब &amp; रेखा</button>
+              <button type="button" class="archive-head-pill" data-head-filter="river">River &amp; Solitude</button>
+              <button type="button" class="archive-head-pill" data-head-filter="monsoon">Monsoon &amp; Rain</button>
+              <button type="button" class="archive-head-pill" data-head-filter="dehleez">देहलीज़ &amp; दिया</button>
+            </div>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="station-sort-wrap">
+            <label for="poetry-sort-select" class="sort-label">Sort:</label>
+            <select id="poetry-sort-select" class="sort-select">
+              <option value="featured">Featured Sequence</option>
+              <option value="title-asc">Title (A → Z)</option>
+              <option value="head">By Collection Head</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Action Bar: Add Manuscript & Customize -->
+        <div class="poetry-station-actions">
+          <button type="button" id="btn-archive-add-poem" class="btn-station-primary" title="Add a new poem or upload manuscript">
+            <span>✦ Upload Manuscript / New Verse</span>
+          </button>
+          <button type="button" id="btn-toggle-archive-editor" class="btn-station-secondary" title="Open Verse Editor">
+            <span>✎ Customize &amp; Edit Verse</span>
+          </button>
+          <span class="station-active-count" id="visible-verses-count">Showing all 6 verses</span>
+        </div>
+
+      </section>
+
+      <!-- ── Inline Poetry Customizer Panel ── -->
+      <div class="inline-poetry-editor-box" id="inline-poetry-editor" style="display: none; margin: var(--space-6) auto var(--space-8); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-6); max-width: 820px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border-light); padding-bottom: var(--space-3); margin-bottom: var(--space-5);">
+          <div>
+            <span style="font-family: var(--font-sans); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-wider); color: var(--color-accent); font-weight: 500;">Sanctuary Customizer</span>
+            <h4 style="font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 400; margin: 2px 0 0;" id="inline-editor-heading">Customize &amp; Edit Verse</h4>
+          </div>
+          <button type="button" id="btn-close-inline-editor" style="background: transparent; border: 1px solid var(--color-border); border-radius: var(--radius-full); width: 28px; height: 28px; cursor: pointer; color: var(--color-text-muted); font-size: 13px;" title="Close Editor">✕</button>
+        </div>
+        
+        <input type="hidden" id="edit-poem-id" />
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-4);">
+          <div class="editorial-form-group">
+            <label class="editorial-form-label" for="edit-poem-title">Poem Title / शीर्षक</label>
+            <input type="text" id="edit-poem-title" class="editorial-form-input" placeholder="e.g. Favor, मक़्तूब, The River Knows" />
+          </div>
+          <div class="editorial-form-group">
+            <label class="editorial-form-label" for="edit-poem-tag">Heading / Collection Tag</label>
+            <input type="text" id="edit-poem-tag" class="editorial-form-input" placeholder="e.g. Memory &amp; The Ganges, मक़्तूब &amp; देहलीज़" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-4);">
+          <div class="editorial-form-group">
+            <label class="editorial-form-label" for="edit-poem-lang">Language / भाषा</label>
+            <select id="edit-poem-lang" class="editorial-form-select">
+              <option value="english">English Poetry (EN)</option>
+              <option value="hindi">हिंदी कविता (Hindi)</option>
+            </select>
+          </div>
+          <div class="editorial-form-group">
+            <label class="editorial-form-label" for="edit-poem-date">Signature / Author</label>
+            <input type="text" id="edit-poem-date" class="editorial-form-input" placeholder="e.g. Audrita Mukherjee" />
+          </div>
+        </div>
+
+        <div class="editorial-form-group" style="margin-bottom: var(--space-5);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+            <label class="editorial-form-label" for="edit-poem-verses">Verses &amp; Stanzas</label>
+            <button type="button" class="btn-modal-tool" id="btn-autoclean-stanzas" title="Format clean stanzas like Favor">
+              ✨ Auto-Clean Stanzas
+            </button>
+          </div>
+          <textarea id="edit-poem-verses" class="editorial-form-textarea" rows="11" placeholder="Write or edit verses here..."></textarea>
+          <p class="editorial-form-hint" style="margin-top: 4px;">Tip: Lines in the same stanza have no blank lines. Press Enter twice to create a clean stanza break.</p>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-3); border-top: 1px solid var(--color-border-light); padding-top: var(--space-4);">
+          <button type="button" class="btn-modal-cancel" id="btn-edit-poem-cancel">Cancel</button>
+          <button type="button" class="btn-modal-save" id="btn-edit-poem-save">Save Changes to Archive</button>
+        </div>
+      </div>
+
+      <!-- ── Master Poems Grid ── -->
+      <div class="all-poems-grid" id="all-poems-grid">
+
+        <!-- Poem 1: Favor (Canonical English) -->
+        <article class="poem-card-clean archive-poem-entry" data-id="poem-favor" data-lang="english" data-head="memory" id="poem-favor">
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang">EN</span>
+              <span class="poem-card-tag">Memory &amp; The Ganges</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-favor" title="Copy verse to clipboard">⎘ Copy</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-favor" title="Edit &amp; Customize Verse">✎ Edit</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title">Favor</h2>
+          <div class="poem-verse-text">Do me a favor, will you please?
+Take his wedding picture
+Clad in white
+In my land
+White is not just celebration
+It is what we wrap our loved ones in
+Before we give them to the fire
+
+Do me a favor, will you please?
+Bring me the ashes from the fire
+That stood witness to his next life
+I will carry it to the Ganges
+And release what loved him quietly,
+Faithfully,
+Without a name
+
+And that will be my last gift to him.</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">Audrita Mukherjee</span>
+            <span class="poem-card-place">Calcutta · Sacred Waters</span>
+          </div>
+        </article>
+
+        <!-- Poem 2: मक़्तूब / Maktub (Canonical Hindi) -->
+        <article class="poem-card-clean archive-poem-entry" data-id="poem-maktub" data-lang="hindi" data-head="maktub" id="poem-maktub">
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang" style="color: var(--color-accent); font-weight: 500;">हिंदी</span>
+              <span class="poem-card-tag">मक़्तूब &amp; राम रेखा</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-maktub" title="Copy verse to clipboard">⎘ Copy</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-maktub" title="Edit &amp; Customize Verse">✎ Edit</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title is-hindi">मक़्तूब / Maktub</h2>
+          <div class="poem-verse-text is-hindi">ये कैसा वरदान दिया रब ने
+चाहे कितनी गाँठों से बाँधे ये दरवाज़े,
+सीली लकीरों से ये दीवारें,
+दस्तक आने में देर न लगती।
+
+और कहीं पुरानी आदतों से रह जाए कोई किवाड़ खुली,
+तो घुस आते मेहमान नए।
+घर के चौराहे से आती ख़ुशबू इतनी,
+गुलाब और पीले फूलों से महकता बग़ीचा,
+बरगद की छाँव की ठंडक,
+और घरवाली की दया से रखा हुआ वो मीठा पानी,
+बाहर की कड़ी धूप में सबको मोह लेता।
+
+आने को तो सब आते हैं
+घर का राशन, पानी, चाव से खाते।
+और जब वो माक़्तूब मानकर
+उनके आगे के सफ़र के लिए पोटलियों में खाना बाँध देती,
+कुछ हसीन यादें भी छोड़ देती
+"माक़्तूब है ये," मानकर, उन्हें अलविदा कह देती।
+
+हर कोई दस्तक देता चला आता
+पर किसी ने अंदरवाले से मिलकर पूछा ही नहीं।
+शायद उन्हें लगता था इसके पास भला किस बात की कमी होगी?
+सब आते-जाते रहे।
+कोई ठहरा नहीं।
+
+घरवाली अनुभव की सीढ़ियाँ चढ़ती गई
+हर पायदान पर थोड़ी और ख़ाली होती।
+एहसास हुआ अब कोई ठहरने नहीं आएगा—
+पर उस दिन उसने किवाड़ बंद नहीं किए
+उसने राम का नाम लिया।
+और देहलीज़ पर एक लकीर खींच दी।
+
+ये लक्ष्मण रेखा नहीं थी,
+जो कोई और उसके लिए खींच जाए,
+ये राम रेखा थी,
+अपने ही केंद्र से खींची हुई।
+
+धीरे-धीरे विश्वास की जड़ें फिर से पकड़ने लगीं।
+कमरों से उन छलिया परछाइयों की यादें
+आँसुओं में घुलने लगीं
+बहती रहीं वो यादें, आँसुओं के साथ देहलीज़ के पार।
+और जब सब बह गया
+बस प्रेम रहा, बस राम रहे।
+
+कुछ दिन आँगन ख़ामोश था,
+देहलीज़ चुप रही।
+आँगन फिर से महक उठा।
+गुलाब की झाड़ियाँ फिर खिलीं,
+अमरूद के पेड़ों पर भँवरे लौट आए।
+
+अब भी दस्तक आती है।
+पर देहलीज़ पूछती है,
+"तुम राशन माँगने आए हो, या ठहरने?"
+
+जो पार कर सके वो रेखा, वही अंदर आता है।
+बाक़ी लौट जाते हैं।
+घरवाली अब भी राम का नाम जपती है
+पर अब वो नाम दरवाज़ा नहीं खोलता,
+उसे थामे रखता है।
+
+ख़ुद ही ख़ुद को वरदान दिया उसने।</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">औद्रिता मुखर्जी</span>
+            <span class="poem-card-place">देहलीज़ · राम रेखा</span>
+          </div>
+        </article>
+
+        <!-- Poem 3: The River Knows (English) -->
+        <article class="poem-card-clean archive-poem-entry" data-id="poem-river-knows" data-lang="english" data-head="river" id="poem-river-knows">
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang">EN</span>
+              <span class="poem-card-tag">River &amp; Solitude</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-river-knows" title="Copy verse to clipboard">⎘ Copy</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-river-knows" title="Edit &amp; Customize Verse">✎ Edit</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title">The River Knows</h2>
+          <div class="poem-verse-text">The river does not ask the bank
+For permission to depart,
+Nor does it measure what it leaves
+Inside the hollowed heart.
+
+It bends where morning bends the reeds,
+It carries silt and stone,
+And teaches every quiet grief
+To travel on alone.
+
+You ask me where the silence goes
+When love has had its say—
+Go ask the waters of the south
+That wash the grief away.</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">Audrita Mukherjee</span>
+            <span class="poem-card-place">The Ganges at Twilight</span>
+          </div>
+        </article>
+
+        <!-- Poem 4: देहलीज़ और दिया (Hindi) -->
+        <article class="poem-card-clean archive-poem-entry" data-id="poem-dehleez-diya" data-lang="hindi" data-head="dehleez" id="poem-dehleez-diya">
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang" style="color: var(--color-accent); font-weight: 500;">हिंदी</span>
+              <span class="poem-card-tag">देहलीज़, साँझ और इंतज़ार</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-dehleez-diya" title="Copy verse to clipboard">⎘ Copy</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-dehleez-diya" title="Edit &amp; Customize Verse">✎ Edit</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title is-hindi">देहलीज़ और दिया</h2>
+          <div class="poem-verse-text is-hindi">एक दीया था जो देहलीज़ पर
+हवा से डर कर नहीं,
+साँझ के भरोसे जलता रहा।
+
+ना कोई वादा था लौटने का,
+ना जाने वाले ने मुड़कर देखा,
+बस एक उम्मीद की हल्की सी लौ थी
+जो रात भर ख़ामोशी से बात करती रही।
+
+जब भोर हुई, तो तेल ख़त्म था,
+पर कमरा अँधेरे से हार नहीं माना था—
+कुछ रौशनी ऐसी होती है
+जो बुझने के बाद भी रास्ता दिखाती है।</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">औद्रिता मुखर्जी</span>
+            <span class="poem-card-place">कलकत्ता · साँझ की देहलीज़</span>
+          </div>
+        </article>
+
+        <!-- Poem 5: Before the Rain (English) -->
+        <article class="poem-card-clean archive-poem-entry" data-id="poem-before-rain" data-lang="english" data-head="monsoon" id="poem-before-rain">
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang">EN</span>
+              <span class="poem-card-tag">Monsoon &amp; Rain</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-before-rain" title="Copy verse to clipboard">⎘ Copy</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-before-rain" title="Edit &amp; Customize Verse">✎ Edit</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title">Before the Rain</h2>
+          <div class="poem-verse-text">There is a stillness in the banyan boughs
+Before the sky turns slate and green,
+A sudden coolness on the heated brow,
+A breath of what has not yet been.
+
+The clay jars wait upon the sill,
+The open window draws the gust,
+And every leaf stands listening, still,
+To rain that turns the grief to dust.</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">Audrita Mukherjee</span>
+            <span class="poem-card-place">Bengal Monsoon</span>
+          </div>
+        </article>
+
+        <!-- Poem 6: The Colour of Seven (English) -->
+        <article class="poem-card-clean archive-poem-entry" data-id="poem-colour-seven" data-lang="english" data-head="memory" id="poem-colour-seven">
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang">EN</span>
+              <span class="poem-card-tag">Light &amp; Seven</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="poem-colour-seven" title="Copy verse to clipboard">⎘ Copy</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-colour-seven" title="Edit &amp; Customize Verse">✎ Edit</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title">The Colour of Seven</h2>
+          <div class="poem-verse-text">Seven is the shade of unlit lamps,
+The hour between the tea and dusk,
+The quiet scent of dried-up rose
+Left sleeping in a sandalwood musk.
+
+You count the years by what was said,
+I count them by the light withdrawn—
+The seven quiet steps we took
+Before the temple gates at dawn.</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">Audrita Mukherjee</span>
+            <span class="poem-card-place">Dusk &amp; Sandalwood</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- No Results State -->
+      <div id="archive-no-results" class="archive-empty-state" style="display: none;">
+        <span class="empty-icon">❧</span>
+        <h3 class="empty-title">No verses match your selection</h3>
+        <p class="empty-desc">Try clearing the search or choosing a different collection head.</p>
+        <button type="button" id="btn-reset-filters" class="btn-station-secondary">Reset All Filters</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <p class="footer-copy">© 2026 Audrita Mukherjee. All words reserved.</p>
+        <p class="footer-tagline">Poetry preserved with breath and intention.</p>
+      </div>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="poetry-archive.html" class="is-active">Poetry Archive</a>
+        <a href="garden.html">The Garden</a>
+        <a href="about.html">About Me</a>
+        <a href="photo-album.html">Photo Album</a>
+        <button type="button" id="btn-export-sanctuary" class="footer-sync-btn" title="Download backup of your verses">📥 Backup</button>
+        <button type="button" id="btn-import-sanctuary" class="footer-sync-btn" title="Restore verses backup">📤 Restore</button>
+        <input type="file" id="input-import-sanctuary" accept=".json" style="display: none;" />
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=20261013a"></script>
+</body>
+</html>

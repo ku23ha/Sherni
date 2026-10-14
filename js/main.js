@@ -379,9 +379,49 @@
       // 2. Switch tab to match the uploaded language
       switchPoetryTab(language);
 
-      // 3. Render next to Favor / existing poems with identical layout and visible controls
-      renderPoemCard(newPoem, false);
-      updateCounterDisplay();
+      // 3. Render in archive grid if on archive page, or homepage grid
+      if (typeof allPoemsGrid !== 'undefined' && allPoemsGrid) {
+        const card = document.createElement('article');
+        card.className = 'poem-card-clean archive-poem-entry is-newly-planted';
+        card.setAttribute('data-id', newPoem.id);
+        card.setAttribute('data-lang', newPoem.language);
+        card.setAttribute('data-head', 'custom');
+        card.id = newPoem.id;
+
+        card.innerHTML = `
+          <div class="poem-card-header">
+            <div class="poem-card-meta">
+              <span class="poem-card-lang" ${isHindi ? 'style="color: var(--color-accent); font-weight: 500;"' : ''}>${isHindi ? 'हिंदी' : 'EN'}</span>
+              <span class="poem-card-tag">${escapeHTML(newPoem.tag || (isHindi ? 'मक़्तूब & देहलीज़' : 'Memory & Solitude'))}</span>
+            </div>
+            <div class="poem-card-controls">
+              <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="${newPoem.id}" title="Edit & Customize Verse">✎ Edit</button>
+              <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${newPoem.id}" data-title="${escapeHTML(newPoem.title)}" title="Remove poem">✕ Remove</button>
+            </div>
+          </div>
+          <h2 class="poem-card-title ${isHindi ? 'is-hindi' : ''}">${escapeHTML(newPoem.title)}</h2>
+          <div class="poem-verse-text ${isHindi ? 'is-hindi' : ''}">${escapeHTML(newPoem.verse)}</div>
+          <div class="poem-card-footer">
+            <span class="poem-card-date">${escapeHTML(newPoem.date || (isHindi ? 'औद्रिता मुखर्जी' : 'Audrita Mukherjee'))}</span>
+            <span class="poem-card-place">Personal Archive</span>
+          </div>
+        `;
+        allPoemsGrid.prepend(card);
+
+        if (typeof poetryJumpSelect !== 'undefined' && poetryJumpSelect) {
+          const opt = document.createElement('option');
+          opt.value = newPoem.id;
+          opt.textContent = `${newPoem.title} · ${newPoem.tag || 'Personal Archive'}`;
+          poetryJumpSelect.appendChild(opt);
+        }
+        if (typeof filterArchivePoems === 'function') filterArchivePoems();
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+      } else {
+        renderPoemCard(newPoem, false);
+        updateCounterDisplay();
+      }
 
       // 4. Post to backend API /api/poems (Vercel & Supabase sync)
       try {
@@ -431,6 +471,46 @@
       } catch (e) {}
     }
 
+    // Helper to track removed canonical poems
+    const REMOVED_POEMS_KEY = 'audrita_removed_poems_v1';
+    function getRemovedPoems() {
+      try {
+        const stored = localStorage.getItem(REMOVED_POEMS_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    function saveRemovedPoems(list) {
+      try {
+        localStorage.setItem(REMOVED_POEMS_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    function checkRestoreButtonVisibility() {
+      const removed = getRemovedPoems();
+      const hasRemoved = removed.length > 0;
+      const btnRestoreArchive = document.getElementById('btn-restore-default-poems');
+      if (btnRestoreArchive) {
+        btnRestoreArchive.style.display = hasRemoved ? 'inline-flex' : 'none';
+      }
+      const btnRestoreHome = document.getElementById('btn-restore-home-poems');
+      if (btnRestoreHome) {
+        btnRestoreHome.style.display = hasRemoved ? 'inline-flex' : 'none';
+      }
+    }
+
+    const btnRestoreHome = document.getElementById('btn-restore-home-poems');
+    if (btnRestoreHome) {
+      btnRestoreHome.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.confirm('Restore all original default poems back to your collection?')) {
+          localStorage.removeItem(REMOVED_POEMS_KEY);
+          window.location.reload();
+        }
+      });
+    }
+
     // Helper to get customized canonical poems (Favor, Maktub customizations)
     const CANONICAL_CUSTOM_KEY = 'audrita_canonical_customizations_v1';
     function getCanonicalCustomizations() {
@@ -477,19 +557,20 @@
     // Render a pristine poem card arranged identically to Favor with visible Edit and Remove buttons
     function renderPoemCard(poem, isPrepend = false) {
       const isHindi = poem.language === 'hindi';
-      const targetGrid = isHindi ? document.getElementById('poems-grid-hindi') : document.getElementById('poems-grid-english');
+      const homeGrid = document.getElementById('homepage-poems-grid');
+      const targetGrid = homeGrid || (isHindi ? document.getElementById('poems-grid-hindi') : document.getElementById('poems-grid-english'));
       if (!targetGrid) return;
 
       const card = document.createElement('article');
       card.className = 'poem-card-clean filterable-item';
-      card.setAttribute('data-category', poem.language);
+      card.setAttribute('data-category', poem.language || 'english');
       card.id = poem.id || `poem-custom-${Date.now()}`;
 
       // Clean, visible Edit and Remove controls in the card header
       const controlsHtml = `
         <div class="poem-card-controls">
-          <button class="btn-poem-ctrl btn-poem-edit" data-id="${card.id}" title="Edit & Customize Verse">✎ Edit</button>
-          <button class="btn-poem-ctrl btn-poem-remove" data-id="${card.id}" data-title="${escapeHTML(poem.title)}" title="Remove poem">✕ Remove</button>
+          <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="${card.id}" title="Edit & Customize Verse">✎ Edit</button>
+          <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${card.id}" data-title="${escapeHTML(poem.title)}" title="Remove poem">✕ Remove</button>
         </div>
       `;
 
@@ -513,6 +594,10 @@
       } else {
         targetGrid.appendChild(card);
       }
+
+      if (typeof updateHomePoetryCounts === 'function') {
+        updateHomePoetryCounts();
+      }
     }
 
     // ── Poetry Customization & Edit (Inline inside Poetry Archive) ─────────────────
@@ -521,6 +606,7 @@
     const btnCloseInlineEditor = document.getElementById('btn-close-inline-editor');
     const btnEditPoemCancel = document.getElementById('btn-edit-poem-cancel');
     const btnEditPoemSave = document.getElementById('btn-edit-poem-save');
+    const btnEditPoemDelete = document.getElementById('btn-edit-poem-delete');
     const btnAutocleanStanzas = document.getElementById('btn-autoclean-stanzas');
     const inlineEditorHeading = document.getElementById('inline-editor-heading');
 
@@ -530,6 +616,30 @@
     const editPoemLangSelect = document.getElementById('edit-poem-lang');
     const editPoemDateInput = document.getElementById('edit-poem-date');
     const editPoemVersesTextarea = document.getElementById('edit-poem-verses');
+
+    function openNewPoemEditor() {
+      if (editPoemIdInput) editPoemIdInput.value = 'new';
+      if (editPoemTitleInput) editPoemTitleInput.value = '';
+      if (editPoemTagInput) editPoemTagInput.value = 'Memory & Solitude';
+      if (editPoemLangSelect) editPoemLangSelect.value = 'english';
+      if (editPoemDateInput) editPoemDateInput.value = 'Audrita Mukherjee';
+      if (editPoemVersesTextarea) editPoemVersesTextarea.value = '';
+
+      if (inlineEditorHeading) {
+        inlineEditorHeading.textContent = '✦ Write New Poem / नई कविता जोड़ें';
+      }
+      if (btnEditPoemSave) {
+        btnEditPoemSave.textContent = 'Save Poem to Archive';
+      }
+      if (btnEditPoemDelete) {
+        btnEditPoemDelete.style.display = 'none';
+      }
+      if (inlinePoetryEditor) {
+        inlinePoetryEditor.style.display = 'block';
+        inlinePoetryEditor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      if (editPoemTitleInput) editPoemTitleInput.focus();
+    }
 
     function openEditPoemEditor(poemId) {
       const card = document.getElementById(poemId) || document.getElementById('poem-favor');
@@ -554,6 +664,14 @@
       if (inlineEditorHeading) {
         inlineEditorHeading.textContent = `Customize & Edit: ${titleEl ? titleEl.textContent.trim() : 'Verse'}`;
       }
+      if (btnEditPoemSave) {
+        btnEditPoemSave.textContent = 'Save Changes to Archive';
+      }
+      if (btnEditPoemDelete) {
+        btnEditPoemDelete.style.display = 'inline-flex';
+        btnEditPoemDelete.setAttribute('data-id', card.id);
+        btnEditPoemDelete.setAttribute('data-title', titleEl ? titleEl.textContent.trim() : 'Verse');
+      }
 
       if (inlinePoetryEditor) {
         inlinePoetryEditor.style.display = 'block';
@@ -566,6 +684,20 @@
       if (inlinePoetryEditor) {
         inlinePoetryEditor.style.display = 'none';
       }
+      if (btnEditPoemDelete) {
+        btnEditPoemDelete.style.display = 'none';
+      }
+    }
+
+    if (btnEditPoemDelete) {
+      btnEditPoemDelete.addEventListener('click', function (e) {
+        e.preventDefault();
+        const poemId = this.getAttribute('data-id') || (editPoemIdInput ? editPoemIdInput.value : '');
+        const poemTitle = this.getAttribute('data-title') || 'Verse';
+        if (poemId && poemId !== 'new') {
+          executePoemRemoval(poemId, poemTitle);
+        }
+      });
     }
 
     if (btnTogglePoetryEditor) {
@@ -596,16 +728,91 @@
       });
     }
 
-    // Save changes from Edit Modal
+    // Save changes from Edit / Add Modal
     if (btnEditPoemSave) {
       btnEditPoemSave.addEventListener('click', function () {
-        const poemId = editPoemIdInput.value;
-        const newTitle = editPoemTitleInput.value.trim() || 'Untitled Verse';
-        const newTag = editPoemTagInput.value.trim() || 'Memory & Solitude';
-        const newLang = editPoemLangSelect.value;
-        const newDate = editPoemDateInput.value.trim() || 'Audrita Mukherjee';
-        const newVerses = formatPoetryVerses(editPoemVersesTextarea.value);
+        const poemId = editPoemIdInput ? editPoemIdInput.value : '';
+        const newTitle = editPoemTitleInput ? editPoemTitleInput.value.trim() : '';
+        const newTag = (editPoemTagInput ? editPoemTagInput.value.trim() : '') || 'Memory & Solitude';
+        const newLang = editPoemLangSelect ? editPoemLangSelect.value : 'english';
+        const newDate = (editPoemDateInput ? editPoemDateInput.value.trim() : '') || 'Audrita Mukherjee';
+        const newVerses = formatPoetryVerses(editPoemVersesTextarea ? editPoemVersesTextarea.value : '');
 
+        if (!newTitle && !newVerses) {
+          showToast('Please provide a poem title or verses.');
+          return;
+        }
+
+        const finalTitle = newTitle || 'Untitled Verse';
+
+        // ── 1. Adding a Brand New Poem ──
+        if (poemId === 'new' || !poemId || !document.getElementById(poemId)) {
+          const newId = 'custom-' + Date.now();
+          const newPoem = {
+            id: newId,
+            title: finalTitle,
+            tag: newTag,
+            language: newLang,
+            date: newDate,
+            verse: newVerses,
+            isCustom: true,
+            created_at: new Date().toISOString()
+          };
+
+          const currentList = getStoredPoems();
+          currentList.push(newPoem);
+          saveStoredPoems(currentList);
+
+          if (typeof allPoemsGrid !== 'undefined' && allPoemsGrid) {
+            const card = document.createElement('article');
+            const isHindi = newLang === 'hindi';
+            card.className = 'poem-card-clean archive-poem-entry is-newly-planted';
+            card.setAttribute('data-id', newId);
+            card.setAttribute('data-lang', newLang);
+            card.setAttribute('data-head', 'custom');
+            card.id = newId;
+
+            card.innerHTML = `
+              <div class="poem-card-header">
+                <div class="poem-card-meta">
+                  <span class="poem-card-lang" ${isHindi ? 'style="color: var(--color-accent); font-weight: 500;"' : ''}>${isHindi ? 'हिंदी' : 'EN'}</span>
+                  <span class="poem-card-tag">${escapeHTML(newTag)}</span>
+                </div>
+                <div class="poem-card-controls">
+                  <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="${newId}" title="Edit & Customize Verse">✎ Edit</button>
+                  <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${newId}" data-title="${escapeHTML(finalTitle)}" title="Remove poem">✕ Remove</button>
+                </div>
+              </div>
+              <h2 class="poem-card-title ${isHindi ? 'is-hindi' : ''}">${escapeHTML(finalTitle)}</h2>
+              <div class="poem-verse-text ${isHindi ? 'is-hindi' : ''}">${escapeHTML(newVerses)}</div>
+              <div class="poem-card-footer">
+                <span class="poem-card-date">${escapeHTML(newDate)}</span>
+                <span class="poem-card-place">Personal Archive</span>
+              </div>
+            `;
+            allPoemsGrid.prepend(card);
+
+            if (typeof poetryJumpSelect !== 'undefined' && poetryJumpSelect) {
+              const opt = document.createElement('option');
+              opt.value = newId;
+              opt.textContent = `${finalTitle} · ${newTag}`;
+              poetryJumpSelect.appendChild(opt);
+            }
+            if (typeof filterArchivePoems === 'function') filterArchivePoems();
+            setTimeout(() => {
+              card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 150);
+          } else {
+            renderPoemCard(newPoem, true);
+            updateCounterDisplay();
+          }
+
+          closeEditPoemEditor();
+          showToast(`❧ "${finalTitle}" added to poetry archive`);
+          return;
+        }
+
+        // ── 2. Editing an Existing Poem ──
         const card = document.getElementById(poemId);
         if (card) {
           const titleEl = card.querySelector('.poem-card-title');
@@ -613,9 +820,11 @@
           const langEl = card.querySelector('.poem-card-lang');
           const dateEl = card.querySelector('.poem-card-date');
           const verseEl = card.querySelector('.poem-verse-text');
+          const removeBtn = card.querySelector('.btn-poem-remove');
 
-          if (titleEl) titleEl.textContent = newTitle;
+          if (titleEl) titleEl.textContent = finalTitle;
           if (tagEl) tagEl.textContent = newTag;
+          if (removeBtn) removeBtn.setAttribute('data-title', finalTitle);
           if (langEl) {
             langEl.textContent = newLang === 'hindi' ? 'हिंदी' : 'EN';
             langEl.style.color = newLang === 'hindi' ? 'var(--color-accent)' : '';
@@ -627,13 +836,15 @@
             if (newLang === 'hindi') verseEl.classList.add('is-hindi');
             else verseEl.classList.remove('is-hindi');
           }
+          card.setAttribute('data-lang', newLang);
         }
 
-        // Check if canonical poem (poem-favor, poem-maktub) or custom
-        if (poemId === 'poem-favor' || poemId === 'poem-maktub') {
+        // Check if canonical poem or custom
+        const isCanonical = poemId.startsWith('poem-') && !poemId.startsWith('poem-custom-');
+        if (isCanonical) {
           const canonicalMap = getCanonicalCustomizations();
           canonicalMap[poemId] = {
-            title: newTitle,
+            title: finalTitle,
             tag: newTag,
             date: newDate,
             verse: newVerses,
@@ -641,11 +852,10 @@
           };
           saveCanonicalCustomizations(canonicalMap);
         } else {
-          // Custom poem
           const stored = getStoredPoems();
           const target = stored.find(p => p.id === poemId);
           if (target) {
-            target.title = newTitle;
+            target.title = finalTitle;
             target.tag = newTag;
             target.date = newDate;
             target.verse = newVerses;
@@ -655,8 +865,60 @@
         }
 
         closeEditPoemEditor();
-        showToast(`❧ "${newTitle}" headings & verses updated`);
+        showToast(`❧ "${finalTitle}" headings & verses updated`);
       });
+    }
+
+    // Centralized poem removal executor (works for both archive page and homepage)
+    function executePoemRemoval(poemId, poemTitle) {
+      if (!poemId) return;
+
+      if (window.confirm(`Do you wish to remove "${poemTitle}" from your poetry collection?`)) {
+        // If currently editing this poem in inline editor, close it
+        if (editPoemIdInput && editPoemIdInput.value === poemId) {
+          closeEditPoemEditor();
+        }
+
+        const stored = getStoredPoems();
+        const isCustom = stored.some(p => p.id === poemId);
+        if (isCustom) {
+          saveStoredPoems(stored.filter(p => p.id !== poemId));
+        } else {
+          // Canonical poem: save in removed list
+          const removed = getRemovedPoems();
+          if (!removed.includes(poemId)) {
+            removed.push(poemId);
+            saveRemovedPoems(removed);
+          }
+        }
+        checkRestoreButtonVisibility();
+
+        // Fade and remove any matching card in DOM
+        const cards = document.querySelectorAll(`[id="${poemId}"]`);
+        cards.forEach(card => {
+          card.style.transition = 'all 0.3s ease-out';
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(12px)';
+          setTimeout(() => {
+            card.remove();
+            if (typeof poetryJumpSelect !== 'undefined' && poetryJumpSelect) {
+              const opt = poetryJumpSelect.querySelector(`option[value="${poemId}"]`);
+              if (opt) opt.remove();
+            }
+            if (typeof filterArchivePoems === 'function') {
+              filterArchivePoems();
+            }
+            if (typeof updateCounterDisplay === 'function') {
+              updateCounterDisplay();
+            }
+            if (typeof updateHomePoetryCounts === 'function') {
+              updateHomePoetryCounts();
+            }
+          }, 300);
+        });
+
+        showToast(`❧ "${poemTitle}" removed from poetry collection`);
+      }
     }
 
     // Delegate click on Edit and Remove Poem buttons
@@ -676,25 +938,7 @@
         e.preventDefault();
         const poemId = removeBtn.getAttribute('data-id');
         const poemTitle = removeBtn.getAttribute('data-title') || 'Verse';
-        if (!poemId) return;
-
-        if (window.confirm(`Do you wish to remove "${poemTitle}" from your poetry archive?`)) {
-          const stored = getStoredPoems();
-          const updated = stored.filter(p => p.id !== poemId);
-          saveStoredPoems(updated);
-
-          const card = document.getElementById(poemId);
-          if (card) {
-            card.style.transition = 'all 0.3s ease-out';
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(12px)';
-            setTimeout(() => {
-              card.remove();
-              updateCounterDisplay();
-            }, 300);
-          }
-          showToast(`❧ "${poemTitle}" quietly removed from archive`);
-        }
+        if (poemId) executePoemRemoval(poemId, poemTitle);
       }
     });
 
@@ -708,12 +952,95 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Load initial stored custom poems on page load
-    const existingCustomPoems = getStoredPoems();
-    existingCustomPoems.forEach(p => {
-      p.isCustom = true;
-      renderPoemCard(p, false);
-    });
+    // Guarantee strict poem controls: ONLY '✎ Edit' and '✕ Remove', no copy, no just-edit
+    function enforcePoemControls() {
+      const controlsWrappers = document.querySelectorAll('.poem-card-controls');
+      controlsWrappers.forEach(ctrls => {
+        // 1. Purge any stray copy buttons
+        ctrls.querySelectorAll('.btn-poem-copy').forEach(el => el.remove());
+
+        const card = ctrls.closest('article');
+        const poemId = (card && card.id) ? card.id : null;
+        const titleEl = card ? (card.querySelector('.poem-card-title') || card.querySelector('h2, h4')) : null;
+        const poemTitle = titleEl ? titleEl.textContent.trim() : 'Verse';
+
+        // 2. Ensure Edit button exists
+        let editBtn = ctrls.querySelector('.btn-poem-edit');
+        if (!editBtn && poemId) {
+          editBtn = document.createElement('button');
+          editBtn.type = 'button';
+          editBtn.className = 'btn-poem-ctrl btn-poem-edit';
+          editBtn.setAttribute('data-id', poemId);
+          editBtn.setAttribute('title', 'Edit & Customize Verse');
+          editBtn.textContent = '✎ Edit';
+          ctrls.prepend(editBtn);
+        } else if (editBtn) {
+          editBtn.textContent = '✎ Edit';
+        }
+
+        // 3. Ensure Remove button exists alongside Edit button
+        let removeBtn = ctrls.querySelector('.btn-poem-remove');
+        if (!removeBtn && poemId) {
+          removeBtn = document.createElement('button');
+          removeBtn.type = 'button';
+          removeBtn.className = 'btn-poem-ctrl btn-poem-remove';
+          removeBtn.setAttribute('data-id', poemId);
+          removeBtn.setAttribute('data-title', poemTitle);
+          removeBtn.setAttribute('title', 'Remove poem');
+          removeBtn.textContent = '✕ Remove';
+          ctrls.appendChild(removeBtn);
+        } else if (removeBtn) {
+          removeBtn.textContent = '✕ Remove';
+          if (!removeBtn.getAttribute('data-title')) {
+            removeBtn.setAttribute('data-title', poemTitle);
+          }
+        }
+      });
+    }
+
+    // Dynamic Homepage Poetry Counts (Updates filter pills dynamically)
+    function updateHomePoetryCounts() {
+      const homeGrid = document.getElementById('homepage-poems-grid');
+      if (!homeGrid) return;
+
+      const allCards = homeGrid.querySelectorAll('.filterable-item');
+      const enCards = homeGrid.querySelectorAll('.filterable-item[data-category="english"]');
+      const hiCards = homeGrid.querySelectorAll('.filterable-item[data-category="hindi"]');
+
+      const pillAll = document.querySelector('.poetry-filter-bar button[data-filter="all"]');
+      const pillEn = document.querySelector('.poetry-filter-bar button[data-filter="english"]');
+      const pillHi = document.querySelector('.poetry-filter-bar button[data-filter="hindi"]');
+
+      if (pillAll) pillAll.textContent = `All ${allCards.length} Verses`;
+      if (pillEn) pillEn.textContent = `English Poetry (${enCards.length})`;
+      if (pillHi) pillHi.textContent = `हिंदी कविता (${hiCards.length})`;
+    }
+
+    // Initialize Homepage Poems (applies removals, renders stored, syncs counters)
+    function initHomepagePoems() {
+      const homeGrid = document.getElementById('homepage-poems-grid');
+      if (!homeGrid) return;
+
+      // 1. Remove canonical poems that user previously removed
+      const removedList = getRemovedPoems();
+      removedList.forEach(id => {
+        const card = homeGrid.querySelector(`#${id}`);
+        if (card) card.remove();
+      });
+
+      // 2. Render stored custom poems onto homepage
+      const stored = getStoredPoems();
+      stored.forEach(p => {
+        if (!homeGrid.querySelector(`#${p.id}`)) {
+          renderPoemCard(p, false);
+        }
+      });
+
+      enforcePoemControls();
+      updateHomePoetryCounts();
+      checkRestoreButtonVisibility();
+    }
+    initHomepagePoems();
 
     // Update garden count display (2 core canonical poems: Favor & Maktub + custom additions)
     function updateCounterDisplay() {
@@ -723,6 +1050,7 @@
         const totalStr = total < 10 ? `0${total}` : total;
         counterEl.textContent = `${totalStr} / 50`;
       }
+      updateHomePoetryCounts();
     }
     updateCounterDisplay();
 
@@ -1347,6 +1675,8 @@
     const btnResetFilters = document.getElementById('btn-reset-filters');
     const btnArchiveAddPoem = document.getElementById('btn-archive-add-poem');
     const btnToggleArchiveEditor = document.getElementById('btn-toggle-archive-editor');
+    const btnArchiveWritePoem = document.getElementById('btn-archive-write-poem');
+    const btnRestoreDefaultPoems = document.getElementById('btn-restore-default-poems');
 
     let activeLangFilter = 'all';
     let activeHeadFilter = 'all';
@@ -1514,25 +1844,24 @@
         filterArchivePoems();
       });
     }
+    // Archive restore button visibility handled by global checkRestoreButtonVisibility
 
-    // 7. Copy verse to clipboard
-    document.addEventListener('click', function (e) {
-      const copyBtn = e.target.closest('.btn-poem-copy');
-      if (copyBtn) {
+    if (btnArchiveWritePoem) {
+      btnArchiveWritePoem.addEventListener('click', function (e) {
         e.preventDefault();
-        const card = copyBtn.closest('article');
-        if (card) {
-          const title = card.querySelector('.poem-card-title') ? card.querySelector('.poem-card-title').textContent.trim() : '';
-          const verse = card.querySelector('.poem-verse-text') ? card.querySelector('.poem-verse-text').textContent.trim() : '';
-          const fullText = `${title}\n\n${verse}\n\n— Audrita Mukherjee`;
-          navigator.clipboard.writeText(fullText).then(() => {
-            showToast(`⎘ "${title}" copied to clipboard`);
-          }).catch(() => {
-            showToast('Unable to copy verse.');
-          });
+        openNewPoemEditor();
+      });
+    }
+
+    if (btnRestoreDefaultPoems) {
+      btnRestoreDefaultPoems.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.confirm('Restore all original default poems back to your archive?')) {
+          localStorage.removeItem(REMOVED_POEMS_KEY);
+          window.location.reload();
         }
-      }
-    });
+      });
+    }
 
     // 8. Add poem actions on archive page
     if (btnArchiveAddPoem) {
@@ -1550,6 +1879,19 @@
 
     // Render custom stored poems on poetry-archive.html
     if (allPoemsGrid) {
+      // 1. Remove any canonical poems previously removed by user
+      const removedList = getRemovedPoems();
+      removedList.forEach(id => {
+        const card = document.getElementById(id);
+        if (card) card.remove();
+        if (poetryJumpSelect) {
+          const opt = poetryJumpSelect.querySelector(`option[value="${id}"]`);
+          if (opt) opt.remove();
+        }
+      });
+      checkRestoreButtonVisibility();
+
+      // 2. Render stored poems
       const stored = getStoredPoems();
       stored.forEach(p => {
         if (!document.getElementById(p.id)) {
@@ -1569,7 +1911,7 @@
               </div>
               <div class="poem-card-controls">
                 <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="${p.id}" title="Edit & Customize Verse">✎ Edit</button>
-                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${p.id}" data-title="${escapeHTML(p.title)}" title="Remove poem">✕</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${p.id}" data-title="${escapeHTML(p.title)}" title="Remove poem">✕ Remove</button>
               </div>
             </div>
             <h2 class="poem-card-title ${isHindi ? 'is-hindi' : ''}">${escapeHTML(p.title)}</h2>
@@ -1591,6 +1933,7 @@
         }
       });
       filterArchivePoems();
+      enforcePoemControls();
     }
 
     // ── Voice Verses (Words In Voice) Hub & Add/Remove System ──

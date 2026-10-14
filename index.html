@@ -321,6 +321,7 @@
           <button class="filter-pill is-active" data-filter="all">All 4 Verses</button>
           <button class="filter-pill" data-filter="english">English Poetry (2)</button>
           <button class="filter-pill" data-filter="hindi">हिंदी कविता (2)</button>
+          <button type="button" id="btn-restore-home-poems" class="filter-pill" style="display: none; border-color: rgba(179, 57, 57, 0.4); color: #b33939; margin-left: 8px;" title="Restore all original default poems">↺ Restore Defaults</button>
           <a href="poetry-archive.html" class="filter-pill btn-pill-all-archive" style="margin-left: auto; border-color: var(--color-accent); color: var(--color-accent); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 500;" title="Browse complete collection of verses">
             ✦ Full Poetry Archive →
           </a>
@@ -373,9 +374,12 @@
             <p class="editorial-form-hint" style="margin-top: 4px;">Tip: Lines in the same stanza have no blank lines. Press Enter twice to create a clean stanza break.</p>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: var(--space-3); border-top: 1px solid var(--color-border-light); padding-top: var(--space-4);">
-            <button type="button" class="btn-modal-cancel" id="btn-edit-poem-cancel">Cancel</button>
-            <button type="button" class="btn-modal-save" id="btn-edit-poem-save">Save Changes to Archive</button>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border-light); padding-top: var(--space-4);">
+            <button type="button" class="btn-modal-cancel" id="btn-edit-poem-delete" style="color: #b33939; border-color: rgba(179, 57, 57, 0.35); display: none;" title="Remove this verse from collection">✕ Remove Verse</button>
+            <div style="display: flex; gap: var(--space-3); margin-left: auto;">
+              <button type="button" class="btn-modal-cancel" id="btn-edit-poem-cancel">Cancel</button>
+              <button type="button" class="btn-modal-save" id="btn-edit-poem-save">Save Changes to Archive</button>
+            </div>
           </div>
         </div>
 
@@ -391,6 +395,7 @@
               </div>
               <div class="poem-card-controls">
                 <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-favor" title="Edit &amp; Customize Verse">✎ Edit</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="poem-favor" data-title="Favor" title="Remove poem">✕ Remove</button>
               </div>
             </div>
             <h4 class="poem-card-title">Favor</h4>
@@ -426,6 +431,7 @@ And that will be my last gift to him.</div>
               </div>
               <div class="poem-card-controls">
                 <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-maktub" title="Edit &amp; Customize Verse">✎ Edit</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="poem-maktub" data-title="मक़्तूब / Maktub" title="Remove poem">✕ Remove</button>
               </div>
             </div>
             <h4 class="poem-card-title is-hindi">मक़्तूब / Maktub</h4>
@@ -506,6 +512,7 @@ And that will be my last gift to him.</div>
               </div>
               <div class="poem-card-controls">
                 <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-river-knows" title="Edit &amp; Customize Verse">✎ Edit</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="poem-river-knows" data-title="The River Knows" title="Remove poem">✕ Remove</button>
               </div>
             </div>
             <h4 class="poem-card-title">The River Knows</h4>
@@ -538,6 +545,7 @@ That wash the grief away.</div>
               </div>
               <div class="poem-card-controls">
                 <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="poem-dehleez-diya" title="Edit &amp; Customize Verse">✎ Edit</button>
+                <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="poem-dehleez-diya" data-title="देहलीज़ और दिया" title="Remove poem">✕ Remove</button>
               </div>
             </div>
             <h4 class="poem-card-title is-hindi">देहलीज़ और दिया</h4>

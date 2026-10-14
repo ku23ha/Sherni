@@ -1568,7 +1568,6 @@
                 <span class="poem-card-tag">${escapeHTML(p.tag || 'Sanctuary Verse')}</span>
               </div>
               <div class="poem-card-controls">
-                <button type="button" class="btn-poem-ctrl btn-poem-copy" data-id="${p.id}" title="Copy verse to clipboard">⎘ Copy</button>
                 <button type="button" class="btn-poem-ctrl btn-poem-edit" data-id="${p.id}" title="Edit & Customize Verse">✎ Edit</button>
                 <button type="button" class="btn-poem-ctrl btn-poem-remove" data-id="${p.id}" data-title="${escapeHTML(p.title)}" title="Remove poem">✕</button>
               </div>
